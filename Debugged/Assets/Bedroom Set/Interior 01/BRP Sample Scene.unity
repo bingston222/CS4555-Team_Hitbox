@@ -359,7 +359,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7dce48e404868c46a862ca531fddf3d, type: 3}
---- !u!1 &354915515
+--- !u!1 &353146677
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -367,23 +367,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 354915518}
-  - component: {fileID: 354915517}
-  - component: {fileID: 354915516}
+  - component: {fileID: 353146681}
+  - component: {fileID: 353146680}
+  - component: {fileID: 353146679}
+  - component: {fileID: 353146678}
   m_Layer: 0
-  m_Name: Camera
-  m_TagString: Untagged
+  m_Name: MainCamera
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &354915516
+--- !u!114 &353146678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 354915515}
+  m_GameObject: {fileID: 353146677}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
@@ -400,7 +401,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -421,18 +422,26 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!20 &354915517
+--- !u!81 &353146679
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353146677}
+  m_Enabled: 1
+--- !u!20 &353146680
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 354915515}
+  m_GameObject: {fileID: 353146677}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.078616336, g: 0.08473094, b: 0.09433961, a: 0}
+  m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
   m_Iso: 200
@@ -452,11 +461,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.099999994
+  near clip plane: 0.3
   far clip plane: 1000
-  field of view: 26.991467
+  field of view: 60
   orthographic: 0
-  orthographic size: 0.0023994944
+  orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -472,21 +481,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!4 &354915518
+--- !u!4 &353146681
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 354915515}
+  m_GameObject: {fileID: 353146677}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16210683, y: 0.39611804, z: -0.07127103, w: 0.90096194}
-  m_LocalPosition: {x: -89.41971, y: 26.430916, z: -61.865932}
-  m_LocalScale: {x: 100.000015, y: 100, z: 100}
+  m_LocalRotation: {x: 0.19725123, y: 0.54202664, z: -0.13264394, w: 0.80604255}
+  m_LocalPosition: {x: -92.88737, y: 33.084858, z: -50.73115}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 80, z: 0}
 --- !u!1001 &400208067
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -658,50 +667,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7de0c19ef8acace4892b5f8c8847bfda, type: 3}
---- !u!1 &605891260
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 605891262}
-  - component: {fileID: 605891261}
-  m_Layer: 0
-  m_Name: Scene
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &605891261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605891260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8085aef260f46d1b652269254346b3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &605891262
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 605891260}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &642827471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -720,13 +685,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 55a489c79083b4164ac649dccafc2fe2, type: 2}
     - target: {fileID: 2053394018447661357, guid: 04f97845abb19db42a95f48d8ccf6a71, type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'arm_stretch.l'\n\tTransform 'spine_02.x'\n\tTransform
-        'spine_01.x'\n\tTransform 'toes_01.r'\n\tTransform 'thigh_stretch.r'\n\tTransform
-        'c_index2.r'\n\tTransform 'c_middle2.r'\n\tTransform 'root.x'\n\tTransform
-        'c_pinky2.l'\n\tTransform 'c_middle3.r'\n\tand more ...\n\tFrom animation
-        clip 'root_idle_bot_remap'\n\tFrom animation clip 'root_walk_bot_remap'"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8165868206848317765, guid: 04f97845abb19db42a95f48d8ccf6a71, type: 3}
       propertyPath: m_LocalScale.x
@@ -1988,7 +1947,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   postProcessVolumePrefab: {fileID: 0}
   gameCameras:
-  - {fileID: 354915517}
+  - {fileID: 0}
   yureiLayer: 0
 --- !u!4 &1702474431
 Transform:
@@ -2818,7 +2777,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 605891262}
   - {fileID: 1233731057}
   - {fileID: 1338741814}
   - {fileID: 1811891185}
@@ -2854,7 +2812,7 @@ SceneRoots:
   - {fileID: 1857060961}
   - {fileID: 819218853}
   - {fileID: 1643829560639908485}
-  - {fileID: 354915518}
   - {fileID: 1702474431}
   - {fileID: 2129636534}
   - {fileID: 642827471}
+  - {fileID: 353146681}
