@@ -1541,7 +1541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveAction: {fileID: 6185738185388911758, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  moveSpeed: 2
+  moveSpeed: 7
   rotationSpeed: 720
   cameraRelative: 1
 --- !u!143 &642827482
@@ -4476,7 +4476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveAction: {fileID: -2536385963046873963, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  moveSpeed: 2
+  moveSpeed: 7
   rotationSpeed: 720
   cameraRelative: 1
 --- !u!143 &2129636547
