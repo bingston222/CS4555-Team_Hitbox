@@ -1,70 +1,71 @@
 using UnityEngine;
 using TMPro;
 
+/// Classic “Search (E)” prompt controller (singleton).
 public class InteractionPromptUI : MonoBehaviour
 {
     public static InteractionPromptUI I;
 
     [Header("UI")]
-    public CanvasGroup group;    // drag your InteractPrompt panel's CanvasGroup
-    public TMP_Text text;        // drag the TMP text inside the prompt
-
+    public CanvasGroup group;          // assign your gray bar CanvasGroup
+    public TMP_Text text;              // the TMP text that shows “Search (E)”
     [Header("Behavior")]
-    [SerializeField] float holdAfterLost = 0.25f;
+    public float holdAfterLost = 0.25f;
 
-    // arbitration fields (closest request wins each frame)
-    static float bestScoreThisFrame = float.PositiveInfinity;
-    static string bestTextThisFrame = null;
-
-    float holdTimer = 0f;
+    float bestScoreThisFrame = float.PositiveInfinity;
+    string bestTextThisFrame = null;
+    float hideAt = -1f;
 
     void Awake()
     {
         I = this;
-        HideImmediate();
+        if (group) group.alpha = 0f;
+        if (text) text.text = string.Empty;
     }
 
-    /// <summary>Call from Interactor each frame when it has a target.</summary>
-    public static void Request(string prompt, float distanceScore)
+    public static void Request(string t, float score)
     {
-        if (string.IsNullOrEmpty(prompt)) return;
-        if (distanceScore < bestScoreThisFrame)
+        if (!I) return;
+        if (score < I.bestScoreThisFrame)
         {
-            bestScoreThisFrame = distanceScore;
-            bestTextThisFrame = prompt;
+            I.bestScoreThisFrame = score;
+            I.bestTextThisFrame  = t;
         }
     }
 
     void LateUpdate()
     {
-        bool dialogueUp = DialogueManager.I != null && DialogueManager.I.IsVisible;
-
-        if (!dialogueUp && !string.IsNullOrEmpty(bestTextThisFrame))
+        // no requests this frame? start fade timer
+        if (bestTextThisFrame == null)
         {
-            text.text = bestTextThisFrame;
-            group.alpha = 1f;
-            holdTimer = holdAfterLost; // refresh hold
+            if (hideAt < 0f) hideAt = Time.time + holdAfterLost;
         }
         else
         {
-            if (!dialogueUp && holdTimer > 0f)
-            {
-                holdTimer -= Time.deltaTime;
-                group.alpha = 1f;
-            }
-            else
-            {
-                group.alpha = 0f; // hide if dialogue is up OR no target
-            }
+            if (text) text.text = bestTextThisFrame;
+            if (group) group.alpha = 1f;
+            hideAt = -1f;
         }
 
-        // reset arbitration for next frame
+        if (hideAt > 0f && Time.time >= hideAt)
+        {
+            if (group) group.alpha = 0f;
+            if (text) text.text = string.Empty;
+            hideAt = -1f;
+        }
+
+        // reset arbitration
         bestScoreThisFrame = float.PositiveInfinity;
-        bestTextThisFrame = null;
+        bestTextThisFrame  = null;
     }
 
-    public void HideImmediate()
+    public static void ClearNow()
     {
-        if (group) group.alpha = 0f;
+        if (!I) return;
+        I.bestScoreThisFrame = float.PositiveInfinity;
+        I.bestTextThisFrame  = null;
+        if (I.text)  I.text.text = string.Empty;
+        if (I.group) I.group.alpha = 0f;
+        I.hideAt = -1f;
     }
 }

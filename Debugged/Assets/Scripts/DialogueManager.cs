@@ -1,20 +1,20 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
-using System.Collections;
 
 public class DialogueManager : MonoBehaviour
 {
-    // Singleton (so other scripts can check visibility)
+    // Singleton so other scripts can check visibility
     public static DialogueManager I { get; private set; }
 
     [Header("UI")]
-    public TMP_Text bubble;              // assign your DialogueText TMP
+    public TMP_Text bubble;          // assign your DialogueText TMP in the scene
 
     [Header("Durations")]
-    public float seconds = 2.5f;         // normal lines
-    public float shortSeconds = 1.0f;    // quick hints like "Oops, not here!"
+    public float seconds = 2.5f;     // normal lines
+    public float shortSeconds = 1f;  // quick hints
 
-    public bool IsVisible { get; private set; }  // <— other scripts read this
+    public bool IsVisible { get; private set; }
 
     Coroutine current;
 
@@ -28,7 +28,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (bubble) bubble.gameObject.SetActive(false);
 
-        // Optional: sample hooks
+        // (Optional) sample hooks like you had before
         if (GameState.I != null)
         {
             GameState.I.OnFound += who =>
@@ -49,17 +49,33 @@ public class DialogueManager : MonoBehaviour
 
     public void ShowFor(string s, float dur)
     {
+        // Kill any lingering interaction prompt so it never overlaps the dialogue
+        InteractionPromptUI.ClearNow();
+
         if (!bubble) return;
+
         if (current != null) StopCoroutine(current);
-        current = StartCoroutine(ShowCo(s, dur));
+        current = StartCoroutine(ShowCo(s, Mathf.Max(0.01f, dur)));
     }
 
+    public void HideNow()
+    {
+        if (current != null) StopCoroutine(current);
+        current = null;
+
+        if (bubble) bubble.gameObject.SetActive(false);
+        IsVisible = false;
+    }
+
+    // ---------- Impl ----------
     IEnumerator ShowCo(string s, float dur)
     {
         IsVisible = true;
         bubble.text = s;
         bubble.gameObject.SetActive(true);
+
         yield return new WaitForSeconds(dur);
+
         bubble.gameObject.SetActive(false);
         IsVisible = false;
         current = null;

@@ -1,216 +1,235 @@
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
-using UnityEngine.Events;
 using TMPro;
+using UnityEngine.Events;
+using System.Collections;
 
 public class ConnectToPC : MonoBehaviour
 {
+    [Header("Players (drag their Transforms)")]
+    public Transform p1;
+    public Transform p2;
+
     [Header("Keys")]
-    public KeyCode p1Key = KeyCode.E;             // WASD player
-    public KeyCode p2Key = KeyCode.RightShift;    // Arrow-keys player
+    public KeyCode p1Key = KeyCode.E;
+    public KeyCode p2Key = KeyCode.Slash;
 
-    [Header("Detection (no triggers needed)")]
-    public float radius = 1.8f;                   // horizontal distance from PC
-    public float maxVertical = 1.2f;              // max Y difference allowed
-    public LayerMask playerMask = ~0;             // players’ layer (Everything is fine)
+    [Header("Detection")]
+    public float radius = 7.5f;
+    public float maxVertical = 7f;
 
-    [Header("UI")]
-    public TextMeshProUGUI topBanner;             // big “Goal” text (optional)
-    public TextMeshProUGUI bottomPrompt;          // bottom prompt label (PromptText)
+    [Header("Bottom Bar UI (grey panel)")]
+    public CanvasGroup bottomGroup;     // CanvasGroup on PCBottomPanel
+    public TMP_Text bottomPrompt;       // PCBottomText
 
-    [Header("FX (optional)")]
-    public AudioSource connectSfx;
-    public Animator pcAnimator;
-    public string animatorTrigger = "Crash";
+    [Header("Goal UI")]
+    [SerializeField] GameObject goalBar;   // Drag the GoalBar or GoalText GameObject here
 
-    [Header("Events")]
+
+    [Header("Behavior")]
+    public bool startListeningOnPlay = false;
+    [SerializeField] float hideDelayAfterBoth = 0.35f;
+
+    [Header("Search cleanup (optional)")]
+    [Tooltip("If true, disables all SpotInteractable components after both players connect so Search prompts never appear again.")]
+    public bool disableAllSearchAfterPC = true;
+    [Tooltip("Optional root transform to limit the search disabling (leave empty to scan whole scene).")]
+    public Transform searchRoot;
+
+    [Header("Events (optional)")]
     public UnityEvent onP1Connected;
     public UnityEvent onP2Connected;
     public UnityEvent onBothConnected;
 
-    [Header("Debug")]
-    public bool startListeningOnPlay = false;     // tick to test without wiring GameState
+    // runtime state
+    public bool IsListening { get; private set; }
+    public bool P1Connected { get; private set; }
+    public bool P2Connected { get; private set; }
+    public bool P1Near { get; private set; }
+    public bool P2Near { get; private set; }
+    private bool bothAnnounced = false;   // guard so we don't fire twice
 
-    bool listening;
-    readonly bool[] connected = new bool[2];
 
-    // Disable these scene-wide during the PC step so nothing clears the bottom prompt
-    readonly string[] toDisableByName = {
-        "Interactor", "SpotInteractable", "InteractingPromptUI",
-        "ControllerPickup", "DialogueManager"
-    };
-    readonly List<Behaviour> worldDisabled = new();
+    bool bothPhaseCompleted;    // becomes true once both are connected (used in StopListening)
 
     void Start()
     {
-        if (startListeningOnPlay)
-        {
-            listening = true;
-            BeginPCStepTakeover();
-            if (topBanner) topBanner.text = "Goal: Connect both controllers";
-            UpdateUI(false, false); // show “Stand at PC” immediately
-        }
-
-        // Your project: public event System.Action<int> OnBothFound;
-        if (GameState.I != null)
-            GameState.I.OnBothFound += BeginListeningParam;
+        SetBottomAlpha(0f);
+        bottomPrompt?.SetText(string.Empty);
+        if (startListeningOnPlay) BeginListening();
     }
 
-    void OnDestroy()
+    // Hook into your GameState “both found” so this step begins right after searching is done
+    void OnEnable()
     {
-        if (GameState.I != null)
-            GameState.I.OnBothFound -= BeginListeningParam;
-
-        RestoreWorldInteractions();
+        if (GameState.I != null) GameState.I.OnBothFound += HandleBothFound;
+        else StartCoroutine(WaitAndHook());
+    }
+    void OnDisable()
+    {
+        if (GameState.I != null) GameState.I.OnBothFound -= HandleBothFound;
+    }
+    IEnumerator WaitAndHook()
+    {
+        while (GameState.I == null) yield return null;
+        GameState.I.OnBothFound += HandleBothFound;
+    }
+    void HandleBothFound(int _lastFinder)
+    {
+        BeginListening();
     }
 
-    // GameState -> when both controllers are found
-    public void BeginListeningParam(int _) => BeginListening();
-
+    // ── Public control ─────────────────────────────────────────────
     public void BeginListening()
     {
-        listening = true;
-        connected[0] = connected[1] = false;
+        bothPhaseCompleted = false;
 
-        // Hide any dialogue bubble that might be up
-        if (DialogueManager.I && DialogueManager.I.bubble)
-            DialogueManager.I.bubble.gameObject.SetActive(false);
+        // Hide any lingering Search prompt immediately
+        InteractionPromptUI.ClearNow();
 
-        BeginPCStepTakeover();
+        IsListening = true;
+        P1Connected = false;
+        P2Connected = false;
 
-        if (topBanner) topBanner.text = "Goal: Connect both controllers";
-        UpdateUI(false, false); // keep “Stand at PC” visible from the start
+        SetBottomAlpha(1f);
+        UpdatePrompt();
     }
 
     void Update()
+{
+    if (!IsListening) return;
+
+    // 1) Proximity checks
+    P1Near = IsNear(p1);
+    P2Near = IsNear(p2);
+
+    // 2) Key to connect (only if near and not already connected)
+    if (P1Near && !P1Connected && Input.GetKeyDown(p1Key))
     {
-        if (!listening) return;
-
-        // Who is near the PC? (no triggers required)
-        var hits = Physics.OverlapSphere(transform.position, radius, playerMask, QueryTriggerInteraction.Ignore);
-        bool p1Near = false, p2Near = false;
-
-        foreach (var h in hits)
-        {
-            if (!TryGetPlayerIndex(h, out int idx)) continue;
-            if (Mathf.Abs(h.transform.position.y - transform.position.y) > maxVertical) continue;
-            if (idx == 0) p1Near = true; else if (idx == 1) p2Near = true;
-        }
-
-        // Inputs per player
-        if (p1Near && !connected[0] && Input.GetKeyDown(p1Key))
-        {
-            connected[0] = true;
-            onP1Connected?.Invoke();
-            if (connectSfx) connectSfx.Play();
-        }
-        if (p2Near && !connected[1] && Input.GetKeyDown(p2Key))
-        {
-            connected[1] = true;
-            onP2Connected?.Invoke();
-            if (connectSfx) connectSfx.Play();
-        }
-
-        // Update the bottom text EVERY frame so nothing else can “win”
-        UpdateUI(p1Near, p2Near);
-
-        // Finished?
-        if (connected[0] && connected[1])
-        {
-            listening = false;
-
-            if (pcAnimator && !string.IsNullOrEmpty(animatorTrigger))
-                pcAnimator.SetTrigger(animatorTrigger);
-
-            onBothConnected?.Invoke();
-
-            if (bottomPrompt) bottomPrompt.text = "Both connected! ✅";
-
-            RestoreWorldInteractions();
-        }
+        P1Connected = true;
+        onP1Connected?.Invoke();
     }
 
-    // ---------- take over / restore ----------
-    void BeginPCStepTakeover()
+    if (P2Near && !P2Connected && Input.GetKeyDown(p2Key))
     {
-        worldDisabled.Clear();
-        var all = GameObject.FindObjectsOfType<Behaviour>(true);
-        foreach (var b in all)
+        P2Connected = true;
+        onP2Connected?.Invoke();
+    }
+
+    // 3) Refresh the bottom prompt every frame
+    UpdatePrompt();
+
+    // 4) When BOTH are connected, show a short "Both connected ✓",
+    //    hide the goal bar, then fade the bottom bar after a delay.
+    if (P1Connected && P2Connected && !bothAnnounced)
+    {
+        bothAnnounced = true;
+
+        onBothConnected?.Invoke();
+
+        // Optional: briefly show a combined success line
+        if (bottomPrompt) bottomPrompt.text = "Both connected ✓";
+
+        // Hide the goal banner now
+        if (goalBar) goalBar.SetActive(false);
+
+        // Then fade out the bottom bar after a short delay
+        CancelInvoke(nameof(StopListening));
+        Invoke(nameof(StopListening), hideDelayAfterBoth);
+    }
+}
+
+
+    // ── UI text ───────────────────────────────────────────────────
+    void UpdatePrompt()
+    {
+        if (!bottomPrompt) return;
+
+        string l1 = !P1Connected
+            ? (!P1Near ? "P1: Stand at PC" : $"P1: Press {KeyLabel(p1Key)}")
+            : "P1: Connected ✓";
+
+        string l2 = !P2Connected
+            ? (!P2Near ? "P2: Stand at PC" : $"P2: Press {KeyLabel(p2Key)}")
+            : "P2: Connected ✓";
+
+        bottomPrompt.text = $"{l1}\n{l2}";
+    }
+
+    // ── End of step / cleanup ─────────────────────────────────────
+    void StopListening()
+    {
+        IsListening = false;
+
+        // 1) Clear any active interaction prompt (safety)
+        InteractionPromptUI.ClearNow();
+
+        // 2) Optionally disable all search spots so Search prompts never reappear
+        if (disableAllSearchAfterPC)
+            DisableAllSearchSpots();
+
+        // 3) Hide the bottom bar and clear text
+        SetBottomAlpha(0f);
+        bottomPrompt?.SetText(string.Empty);
+    }
+
+    void DisableAllSearchSpots()
+    {
+        // If you used HideAllGlowsOnBothFound earlier, this reproduces the effect here.
+        // It disables SpotInteractable and their collider, and hides an optional glowRoot.
+
+        // choose scope
+        if (searchRoot)
         {
-            if (b == null || !b.enabled) continue;
-
-            // don’t disable self/children
-            if (b.transform.IsChildOf(transform)) continue;
-
-            // keep the label’s own components alive
-            if (bottomPrompt && (b.transform == bottomPrompt.transform || b.transform.IsChildOf(bottomPrompt.transform)))
-                continue;
-
-            string n = b.GetType().Name;
-            for (int i = 0; i < toDisableByName.Length; i++)
+            var spots = searchRoot.GetComponentsInChildren<SpotInteractable>(true);
+            foreach (var s in spots)
             {
-                if (n == toDisableByName[i])
-                {
-                    b.enabled = false;
-                    worldDisabled.Add(b);
-                    break;
-                }
+                // hide glow if present
+                if (s && s.glowRoot) s.glowRoot.SetActive(false);
+
+                // disable collider so it can’t be detected
+                var col = s ? s.GetComponent<Collider>() : null;
+                if (col) col.enabled = false;
+
+                // disable the script (extra safety so it won’t call the UI)
+                s.enabled = false;
+            }
+        }
+        else
+        {
+            var spots = FindObjectsOfType<SpotInteractable>(true);
+            foreach (var s in spots)
+            {
+                if (s && s.glowRoot) s.glowRoot.SetActive(false);
+                var col = s ? s.GetComponent<Collider>() : null;
+                if (col) col.enabled = false;
+                s.enabled = false;
             }
         }
     }
 
-    void RestoreWorldInteractions()
+    // ── Helpers ───────────────────────────────────────────────────
+    bool IsNear(Transform t)
     {
-        foreach (var b in worldDisabled)
-            if (b) b.enabled = true;
-        worldDisabled.Clear();
+        if (!t) return false;
+        Vector3 a = t.position, b = transform.position;
+        float horiz = Vector2.Distance(new Vector2(a.x, a.z), new Vector2(b.x, b.z));
+        float vert = Mathf.Abs(a.y - b.y);
+        return horiz <= radius && vert <= maxVertical;
     }
 
-    // ---------- UI (persists until done) ----------
-    void UpdateUI(bool p1Near, bool p2Near)
+    void SetBottomAlpha(float a)
     {
-        if (!bottomPrompt) return;
-
-        // Stand → Press → Connected per player
-        string p1 = connected[0] ? "P1: Connected ✓" :
-                    (p1Near ? $"P1: Press {p1Key}" : "P1: Stand at PC");
-
-        string p2 = connected[1] ? "P2: Connected ✓" :
-                    (p2Near ? $"P2: Press {p2Key}" : "P2: Stand at PC");
-
-        bottomPrompt.text = $"{p1}\n{p2}";
+        if (!bottomGroup) return;
+        bottomGroup.alpha = a;
+        // keep raycasts off so this panel never blocks world clicks
+        bottomGroup.blocksRaycasts = a > 0.01f;
+        bottomGroup.interactable   = false;
     }
 
-    // ---------- PlayerId lookup (works even if the field/property name differs) ----------
-    bool TryGetPlayerIndex(Component c, out int index)
+    string KeyLabel(KeyCode kc)
     {
-        index = 0;
-        if (!c) return false;
-
-        var id = c.GetComponentInParent<PlayerId>();
-        if (id == null) return false;
-
-        object boxed = id;
-        var t = boxed.GetType();
-        string[] names = { "PlayerIndex","playerIndex","PlayerId","playerId","Index","index","Id","id","playerNumber","PlayerNumber" };
-
-        foreach (var n in names)
-        {
-            var f = t.GetField(n, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            if (f != null && f.FieldType == typeof(int)) { index = Normalize((int)f.GetValue(boxed)); return true; }
-            var p = t.GetProperty(n, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            if (p != null && p.PropertyType == typeof(int)) { index = Normalize((int)p.GetValue(boxed, null)); return true; }
-        }
-        return false;
-    }
-
-    int Normalize(int idx) { if (idx >= 1 && idx <= 2) idx -= 1; return Mathf.Clamp(idx, 0, 1); }
-
-    // Visualize radius in Scene view
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = new Color(0.2f, 0.8f, 1f, 0.35f);
-        Gizmos.DrawWireSphere(transform.position, radius);
+        return kc == KeyCode.Slash ? "/" :
+               kc == KeyCode.Return ? "Enter" :
+               kc.ToString();
     }
 }
