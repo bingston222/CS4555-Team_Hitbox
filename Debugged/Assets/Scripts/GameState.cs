@@ -49,4 +49,7 @@ public class GameState : MonoBehaviour
         OnFound?.Invoke(playerIndex);
         if (P1HasController && P2HasController) OnBothFound?.Invoke(playerIndex);
     }
+
+    public ConnectToPC pc;   // drag your PC object here in the Inspector
+
 }

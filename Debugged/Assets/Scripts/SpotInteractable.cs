@@ -57,10 +57,18 @@ public class SpotInteractable : MonoBehaviour, IInteractable
     }
 
     // Interactor will usually override this with "Search (key)", but keep a fallback:
-    public string GetPromptText() => "Search (E)";
+    public string GetPromptText()
+{
+    if (GameState.I != null && GameState.I.P1HasController && GameState.I.P2HasController)
+        return string.Empty; // no prompt after search phase
+    return "Search (E)";
+}
 
     public void Interact(Interactor interactor)
     {
+         if (GameState.I != null && GameState.I.P1HasController && GameState.I.P2HasController)
+        return; // ignore after search phase
+        
         var id = interactor.GetComponent<PlayerId>();
         if (id == null) return;
 
