@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8492503263294055888
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      propertyPath: m_Name
+      value: phamtom
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7044723329686481908}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3596051026457998667}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7249769816232222032}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3125394330298308312}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2211473374945071498}
+  m_SourcePrefab: {fileID: 100100000, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+--- !u!1 &8726295375040862337 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1e3dac2caa27f18408521aa28bb07850, type: 3}
+  m_PrefabInstance: {fileID: 8492503263294055888}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7044723329686481908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8726295375040862337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af610542938a95d40b9a00b094d1559f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!195 &3596051026457998667
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8726295375040862337}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &7249769816232222032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8726295375040862337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9f5d4d911a5ea49b8315011d69a915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 100
+  invulnerable: 0
+--- !u!114 &3125394330298308312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8726295375040862337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8deb2a4b6234447b325049004854d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sightRange: 18
+  attackRange: 8
+  attackCooldown: 1.5
+  contactDamage: 0
+--- !u!114 &2211473374945071498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8726295375040862337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4e40400306f0a438180479837c601f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sightRange: 18
+  attackRange: 8
+  attackCooldown: 1.5
+  contactDamage: 0
+  teleportInterval: 2.5
+  teleportStep: 6
