@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 360b3bb27883b8b408ba98c537d5522c, type: 3}
       propertyPath: m_Name
-      value: Player_HitBox
+      value: HitBox
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 360b3bb27883b8b408ba98c537d5522c, type: 3}
       propertyPath: m_TagString
@@ -78,6 +78,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 360b3bb27883b8b408ba98c537d5522c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8521838509802418632}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 360b3bb27883b8b408ba98c537d5522c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7472462904686488816}
   m_SourcePrefab: {fileID: 100100000, guid: 360b3bb27883b8b408ba98c537d5522c, type: 3}
 --- !u!1 &1012969477625155423 stripped
 GameObject:
@@ -105,9 +108,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1012969477625155423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edd0c8011de94f6498a6bf2b404c4dc4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d77d657f42623a4a8baf8a99fb9e0d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 5
+  sprintSpeed: 8
+  jumpForce: 7
+  gravity: -20
+  turnSmooth: 12
+  cameraPivot: {fileID: 0}
 --- !u!114 &8526487323971278683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,9 +126,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1012969477625155423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49699cf2480baca4da7e0026470f2d8d, type: 3}
+  m_Script: {fileID: 11500000, guid: ee9f5d4d911a5ea49b8315011d69a915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 100
+  invulnerable: 0
 --- !u!114 &6529438498321988315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,9 +140,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1012969477625155423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87f3bf441cb198641907cb8ce06b5794, type: 3}
+  m_Script: {fileID: 11500000, guid: 8475a53b3267e884e9dbd17f75b57f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startRadius: 0.5
+  endRadius: 6
+  expandTime: 0.35
+  damage: 25
+  cooldown: 0.4
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!143 &1470018204643366684
 CharacterController:
   m_ObjectHideFlags: 0
@@ -166,6 +185,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1012969477625155423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e13afe5f24e554d48a5135b0d58df987, type: 3}
+  m_Script: {fileID: 11500000, guid: 7669870b05541d54ba6c88e79b84d318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 114
+  factor: 1.8
+  duration: 8
+  cooldown: 30
+--- !u!114 &7472462904686488816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012969477625155423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b16846f304c24a540aed5615d1530b87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 7
+  cooldown: 16
+  key: 101
