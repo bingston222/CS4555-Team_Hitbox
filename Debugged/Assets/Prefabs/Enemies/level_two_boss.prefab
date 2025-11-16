@@ -1,0 +1,174 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6242890799193827020
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      propertyPath: m_Name
+      value: level_two_boss
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 121903246765850475}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2683753682350139297}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5488377838136952537}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8824487786450885987}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2669093427507674466}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9173869979769400872}
+  m_SourcePrefab: {fileID: 100100000, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+--- !u!1 &6512871137281416093 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 95e4e9405f9b86b41b7cc45454621986, type: 3}
+  m_PrefabInstance: {fileID: 6242890799193827020}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &121903246765850475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512871137281416093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5ce0ad34842c0d4fa94037160365c4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 150
+  currentHP: 0
+  isWeakened: 0
+--- !u!114 &2683753682350139297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512871137281416093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffd7686c48381b4191798ae13296fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 150
+  currentHP: 0
+  isWeakened: 0
+  mineDropper: {fileID: 0}
+  redirect: {fileID: 0}
+  defragment: {fileID: 0}
+--- !u!114 &5488377838136952537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512871137281416093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5f9894ab59e0a4894c1ef0f745853e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minePrefab: {fileID: 0}
+  dropPoints: []
+  cooldown: 4
+--- !u!114 &8824487786450885987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512871137281416093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf52b8b53c9baa2448f96b383c60cd09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 2
+  radius: 3
+  damage: 20
+--- !u!114 &2669093427507674466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512871137281416093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc75523e5477f344a0ec77b37e4e1d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 3
+  cooldown: 8
+--- !u!114 &9173869979769400872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512871137281416093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b6c49c88d510b46b92b31132e1492e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boss: {fileID: 0}
+  healPercent: 0.15
+  radius: 10
