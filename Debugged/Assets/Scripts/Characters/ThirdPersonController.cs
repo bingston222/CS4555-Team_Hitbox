@@ -11,29 +11,60 @@ public class ThirdPersonController : MonoBehaviour
     Animator anim;
     Vector3 vel;
 
-    void Awake(){ cc = GetComponent<CharacterController>(); anim = GetComponent<Animator>(); }
+    // ⭐ New: PlayerStatus reference for slow/reverse effects
+    PlayerStatus status;
+
+    void Awake()
+    {
+        cc = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
+        status = GetComponent<PlayerStatus>(); //  required for boss abilities
+    }
 
     void Update()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        Vector3 dir = new Vector3(h,0,v).normalized;
 
-        float speed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : moveSpeed;
+        //  Reverse input if boss ability is active
+        if (status != null && status.reverseInput)
+        {
+            h = -h;
+            v = -v;
+        }
+
+        Vector3 dir = new Vector3(h, 0, v).normalized;
+        float baseSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : moveSpeed;
+
+        //  Apply movement multiplier (Time Slice or Lag)
+        float finalSpeed = baseSpeed * (status != null ? status.moveMultiplier : 1f);
 
         if (dir.magnitude > 0.1f)
         {
-            float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + (cameraPivot ? cameraPivot.eulerAngles.y : 0f);
+            float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg +
+                                (cameraPivot ? cameraPivot.eulerAngles.y : 0f);
+
             float angle = Mathf.LerpAngle(transform.eulerAngles.y, targetAngle, Time.deltaTime * turnSmooth);
             transform.rotation = Quaternion.Euler(0, angle, 0);
+
             Vector3 moveDir = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
-            cc.Move(moveDir.normalized * speed * Time.deltaTime);
+
+            cc.Move(moveDir.normalized * finalSpeed * Time.deltaTime);
+        }
+        if (cc.isGrounded)
+        {
+            vel.y = -2f;
+            if (Input.GetKeyDown(KeyCode.Space))
+                vel.y = jumpForce;
         }
 
-        if (cc.isGrounded){ vel.y = -2f; if (Input.GetKeyDown(KeyCode.Space)) vel.y = jumpForce; }
         vel.y += gravity * Time.deltaTime;
         cc.Move(vel * Time.deltaTime);
 
-        if (anim){ anim.SetFloat("Speed", new Vector2(h,v).magnitude); anim.SetBool("IsGrounded", cc.isGrounded); }
+        if (anim)
+        {
+            anim.SetFloat("Speed", new Vector2(h, v).magnitude);
+            anim.SetBool("IsGrounded", cc.isGrounded);
+        }
     }
 }
