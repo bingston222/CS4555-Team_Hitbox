@@ -1,39 +1,35 @@
+using System.Collections;
 using UnityEngine;
 
 public class SystemRestoreUltimate : MonoBehaviour
 {
     public KeyCode key = KeyCode.R;
     public float duration = 10f;
-    public float cooldown = 30f;
 
-    bool ready = true;
-    Health hp;
-    DamageReflector reflect;
-
-    void Awake()
-    {
-        hp = GetComponent<Health>();
-        reflect = GetComponent<DamageReflector>();
-    }
+    bool usingUlt = false;
 
     void Update()
     {
-        if (ready && Input.GetKeyDown(key))
-            StartCoroutine(DoUlt());
+        var charge = GetComponent<UltimateCharge>();
+
+        if (Input.GetKeyDown(key) && charge.IsFull && !usingUlt)
+            StartCoroutine(DoUltimate());
     }
 
-    System.Collections.IEnumerator DoUlt()
+    IEnumerator DoUltimate()
     {
-        ready = false;
-        hp.SetInvulnerable(true);
-        reflect.enableReflect = true;
+        usingUlt = true;
+
+        // Correct variable name
+        var status = GetComponent<PlayerStatus>();
+        status.turnEnemiesFriendly = true;
 
         yield return new WaitForSeconds(duration);
 
-        hp.SetInvulnerable(false);
-        reflect.enableReflect = false;
+        status.turnEnemiesFriendly = false;
 
-        yield return new WaitForSeconds(cooldown);
-        ready = true;
+        GetComponent<UltimateCharge>().ResetCharge();
+
+        usingUlt = false;
     }
 }
