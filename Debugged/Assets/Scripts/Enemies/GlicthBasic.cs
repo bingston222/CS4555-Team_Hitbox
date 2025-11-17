@@ -10,17 +10,22 @@ public class GlitchBasic : EnemyBase
     protected override void Attack()
     {
         if (!target || !projectilePrefab) return;
+
         var spawnPos = transform.position + Vector3.up * 1.2f;
         var go = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
         go.tag = "Projectile";
+
         var rb = go.GetComponent<Rigidbody>();
         if (!rb) rb = go.AddComponent<Rigidbody>();
         rb.useGravity = true;
 
         var proj = go.GetComponent<Projectile>();
         if (!proj) proj = go.AddComponent<Projectile>();
-        proj.damage = projectileDamage;
 
-        rb.linearVelocity = (target.position + Vector3.up * 0.6f - spawnPos).normalized * projectileSpeed;
+        // FIX: Convert projectileDamage (float) → int
+        proj.damage = Mathf.RoundToInt(projectileDamage);
+
+        rb.linearVelocity =
+            (target.position + Vector3.up * 0.6f - spawnPos).normalized * projectileSpeed;
     }
 }

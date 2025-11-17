@@ -1,50 +1,48 @@
 using UnityEngine;
-using System;
 
 public class Projectile : MonoBehaviour
 {
-    [Header("Projectile Settings")]
-    public float speed = 12f;
-    public float lifetime = 4f;
-    public float damage = 10f;
+    public float speed = 10f;
+    public float lifetime = 3f;
 
-    Rigidbody rb;
+    // Who fired this projectile
+    public GameObject owner;
 
-    // Called when projectile hits an enemy
-    public Action<Health> onHit;
+    // Optional damage value — only used for damaging projectiles
+    public int damage = 0;
+
+    // Callback to tell whatever ability fired this projectile WHAT it hit
+    public System.Action<GameObject> onHit;
+
+    private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        if (!rb)
-        {
-            rb = gameObject.AddComponent<Rigidbody>();
-            rb.useGravity = false;
-        }
 
-        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        if (rb != null)
+            rb.linearVelocity = transform.forward * speed;
+
         Destroy(gameObject, lifetime);
     }
 
-    void FixedUpdate()
+    private void OnTriggerEnter(Collider other)
     {
-        rb.linearVelocity = transform.forward * speed;
-    }
+        // Ignore hitting yourself
+        if (other.gameObject == owner)
+            return;
 
-    void OnCollisionEnter(Collision col)
-    {
-        Health hp = col.collider.GetComponent<Health>();
+        // If the shooter wants to handle the hit (healing, debuff, etc.)
+        if (onHit != null)
+            onHit(other.gameObject);
 
-        // If target has Health → damage them
-        if (hp)
+        // If the thing we hit has health, apply damage
+        Health hp = other.GetComponent<Health>();
+        if (hp != null && damage > 0)
         {
             hp.TakeDamage(damage);
-
-            // Tell listeners this projectile hit someone
-            onHit?.Invoke(hp);
         }
 
-        // Destroy projectile on ANY collision
         Destroy(gameObject);
     }
 }
