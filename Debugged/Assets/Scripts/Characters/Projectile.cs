@@ -1,39 +1,50 @@
 using UnityEngine;
 using System;
 
-[RequireComponent(typeof(Collider))]
-[RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
+    [Header("Projectile Settings")]
+    public float speed = 12f;
+    public float lifetime = 4f;
     public float damage = 10f;
-    public float life = 5f;
 
-    // NEW: callback for when projectile hits something
+    Rigidbody rb;
+
+    // Called when projectile hits an enemy
     public Action<Health> onHit;
 
     void Start()
     {
-        GetComponent<Collider>().isTrigger = true;
-        Destroy(gameObject, life);
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        // prevent friendly fire
-        if (other.CompareTag("Player")) return;
-
-        // Get health component (supports parent or current object)
-        Health h = other.GetComponentInParent<Health>() ?? other.GetComponent<Health>();
-
-        if (h != null)
+        rb = GetComponent<Rigidbody>();
+        if (!rb)
         {
-            // Apply damage
-            h.TakeDamage(damage);
-
-            // Trigger hit callback (PatchNotes uses this for ult charge)
-            onHit?.Invoke(h);
+            rb = gameObject.AddComponent<Rigidbody>();
+            rb.useGravity = false;
         }
 
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        Destroy(gameObject, lifetime);
+    }
+
+    void FixedUpdate()
+    {
+        rb.linearVelocity = transform.forward * speed;
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        Health hp = col.collider.GetComponent<Health>();
+
+        // If target has Health → damage them
+        if (hp)
+        {
+            hp.TakeDamage(damage);
+
+            // Tell listeners this projectile hit someone
+            onHit?.Invoke(hp);
+        }
+
+        // Destroy projectile on ANY collision
         Destroy(gameObject);
     }
 }
