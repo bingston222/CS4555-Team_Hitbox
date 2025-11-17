@@ -1,28 +1,34 @@
+using System.Collections;
 using UnityEngine;
 
 public class InstantHitboxUltimate : MonoBehaviour
 {
     public KeyCode key = KeyCode.R;
-    public float factor = 1.8f, duration = 8f, cooldown = 30f;
-    bool ready = true;
+    public float duration = 8f;
 
-    void Update(){ if (ready && Input.GetKeyDown(key)) StartCoroutine(DoUlt()); }
+    bool usingUlt = false;
 
-    System.Collections.IEnumerator DoUlt()
+    void Update()
     {
-        ready = false;
-        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (var e in enemies)
-            foreach (var hb in e.GetComponentsInChildren<EnemyHitbox>())
-                hb.Enlarge(factor);
+        var charge = GetComponent<UltimateCharge>();
+
+        if (Input.GetKeyDown(key) && charge.IsFull && !usingUlt)
+            StartCoroutine(DoUltimate());
+    }
+
+    IEnumerator DoUltimate()
+    {
+        usingUlt = true;
+
+        // Correct variable name
+        GetComponent<PlayerStatus>().guaranteedHit = true;
 
         yield return new WaitForSeconds(duration);
 
-        foreach (var e in enemies)
-            foreach (var hb in e.GetComponentsInChildren<EnemyHitbox>())
-                hb.Restore();
+        GetComponent<PlayerStatus>().guaranteedHit = false;
 
-        yield return new WaitForSeconds(cooldown);
-        ready = true;
+        GetComponent<UltimateCharge>().ResetCharge();
+
+        usingUlt = false;
     }
 }

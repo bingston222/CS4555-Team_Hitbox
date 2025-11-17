@@ -84,6 +84,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 360b3bb27883b8b408ba98c537d5522c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3224053966296412255}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 360b3bb27883b8b408ba98c537d5522c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2483927979463519359}
   m_SourcePrefab: {fileID: 100100000, guid: 360b3bb27883b8b408ba98c537d5522c, type: 3}
 --- !u!1 &1012969477625155423 stripped
 GameObject:
@@ -146,14 +149,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8475a53b3267e884e9dbd17f75b57f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startRadius: 0.5
-  endRadius: 6
-  expandTime: 0.35
+  key: 323
+  radius: 3
   damage: 25
   cooldown: 0.4
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!143 &1470018204643366684
 CharacterController:
   m_ObjectHideFlags: 0
@@ -192,9 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 114
-  factor: 1.8
   duration: 8
-  cooldown: 30
 --- !u!114 &7472462904686488816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,9 +204,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b16846f304c24a540aed5615d1530b87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  key: 101
   duration: 7
   cooldown: 16
-  key: 101
 --- !u!114 &3224053966296412255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,3 +222,22 @@ MonoBehaviour:
   reverseInput: 0
   moveMultiplier: 1
   abilitiesDisabled: 0
+  invulnerable: 0
+  guaranteedHit: 0
+  turnEnemiesFriendly: 0
+--- !u!114 &2483927979463519359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012969477625155423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76921466ba8d7e84595e3ebef24304cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseCooldownMask: {fileID: 0}
+  abilityCooldownMask: {fileID: 0}
+  ultimateFillMask: {fileID: 0}
+  ultimateGlow: {fileID: 0}

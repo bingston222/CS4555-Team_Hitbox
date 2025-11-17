@@ -1,29 +1,33 @@
 using UnityEngine;
-
+using System.Collections;
 public class CorruptedPatchAttack : MonoBehaviour
 {
-    public KeyCode key = KeyCode.Mouse0; // left click
     public GameObject projectilePrefab;
-    public Transform throwPoint;
-
-    public float throwForce = 13f;
+    public Transform firePoint;
+    public KeyCode key = KeyCode.Mouse0;
     public float cooldown = 0.3f;
 
     bool ready = true;
 
     void Update()
     {
-        if (ready && Input.GetKeyDown(key))
+        if (Input.GetKeyDown(key) && ready)
             StartCoroutine(Fire());
     }
 
-    System.Collections.IEnumerator Fire()
+    IEnumerator Fire()
     {
         ready = false;
 
-        GameObject obj = Instantiate(projectilePrefab, throwPoint.position, throwPoint.rotation);
-        Rigidbody rb = obj.GetComponent<Rigidbody>();
-        rb.AddForce(throwPoint.forward * throwForce, ForceMode.Impulse);
+        GameObject patch = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        Projectile proj = patch.GetComponent<Projectile>();
+
+        //  Add ult charge if projectile hits enemy
+        proj.onHit += (Health enemy) =>
+        {
+            var ult = GetComponent<UltimateCharge>();
+            if (ult != null) ult.AddCharge(8f);
+        };
 
         yield return new WaitForSeconds(cooldown);
         ready = true;

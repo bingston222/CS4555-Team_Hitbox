@@ -1,34 +1,39 @@
+using System.Collections;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class ShockwaveAttack : MonoBehaviour
 {
-    public float startRadius = 0.5f, endRadius = 6f, expandTime = 0.35f, damage = 25f, cooldown = 0.4f;
-    public LayerMask enemyMask;
+    public KeyCode key = KeyCode.Mouse0;
+    public float radius = 3f;
+    public float damage = 10f;
+    public float cooldown = 0.4f;
 
     bool ready = true;
 
-    void Update(){ if (Input.GetMouseButtonDown(0) && ready) StartCoroutine(Fire()); }
+    void Update()
+    {
+        if (Input.GetKeyDown(key) && ready)
+            StartCoroutine(DoAttack());
+    }
 
-    System.Collections.IEnumerator Fire()
+    IEnumerator DoAttack()
     {
         ready = false;
-        float t = 0f; var hitOnce = new HashSet<Collider>();
-        while (t < expandTime)
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, radius);
+        foreach (var hit in hits)
         {
-            t += Time.deltaTime;
-            float r = Mathf.Lerp(startRadius, endRadius, t/expandTime);
-            var cols = Physics.OverlapSphere(transform.position, r, enemyMask, QueryTriggerInteraction.Collide);
-            foreach (var c in cols)
+            Health enemy = hit.GetComponent<Health>();
+            if (enemy != null)
             {
-                if (hitOnce.Add(c))
-                {
-                    var h = c.GetComponentInParent<Health>() ?? c.GetComponent<Health>();
-                    if (h && c.CompareTag("Enemy")) h.TakeDamage(damage);
-                }
+                enemy.TakeDamage(damage);
+
+                //  Add ultimate charge on hit
+                var ult = GetComponent<UltimateCharge>();
+                if (ult != null) ult.AddCharge(10f);
             }
-            yield return null;
         }
+
         yield return new WaitForSeconds(cooldown);
         ready = true;
     }

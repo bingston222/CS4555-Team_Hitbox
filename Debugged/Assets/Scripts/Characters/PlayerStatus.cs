@@ -3,13 +3,33 @@ using System.Collections;
 
 public class PlayerStatus : MonoBehaviour
 {
+    // -------------------------
+    // MOVEMENT EFFECTS
+    // -------------------------
     public bool reverseInput = false;
-    public float moveMultiplier = 1f;   // 1 = normal, <1 slow, >1 fast
+    public float moveMultiplier = 1f;
     public bool abilitiesDisabled = false;
 
+    // -------------------------
+    // ABILITY STATUS FLAGS
+    // -------------------------
+
+    // Freeze Ability uses this
+    public bool invulnerable = false;
+
+    // HitBox Ultimate uses this
+    public bool guaranteedHit = false;
+
+    // PatchNotes Ultimate uses this
+    public bool turnEnemiesFriendly = false;
+
+    // -------------------------
+    // EFFECT FUNCTIONS
+    // -------------------------
+
+    // Lag / Slow Effect
     public void ApplyLag(float duration)
     {
-        StopAllCoroutines();
         StartCoroutine(LagRoutine(duration));
     }
 
@@ -20,9 +40,9 @@ public class PlayerStatus : MonoBehaviour
         moveMultiplier = 1f;
     }
 
+    // Reverse Controls
     public void ReverseControls(float duration)
     {
-        StopAllCoroutines();
         StartCoroutine(ReverseRoutine(duration));
     }
 
@@ -33,9 +53,9 @@ public class PlayerStatus : MonoBehaviour
         reverseInput = false;
     }
 
+    // Silence / Disable Abilities
     public void DisableAbilities(float duration)
     {
-        StopAllCoroutines();
         StartCoroutine(DisableAbilitiesRoutine(duration));
     }
 

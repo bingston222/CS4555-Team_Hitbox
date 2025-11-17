@@ -1,21 +1,46 @@
+using System.Collections;
 using UnityEngine;
 
 public class FreezeAbility : MonoBehaviour
 {
-    public float duration = 7f, cooldown = 16f;
     public KeyCode key = KeyCode.E;
-    Health health; bool ready = true;
+    public float duration = 7f;
+    public float cooldown = 45f;
 
-    void Awake(){ health = GetComponent<Health>(); }
+    bool ready = true;
+    AbilityUI ui;
 
-    void Update(){ if (ready && Input.GetKeyDown(key)) StartCoroutine(DoFreeze()); }
-
-    System.Collections.IEnumerator DoFreeze()
+    void Start()
     {
-        ready = false; health.SetInvulnerable(true);
+        ui = GetComponent<AbilityUI>();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(key) && ready)
+            StartCoroutine(DoFreeze());
+    }
+
+    IEnumerator DoFreeze()
+    {
+        ready = false;
+        ui.UpdateAbilityCooldown(1f);
+
+        GetComponent<PlayerStatus>().invulnerable = true;
+
         yield return new WaitForSeconds(duration);
-        health.SetInvulnerable(false);
-        yield return new WaitForSeconds(cooldown);
+
+        GetComponent<PlayerStatus>().invulnerable = false;
+
+        float t = cooldown;
+        while (t > 0f)
+        {
+            t -= Time.deltaTime;
+            ui.UpdateAbilityCooldown(t / cooldown);
+            yield return null;
+        }
+
+        ui.UpdateAbilityCooldown(0f);
         ready = true;
     }
 }
