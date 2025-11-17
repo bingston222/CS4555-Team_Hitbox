@@ -1,31 +1,34 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
-public class GameBootstrap : MonoBehaviour
-{
-    public static GameBootstrap I;
-    [Header("Assign your Player prefab here")]
-    public GameObject playerPrefab;
-
-    GameObject playerInstance;
-
-    void Awake()
-    {
-        if (I != null) { Destroy(gameObject); return; }
-        I = this;
-        DontDestroyOnLoad(gameObject);
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        var spawn = FindObjectOfType<PlayerSpawnPoint>();
+using UnityEngine; 
+using UnityEngine.SceneManagement; 
+public class GameBootstrap : MonoBehaviour { 
+    public static GameBootstrap I; 
+    [Header("Assign your Player prefab here")] 
+    public GameObject playerPrefab; 
+    GameObject playerInstance; 
+    void Awake() { 
+        if (I != null) { 
+            Destroy(gameObject); return; } 
+            I = this; 
+            DontDestroyOnLoad(gameObject); 
+            SceneManager.sceneLoaded += OnSceneLoaded; 
+    } 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) { 
+        var spawn = FindObjectOfType<PlayerSpawnPoint>(); 
         if (playerInstance == null)
-            playerInstance = Instantiate(playerPrefab);
-
+        {
+            playerInstance = Instantiate(playerPrefab); 
+        }
+            
         if (spawn)
-            playerInstance.transform.SetPositionAndRotation(spawn.transform.position, spawn.transform.rotation);
+        {
+            playerInstance.transform.SetPositionAndRotation(spawn.transform.position, spawn.transform.rotation); 
+        }
         else
-            playerInstance.transform.position = new Vector3(0, 1, 0);
-    }
+        {
+            playerInstance.transform.position = new Vector3(0, 1, 0); 
+        } 
+     } 
+
+              
 }
+

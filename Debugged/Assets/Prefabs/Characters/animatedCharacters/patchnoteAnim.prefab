@@ -77,6 +77,30 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 427071228399713160}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9155964935762558858}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2715761289775723468}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6958555527481610645}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8816962740019703985}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4237572332114857120}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 457864121130725308}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5398448762072809149}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5958679249291982737}
   m_SourcePrefab: {fileID: 100100000, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
 --- !u!1 &7396067195909204484 stripped
 GameObject:
@@ -142,5 +166,128 @@ MonoBehaviour:
   down: 115
   left: 97
   right: 100
-  jumpKey: 32
+  jumpKey: 101
   sprintKey: 304
+--- !u!114 &9155964935762558858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396067195909204484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9f5d4d911a5ea49b8315011d69a915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 100
+  invulnerable: 0
+--- !u!114 &2715761289775723468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396067195909204484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5916e3a82c397934383cd3f7d7d34d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverseInput: 0
+  moveMultiplier: 1
+  abilitiesDisabled: 0
+  invulnerable: 0
+  guaranteedHit: 0
+  turnEnemiesFriendly: 0
+--- !u!114 &6958555527481610645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396067195909204484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c410188c71b6e45a11c37d37c4c09c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healAmount: 40
+  life: 4
+  owner: {fileID: 0}
+  targetOverride: {fileID: 0}
+--- !u!114 &8816962740019703985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396067195909204484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 343345eb4fc00e847b78934d7f639db4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 113
+  cooldown: 45
+  healingProjectilePrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+--- !u!114 &4237572332114857120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396067195909204484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3099fc44b977b514cb72da0185388f74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  key: 323
+  cooldown: 0.3
+--- !u!114 &457864121130725308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396067195909204484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b730f23d75bbec64d837ac13c8ba8b81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 114
+  duration: 10
+--- !u!114 &5398448762072809149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396067195909204484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f8eb47195e86a04aa4d3c7d1904e58c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableReflect: 0
+--- !u!114 &5958679249291982737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396067195909204484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76921466ba8d7e84595e3ebef24304cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseCooldownMask: {fileID: 0}
+  abilityCooldownMask: {fileID: 0}
+  ultimateFillMask: {fileID: 0}
+  ultimateGlow: {fileID: 0}

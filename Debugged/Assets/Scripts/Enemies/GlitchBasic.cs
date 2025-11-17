@@ -7,7 +7,7 @@ public class GlitchBasic : EnemyBase
     public float projectileSpeed = 16f;
     public float projectileDamage = 10f;
 
-    protected override void Attack()
+    /*protected override void Attack()
     {
         if (!target || !projectilePrefab) return;
 
@@ -32,5 +32,5 @@ public class GlitchBasic : EnemyBase
         // Fire toward target
         Vector3 dir = (target.position + Vector3.up * 0.6f - spawnPos).normalized;
         rb.linearVelocity = dir * projectileSpeed;
-    }
+    }*/
 }
