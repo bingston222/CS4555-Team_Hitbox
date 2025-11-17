@@ -1,18 +1,26 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
+    [System.Serializable]
+    public class HealthChangeEvent : UnityEvent<float, float> { }
+
     public float maxHP = 100f;
     public bool invulnerable = false;
 
-    public System.Action<float, float> onHealthChanged;
+    // UI event
+    public HealthChangeEvent onHealthChanged;
+
+    // Gameplay event (easier for enemies)
     public System.Action onDeath;
 
-    float hp;
+    private float hp;
 
-    void Awake()
+    void Start()
     {
         hp = maxHP;
+        onHealthChanged?.Invoke(hp, maxHP);
     }
 
     public void TakeDamage(float dmg)
@@ -22,11 +30,6 @@ public class Health : MonoBehaviour
 
         hp = Mathf.Max(0f, hp - dmg);
         onHealthChanged?.Invoke(hp, maxHP);
-
-        // Gain ultimate charge when taking damage
-        var ult = GetComponent<UltimateCharge>();
-        if (ult != null)
-            ult.AddCharge(dmg * 0.5f);  // 50% conversion,
 
         if (hp <= 0f)
             onDeath?.Invoke();
