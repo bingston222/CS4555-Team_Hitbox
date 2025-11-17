@@ -90,6 +90,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cad7cd9d82ad1594dac752bb1096afdf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 925323511880284440}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cad7cd9d82ad1594dac752bb1096afdf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6503680788148204975}
   m_SourcePrefab: {fileID: 100100000, guid: cad7cd9d82ad1594dac752bb1096afdf, type: 3}
 --- !u!1 &2311248565928321244 stripped
 GameObject:
@@ -180,6 +183,9 @@ MonoBehaviour:
   reverseInput: 0
   moveMultiplier: 1
   abilitiesDisabled: 0
+  invulnerable: 0
+  guaranteedHit: 0
+  turnEnemiesFriendly: 0
 --- !u!114 &8309484336299903583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +200,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healAmount: 40
   life: 4
+  owner: {fileID: 0}
+  targetOverride: {fileID: 0}
 --- !u!114 &4257758875210527428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,8 +214,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 343345eb4fc00e847b78934d7f639db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 101
-  healingProjectilePrefab: {fileID: 0}
+  healTeammateKey: 101
+  healSelfKey: 113
+  healTeammateProjectile: {fileID: 0}
+  healSelfProjectile: {fileID: 0}
   throwPoint: {fileID: 0}
   throwForce: 10
   cooldown: 12
@@ -223,10 +233,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3099fc44b977b514cb72da0185388f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 323
   projectilePrefab: {fileID: 0}
-  throwPoint: {fileID: 0}
-  throwForce: 13
+  firePoint: {fileID: 0}
+  key: 323
   cooldown: 0.3
 --- !u!114 &6242417595173223224
 MonoBehaviour:
@@ -242,7 +251,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: 114
   duration: 10
-  cooldown: 30
 --- !u!114 &925323511880284440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,3 +264,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableReflect: 0
+--- !u!114 &6503680788148204975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311248565928321244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76921466ba8d7e84595e3ebef24304cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseCooldownMask: {fileID: 0}
+  abilityCooldownMask: {fileID: 0}
+  ultimateFillMask: {fileID: 0}
+  ultimateGlow: {fileID: 0}

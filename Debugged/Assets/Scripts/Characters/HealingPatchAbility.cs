@@ -1,31 +1,43 @@
+using System.Collections;
 using UnityEngine;
 
 public class HealingPatchAbility : MonoBehaviour
 {
-    public KeyCode key = KeyCode.E;
+    public KeyCode key = KeyCode.Q;
+    public float cooldown = 45f;
     public GameObject healingProjectilePrefab;
-    public Transform throwPoint;
-
-    public float throwForce = 10f;
-    public float cooldown = 12f;
+    public Transform firePoint;
 
     bool ready = true;
+    AbilityUI ui;
+
+    void Start()
+    {
+        ui = GetComponent<AbilityUI>();
+    }
 
     void Update()
     {
-        if (ready && Input.GetKeyDown(key))
-            StartCoroutine(Fire());
+        if (Input.GetKeyDown(key) && ready)
+            StartCoroutine(UseHealingPatch());
     }
 
-    System.Collections.IEnumerator Fire()
+    IEnumerator UseHealingPatch()
     {
         ready = false;
+        ui.UpdateAbilityCooldown(1f);
 
-        GameObject obj = Instantiate(healingProjectilePrefab, throwPoint.position, throwPoint.rotation);
-        Rigidbody rb = obj.GetComponent<Rigidbody>();
-        rb.AddForce(throwPoint.forward * throwForce, ForceMode.Impulse);
+        Instantiate(healingProjectilePrefab, firePoint.position, firePoint.rotation);
 
-        yield return new WaitForSeconds(cooldown);
+        float t = cooldown;
+        while (t > 0)
+        {
+            t -= Time.deltaTime;
+            ui.UpdateAbilityCooldown(t / cooldown);
+            yield return null;
+        }
+
+        ui.UpdateAbilityCooldown(0f);
         ready = true;
     }
 }
