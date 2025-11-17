@@ -105,6 +105,7 @@ public AudioSource doorWhoosh;   // (optional) extra whoosh when opening
         // 7) finally unlock input for tutorial when dialogue says so.
         // You can also wait on a dialogue callback instead of a timer.
         // For now, unlock after a short safety delay:
+       
         
     }
 
@@ -152,20 +153,9 @@ public AudioSource doorWhoosh;   // (optional) extra whoosh when opening
 
     public void EnableTutorialPhase()
     {
-        // This is called by DialogueManager when the comms finish
-        SetPlayerInput(true);
-        Debug.Log("✅ Tutorial phase started!");
-        // TODO: enable player input or start movement tutorial
+        if (MovementTutorial.Instance)
+    MovementTutorial.Instance.StartTutorial();
 
-        if (Adialogue.Instance)
-        {
-        Adialogue.Instance.StartCoroutine(
-            Adialogue.Instance.ShowSubtitle("Combat check: give those test orbs a tap.", 1.8f, 0.18f)
-        );
-        }
-
-        // TODO: spawn the orbs here or call your combat-test start function
-        SpawnCombatOrbs();
     }
 
     public IEnumerator OpenDoorInSteps()

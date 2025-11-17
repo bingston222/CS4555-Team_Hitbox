@@ -22,7 +22,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -80,7 +80,62 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: hitbox(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: 14040_Cardboard_Box_On_Palette_v1_L1
+      parentName: hitbox(Clone)
+      position: {x: -1.020114, y: 0.78871036, z: 2.2303553}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Eye_01
+      parentName: 14040_Cardboard_Box_On_Palette_v1_L1
+      position: {x: 0.090538025, y: -24.242722, z: 46.85187}
+      rotation: {x: -0.000000021855692, y: 0, z: -0, w: 1}
+      scale: {x: 1.4900484, y: 1.4900484, z: 1.4900484}
+    - name: Eye_04
+      parentName: 14040_Cardboard_Box_On_Palette_v1_L1
+      position: {x: 0.15241623, y: -25.84951, z: 54.75771}
+      rotation: {x: -0.000000021855694, y: 0, z: -0, w: 1}
+      scale: {x: 1.3835936, y: 1.3835936, z: 1.3835936}
+    - name: Lip_05
+      parentName: 14040_Cardboard_Box_On_Palette_v1_L1
+      position: {x: -0.9562254, y: -25.774887, z: 33.045845}
+      rotation: {x: -0.000000021855694, y: 0, z: -0, w: 1}
+      scale: {x: 1.1831863, y: 1.1831863, z: 1.1831863}
+    - name: Mustache_01
+      parentName: 14040_Cardboard_Box_On_Palette_v1_L1
+      position: {x: -0.4242077, y: -24.328018, z: 39.118145}
+      rotation: {x: -0.000000021855694, y: 0, z: -0, w: 1}
+      scale: {x: 1.0402309, y: 1.0402309, z: 1.0402309}
+    - name: TV_Girl.002
+      parentName: 14040_Cardboard_Box_On_Palette_v1_L1
+      position: {x: -0.39344501, y: 0.28968525, z: 29.724276}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 4.39901, y: 4.39901, z: 4.39901}
+    - name: TV_Girl.003
+      parentName: 14040_Cardboard_Box_On_Palette_v1_L1
+      position: {x: -0.61996937, y: -2.9262419, z: 29.27817}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 5.3946314, y: 5.3946314, z: 5.3946314}
+    - name: TopHat
+      parentName: 14040_Cardboard_Box_On_Palette_v1_L1
+      position: {x: -0.5183964, y: -2.2992964, z: 60.970276}
+      rotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 4.8785887, y: 4.8785887, z: 4.8785887}
+    - name: Camera
+      parentName: hitbox(Clone)
+      position: {x: -7.3588915, y: 4.958309, z: 6.925791}
+      rotation: {x: 0.09062851, y: 0.89379627, z: -0.20997299, w: 0.3857799}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: Light
+      parentName: hitbox(Clone)
+      position: {x: -4.0762453, y: 5.903862, z: -1.005454}
+      rotation: {x: 0.52327543, y: -0.342034, z: 0.72694236, w: 0.28416634}
+      scale: {x: 1, y: 0.99999994, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -91,11 +146,11 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
