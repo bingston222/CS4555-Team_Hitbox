@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public class Projectile : MonoBehaviour
+public class SimpleProjectile : MonoBehaviour
 {
     public float damage = 10f;
     public float life = 5f;

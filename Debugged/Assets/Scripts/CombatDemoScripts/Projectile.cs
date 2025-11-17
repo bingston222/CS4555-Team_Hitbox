@@ -3,21 +3,29 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public GameObject shockwaveRingPrefab;
-    Rigidbody rb;
+    private Rigidbody rb;
 
-    int damage;
-    float speed;
-    GameObject owner;
+    [SerializeField] private int damage;     // now serialized + private
+    public int Damage => damage;            // safe public getter
 
-    EnemyHealth target;   // for homing
-    bool homing;
+    private float speed;
+    private GameObject owner;
 
-    float life = 5f;
+    private EnemyHealth target;   // for homing
+    private bool homing;
+
+    private float life = 5f;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         if (rb) rb.useGravity = false;
+    }
+
+    // Setter used by GlitchBasic.cs
+    public void SetDamage(int d)
+    {
+        damage = d;
     }
 
     public void Init(int damage, float speed, GameObject owner)
@@ -27,7 +35,6 @@ public class Projectile : MonoBehaviour
         this.owner = owner;
     }
 
-    // Call this when ult is active to guarantee a hit
     public void SetHomingTarget(EnemyHealth t)
     {
         target = t;
@@ -36,7 +43,6 @@ public class Projectile : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Homing motion if we have a live target
         if (homing && target != null && target.IsAlive)
         {
             Vector3 dir = (target.transform.position - transform.position).normalized;
@@ -45,30 +51,29 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            // Normal straight flight
             rb.linearVelocity = transform.forward * speed;
         }
 
-        // lifetime
         life -= Time.fixedDeltaTime;
         if (life <= 0f) Destroy(gameObject);
     }
 
     void OnTriggerEnter(Collider other)
     {
+        // Ignore hitting the shooter
         if (owner && other.attachedRigidbody &&
             other.attachedRigidbody.gameObject == owner) return;
 
-        var eh = other.GetComponentInParent<EnemyHealth>();
+        // Hit enemy
+        EnemyHealth eh = other.GetComponentInParent<EnemyHealth>();
         if (eh != null && eh.IsAlive)
         {
             eh.TakeDamage(damage);
 
-            // spawn the ring at the hit point (use our current position)
             if (shockwaveRingPrefab)
             {
-                var ring = Instantiate(shockwaveRingPrefab, transform.position, Quaternion.Euler(0, 0, 0));
-                var sr = ring.GetComponent<ShockwaveRing>();
+                GameObject ring = Instantiate(shockwaveRingPrefab, transform.position, Quaternion.identity);
+                ShockwaveRing sr = ring.GetComponent<ShockwaveRing>();
                 if (sr != null) sr.Play();
             }
 
@@ -76,8 +81,8 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        // Die on solid environment so the ring doesn't keep flying
-        if (!other.isTrigger) Destroy(gameObject);
+        // Hit environment
+        if (!other.isTrigger)
+            Destroy(gameObject);
     }
-
 }
