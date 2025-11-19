@@ -17,6 +17,8 @@ public class DialogueController : MonoBehaviour
     public Image iconUI;
     public TMP_Text dialogueUI;
 
+    public SceneTransition sceneTransition; // ⭐ ADD THIS ⭐
+
     int index = 0;
     bool isTyping = false;
 
@@ -69,8 +71,10 @@ public class DialogueController : MonoBehaviour
 
     IEnumerator DoGlitchThenLoadSelect()
     {
-        Debug.Log("Glitch transition starting...");
-        yield return new WaitForSeconds(1.5f);
-        //SceneManager.LoadScene("Level1");
+        Debug.Log("Dialogue ended, starting fade...");
+        yield return new WaitForSeconds(0.5f);
+
+        // ⭐ START FADE OUT ⭐
+        sceneTransition.BeginTransition();
     }
 }
