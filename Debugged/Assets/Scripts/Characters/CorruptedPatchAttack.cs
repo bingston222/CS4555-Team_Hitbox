@@ -10,7 +10,7 @@ public class CorruptedPatchAttack : MonoBehaviour
 
     bool ready = true;
 
-    /*void Update()
+    void Update()
     {
         if (Input.GetKeyDown(key) && ready)
             StartCoroutine(Fire());
@@ -37,5 +37,5 @@ public class CorruptedPatchAttack : MonoBehaviour
 
         yield return new WaitForSeconds(cooldown);
         ready = true;
-    }*/
+    }
 }
