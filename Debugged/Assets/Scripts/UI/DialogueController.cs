@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class DialogueController : MonoBehaviour
 {
@@ -10,9 +11,7 @@ public class DialogueController : MonoBehaviour
     {
         public Sprite characterIcon;
         [TextArea] public string text;
-
-        // NEW ➜ Optional unique sound for this specific dialogue line
-        public AudioClip customSound;
+        public AudioClip customSound;  // Optional per-line sound
     }
 
     [Header("Dialogue Data")]
@@ -23,9 +22,12 @@ public class DialogueController : MonoBehaviour
     public TMP_Text dialogueUI;
 
     [Header("Sound Settings")]
-    public AudioSource audioSource;     // Audio source component on the DialogueManager
-    public AudioClip blipSound;         // Default sound for most dialogue lines
+    public AudioSource audioSource;
+    public AudioClip blipSound;
     public float volume = 1f;
+
+    [Header("Scene Settings")]
+    public string nextSceneName;   // <-- Add this in inspector
 
     int index = 0;
     bool isTyping = false;
@@ -47,14 +49,12 @@ public class DialogueController : MonoBehaviour
     {
         if (index >= lines.Length)
         {
-            StartCoroutine(DoGlitchThenLoadSelect());
+            LoadNextScene();
             return;
         }
 
-        // Update icon
         iconUI.sprite = lines[index].characterIcon;
 
-        // 🔊 Play sound for this line
         PlaySoundForLine(lines[index]);
 
         StopAllCoroutines();
@@ -81,23 +81,17 @@ public class DialogueController : MonoBehaviour
         ShowLine();
     }
 
-    // 🔊 NEW FUNCTION — decides which sound to play
     void PlaySoundForLine(DialogueLine line)
     {
         if (line.customSound != null)
-        {
             audioSource.PlayOneShot(line.customSound, volume);
-        }
         else
-        {
             audioSource.PlayOneShot(blipSound, volume);
-        }
     }
 
-    IEnumerator DoGlitchThenLoadSelect()
+    void LoadNextScene()
     {
-        Debug.Log("Glitch transition starting...");
-        yield return new WaitForSeconds(1.5f);
-        //SceneManager.LoadScene("Level1");
+        Debug.Log("Loading next scene: " + nextSceneName);
+        SceneManager.LoadScene(nextSceneName);
     }
 }

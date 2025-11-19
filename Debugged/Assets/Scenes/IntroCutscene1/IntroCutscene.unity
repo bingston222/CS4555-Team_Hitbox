@@ -256,17 +256,35 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &806144852 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1948896617911131201, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
+--- !u!1 &434668368 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1843813426507279732, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
   m_PrefabInstance: {fileID: 1701484899}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!95 &434668369 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2867255253701453402, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
+  m_PrefabInstance: {fileID: 1701484899}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &434668376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434668368}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14aa09d26b7194981aaa55ef683e9a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 434668369}
+  fadeAnimationName: FadeToBlack
+  fadeDuration: 1
+  nextSceneName: 'EndIntro '
+  playSound: 0
+  transitionSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!1 &1201292490
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,18 +595,26 @@ MonoBehaviour:
   lines:
   - characterIcon: {fileID: 21300000, guid: 4532ed989de1a437eb1e9f4fdf229dc9, type: 3}
     text: Uhhh, that's strange its never made that sound before.
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: de599691b0207415d8e300e62689d4ae, type: 3}
     text: Did your PC just break?
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: 4532ed989de1a437eb1e9f4fdf229dc9, type: 3}
     text: I think it might've, maybe I just need to get rid of the whole thing.
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: de599691b0207415d8e300e62689d4ae, type: 3}
     text: I guess we can just work on our homework.
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: 4532ed989de1a437eb1e9f4fdf229dc9, type: 3}
     text: Ugh I guess you're right, I'll shut my PC down and if its not working by
       tomorrow, I'll get rid of it.
+    customSound: {fileID: 0}
   iconUI: {fileID: 2128505102}
   dialogueUI: {fileID: 1628399878}
-  sceneTransition: {fileID: 806144852}
+  audioSource: {fileID: 0}
+  blipSound: {fileID: 0}
+  volume: 1
+  nextSceneName: EndIntro
 --- !u!1 &1628399876
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,7 +672,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -813,6 +839,10 @@ PrefabInstance:
       value: FadeCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 1948896617911131201, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
+      propertyPath: playSound
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1948896617911131201, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
       propertyPath: nextSceneName
       value: EndIntro
       objectReference: {fileID: 0}
@@ -896,10 +926,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1948896617911131201, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1843813426507279732, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 434668376}
   m_SourcePrefab: {fileID: 100100000, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
 --- !u!1 &2048184749
 GameObject:
