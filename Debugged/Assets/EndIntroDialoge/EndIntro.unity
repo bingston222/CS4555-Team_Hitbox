@@ -266,12 +266,13 @@ MonoBehaviour:
   - characterIcon: {fileID: 21300000, guid: 8217982dbe280ee4f9e8422dd347963e, type: 3}
     text: Me and Bit can go!!
   - characterIcon: {fileID: 21300000, guid: 15f965f678b8ef54d8200897d01721d5, type: 3}
-    text: We're not actually sending them out together right? Them together equal
+    text: We're not actually sending them out together right? Them together equals
       half a brain.
   - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
     text: Lets figure something out!
   iconUI: {fileID: 1571252566}
   dialogueUI: {fileID: 47837317}
+  sceneTransition: {fileID: 0}
 --- !u!4 &37596377
 Transform:
   m_ObjectHideFlags: 0
