@@ -10,14 +10,22 @@ public class DialogueController : MonoBehaviour
     {
         public Sprite characterIcon;
         [TextArea] public string text;
+
+        // NEW ➜ Optional unique sound for this specific dialogue line
+        public AudioClip customSound;
     }
 
+    [Header("Dialogue Data")]
     public DialogueLine[] lines;
 
+    [Header("UI References")]
     public Image iconUI;
     public TMP_Text dialogueUI;
 
-    public SceneTransition sceneTransition; // ⭐ ADD THIS ⭐
+    [Header("Sound Settings")]
+    public AudioSource audioSource;     // Audio source component on the DialogueManager
+    public AudioClip blipSound;         // Default sound for most dialogue lines
+    public float volume = 1f;
 
     int index = 0;
     bool isTyping = false;
@@ -43,7 +51,11 @@ public class DialogueController : MonoBehaviour
             return;
         }
 
+        // Update icon
         iconUI.sprite = lines[index].characterIcon;
+
+        // 🔊 Play sound for this line
+        PlaySoundForLine(lines[index]);
 
         StopAllCoroutines();
         StartCoroutine(TypeText(lines[index].text));
@@ -69,12 +81,23 @@ public class DialogueController : MonoBehaviour
         ShowLine();
     }
 
+    // 🔊 NEW FUNCTION — decides which sound to play
+    void PlaySoundForLine(DialogueLine line)
+    {
+        if (line.customSound != null)
+        {
+            audioSource.PlayOneShot(line.customSound, volume);
+        }
+        else
+        {
+            audioSource.PlayOneShot(blipSound, volume);
+        }
+    }
+
     IEnumerator DoGlitchThenLoadSelect()
     {
-        Debug.Log("Dialogue ended, starting fade...");
-        yield return new WaitForSeconds(0.5f);
-
-        // ⭐ START FADE OUT ⭐
-        sceneTransition.BeginTransition();
+        Debug.Log("Glitch transition starting...");
+        yield return new WaitForSeconds(1.5f);
+        //SceneManager.LoadScene("Level1");
     }
 }
