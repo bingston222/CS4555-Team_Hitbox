@@ -34,15 +34,7 @@ public class IntroController : MonoBehaviour
     [Header("Dialogue Hook (optional)")]
     public bool triggerDialogueOnEnd = true;
 
-    [Header("Combat Test")]
-public GameObject testOrbPrefab;    // ← drag your TestOrb prefab here
-public Transform orbSpawn1;         // ← assign two spawn points in the inspector
-public Transform orbSpawn2;
-
-    [Header("Door")]
-public DoorSlide firewallDoor;   // ← drag the object with DoorSlide here
-public AudioSource doorWhoosh;   // (optional) extra whoosh when opening
-
+ 
 
     void Start()
     {
@@ -150,51 +142,5 @@ public AudioSource doorWhoosh;   // (optional) extra whoosh when opening
         if (p2) p2.enabled = enabled;
         // Or call into your custom controller scripts
     }
-
-    public void EnableTutorialPhase()
-    {
-        if (MovementTutorial.Instance)
-    MovementTutorial.Instance.StartTutorial();
-
-    }
-
-    public IEnumerator OpenDoorInSteps()
-{
-    if (!firewallDoor) yield break;
-
-    firewallDoor.OpenToPercent(0.33f);  // peek
-    yield return new WaitForSeconds(0.35f);
-
-    firewallDoor.OpenToPercent(0.66f);  // halfway
-    yield return new WaitForSeconds(0.35f);
-
-    firewallDoor.Open();                // full
-}
-
-public void SpawnCombatOrbs()
-{
-    Debug.Log("Spawning Combat Test orbs...");
-
-    // --- HQ line before the fight ---
-    if (Adialogue.Instance)
-    {
-        Adialogue.Instance.StartCoroutine(
-            Adialogue.Instance.ShowSubtitle("Combat check: give those test orbs a tap.", 1.8f, 0.18f)
-        );
-    }
-
-    // --- Spawn both orbs ---
-    if (testOrbPrefab)
-    {
-        if (orbSpawn1)
-            Instantiate(testOrbPrefab, orbSpawn1.position, Quaternion.identity);
-        if (orbSpawn2)
-            Instantiate(testOrbPrefab, orbSpawn2.position, Quaternion.identity);
-    }
-    else
-    {
-        Debug.LogWarning("⚠️ No TestOrb prefab assigned in IntroController!");
-    }
-}
 
 }
