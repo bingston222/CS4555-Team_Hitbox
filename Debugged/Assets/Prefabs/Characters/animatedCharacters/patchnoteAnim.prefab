@@ -103,6 +103,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8642971185700646945}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7545795649602807864}
   m_SourcePrefab: {fileID: 100100000, guid: c8bfc007bf750424bb6a16916bfe8bfb, type: 3}
 --- !u!1 &7780676415158651593 stripped
 GameObject:
@@ -263,3 +266,18 @@ MonoBehaviour:
   abilityCooldownMask: {fileID: 0}
   ultimateFillMask: {fileID: 0}
   ultimateGlow: {fileID: 0}
+--- !u!114 &-7545795649602807864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780676415158651593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f68ec47277bce64eaf9bbc6b8fc5b75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerID: 1
+  repairKey: 101
+  skillCheckUI: {fileID: 0}
