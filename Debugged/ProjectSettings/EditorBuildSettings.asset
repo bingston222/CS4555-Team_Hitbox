@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/IntroCutscene1/IntroCutscene.unity
     guid: 494bdf35d19bf4dfe9ff873114ca05d5
-  - enabled: 1
+  - enabled: 0
     path: Assets/EndIntroDialoge/EndIntro.unity
     guid: 3b8bf4116e32b7c4eb974bc94b44c992
   - enabled: 1
