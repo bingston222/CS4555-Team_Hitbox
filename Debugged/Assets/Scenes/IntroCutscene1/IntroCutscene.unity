@@ -281,7 +281,7 @@ MonoBehaviour:
   animator: {fileID: 434668369}
   fadeAnimationName: FadeToBlack
   fadeDuration: 1
-  nextSceneName: 'EndIntro '
+  nextSceneName: EndIntro
   playSound: 0
   transitionSound: {fileID: 0}
   audioSource: {fileID: 0}
