@@ -1,47 +1,53 @@
 using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class AlarmManager : MonoBehaviour
 {
-    public static AlarmManager Instance { get; private set; }
+    public static AlarmManager Instance;
 
-    [Header("Response")]
-    public AudioSource sfx;
-    public AudioClip alarmClip;
+    [Header("Alarm Rules")]
+    [SerializeField] private int maxAlarms = 2;
+    [SerializeField] private float restartDelay = 0.75f;
 
-    [Header("Timing")]
-    public float minAlarmInterval = 1.25f;
-    public float playerFreeze     = 1.25f;
-    public float postAlarmJam     = 1.25f;
-    public float sceneStartGrace  = 1.0f;
+    [Header("Audio")]
+    [SerializeField] private AudioClip[] alarmClips; // size 2 (or more)
+    [SerializeField] private float alarmVolume = 0.9f;
 
-    float _lastAlarmTime = -999f;
+    private int alarmCount = 0;
+    private AudioSource audioSource;
 
-    void Awake() => Instance = this;
-    void Start() => StartCoroutine(JamAllFor(sceneStartGrace));
-
-    public void OnSpotted(SecurityCamera cam)
+    void Awake()
     {
-        if (Time.time - _lastAlarmTime < minAlarmInterval) return;
-        _lastAlarmTime = Time.time;
-
-        if (sfx && alarmClip) sfx.PlayOneShot(alarmClip);
-
-        var players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (var p in players)
-        {
-            var pc = p.GetComponent<PlayerCaught>();
-            if (pc) pc.OnCaught(playerFreeze, cam.head ? cam.head.position : cam.transform.position);
-        }
-
-        StartCoroutine(JamAllFor(postAlarmJam));
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
     }
 
-    IEnumerator JamAllFor(float seconds)
+    public void TriggerAlarm(Vector3 atPosition)
     {
-        var cams = FindObjectsOfType<SecurityCamera>();
-        foreach (var c in cams) c.SetJammed(true);
-        yield return new WaitForSeconds(seconds);
-        foreach (var c in cams) c.SetJammed(false);
+        alarmCount++;
+
+        // pick a clip (wrap if fewer than alarms)
+        if (alarmClips != null && alarmClips.Length > 0)
+        {
+            var clip = alarmClips[(alarmCount - 1) % alarmClips.Length];
+            audioSource.transform.position = atPosition;
+            audioSource.PlayOneShot(clip, alarmVolume);
+        }
+
+        if (alarmCount >= maxAlarms)
+        {
+            // restart scene
+            Invoke(nameof(RestartScene), restartDelay);
+        }
+    }
+
+    private void RestartScene()
+    {
+        alarmCount = 0;
+        var active = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(active);
     }
 }
