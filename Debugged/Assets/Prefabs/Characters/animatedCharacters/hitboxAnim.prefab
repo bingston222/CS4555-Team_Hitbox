@@ -202,6 +202,7 @@ MonoBehaviour:
   radius: 3
   damage: 10
   cooldown: 0.4
+  animator: {fileID: 5901879269444833737}
 --- !u!114 &8909779251830815992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +278,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f68ec47277bce64eaf9bbc6b8fc5b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerID: 1
   repairKey: 101
-  skillCheckUI: {fileID: 0}
+  skillUI: {fileID: 0}
+--- !u!95 &5901879269444833737 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 2c72bb66e741c4ca893da15c0e72e016, type: 3}
+  m_PrefabInstance: {fileID: 39752039361735768}
+  m_PrefabAsset: {fileID: 0}

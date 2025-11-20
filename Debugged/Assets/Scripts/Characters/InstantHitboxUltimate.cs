@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class InstantHitboxUltimate : MonoBehaviour
 {
-    public KeyCode key = KeyCode.LeftShiftS;
+    public KeyCode key = KeyCode.LeftShift;
     public float duration = 8f;
 
     bool usingUlt = false;
@@ -13,7 +13,7 @@ public class InstantHitboxUltimate : MonoBehaviour
         var charge = GetComponent<UltimateCharge>();
 
         if (Input.GetKeyDown(key) && charge.IsFull && !usingUlt)
-            StartCoroutine(DoUltimate());
+           StartCoroutine(DoUltimate());
     }
 
     IEnumerator DoUltimate()
