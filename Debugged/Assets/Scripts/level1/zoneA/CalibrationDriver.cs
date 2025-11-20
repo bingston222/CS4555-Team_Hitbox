@@ -24,34 +24,36 @@ public class CalibrationDriver : MonoBehaviour
     }
 
     System.Collections.IEnumerator RunIntroAndGuide()
-    {
-        // 1) Radio chatter / context
-        yield return StartCoroutine(beats.Play(beats.calibrationIntro));
+{
+    // One-time radio chatter (won’t replay)
+    yield return StartCoroutine(beats.PlayOnce("calibrationIntro", beats.calibrationIntro));
 
-        // 2) Controls (placeholders replaced)
-        var guided = BuildControlGuide(beats.calibrationGuide);
-        yield return StartCoroutine(beats.Play(guided));
-    }
+    // Controls guide (also one-shot)
+    var guided = BuildControlGuide(beats.calibrationGuide);
+    yield return StartCoroutine(beats.PlayOnce("calibrationGuide", guided));
+}
+
+System.Collections.IEnumerator CalibCompleteSequence()
+{
+    // Say "Calibration complete" (one-shot)
+    yield return StartCoroutine(beats.PlayOnce("calibrationDone", beats.calibrationDone));
+
+    // Small pause
+    yield return new WaitForSeconds(0.4f);
+
+    // Door instructions (one-shot)
+    yield return StartCoroutine(beats.PlayOnce("doorIntro", beats.doorIntro));
+
+    // Re-enable controls if locked
+    if (lockControlsDuringGuide) TogglePlayers(true);
+}
+
 
     void OnCalibComplete()
 {
     StartCoroutine(CalibCompleteSequence());
 }
 
-System.Collections.IEnumerator CalibCompleteSequence()
-{
-    // 1) say "Calibration complete"
-    yield return StartCoroutine(beats.Play(beats.calibrationDone));
-
-    // 2) tiny pause (optional)
-    yield return new WaitForSeconds(0.4f);
-
-    // 3) say door instructions
-    yield return StartCoroutine(beats.Play(beats.doorIntro));
-
-    // 4) re-enable controls if you locked them
-    if (lockControlsDuringGuide) TogglePlayers(true);
-}
 
 
     void TogglePlayers(bool enabled)
