@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SystemRestoreUltimate : MonoBehaviour
 {
-    public KeyCode key = KeyCode.R;
+    public KeyCode key = KeyCode.RightShift;
     public float duration = 10f;
 
     bool usingUlt = false;

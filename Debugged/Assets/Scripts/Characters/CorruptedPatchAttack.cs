@@ -5,7 +5,7 @@ public class CorruptedPatchAttack : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public Transform firePoint;
-    public KeyCode key = KeyCode.Mouse0;
+    public KeyCode key = KeyCode.O;
     public float cooldown = 0.3f;
 
     bool ready = true;
