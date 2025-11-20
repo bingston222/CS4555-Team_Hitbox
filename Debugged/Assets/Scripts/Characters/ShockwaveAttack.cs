@@ -7,6 +7,7 @@ public class ShockwaveAttack : MonoBehaviour
     public float radius = 3f;
     public float damage = 10f;
     public float cooldown = 0.4f;
+    public Animator animator; //
 
     bool ready = true;
 
@@ -19,6 +20,12 @@ public class ShockwaveAttack : MonoBehaviour
     IEnumerator DoAttack()
     {
         ready = false;
+        
+          if (animator != null)
+            animator.SetTrigger("Attack"); //Ensure this matches your Animator parameter name
+
+        // Wait until the hit frame (you can adjust delay to match your animation)
+        yield return new WaitForSeconds(0.2f);  
 
         Collider[] hits = Physics.OverlapSphere(transform.position, radius);
         foreach (var hit in hits)
