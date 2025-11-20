@@ -151,10 +151,16 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 433978839}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+ blender-char
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 800, y: 2}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+ main
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2662342
 MonoBehaviour:
@@ -204,6 +210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 37596377}
   - component: {fileID: 37596376}
+  - component: {fileID: 37596378}
   m_Layer: 0
   m_Name: DialogeManager
   m_TagString: Untagged
@@ -228,50 +235,67 @@ MonoBehaviour:
     text: 'Guys, the PC broke, I think the Player is going to get rid of us!
 
 '
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: 8217982dbe280ee4f9e8422dd347963e, type: 3}
     text: 'Oh no! How are Bit and I supposed to stick together if they get rid of
       us!
 
 '
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: fb98fa2557843f04e87227ca42ac6028, type: 3}
     text: 'AHHHHHHHHHHHHHHH
 
 '
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
     text: "Guys, please let's not overreact \r\n"
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: f058c26aa98edc14da9c117d7cce4814, type: 3}
     text: 'Does anyone know how the PC broke?
 
 '
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 0}
     text: '*Cut to scary glitch sounds*'
+    customSound: {fileID: 8300000, guid: 304e2ab422b5dab499d949c88452d16f, type: 3}
   - characterIcon: {fileID: 21300000, guid: 15f965f678b8ef54d8200897d01721d5, type: 3}
     text: Uhh, is it just me, or does that not sound right?
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: 81d262c64dd62704b9419beb7f3f00b4, type: 3}
     text: 'We''ve got to leave before whatever that is comes to get us!
 
 '
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
     text: 'The computer has been corrupted! We need to send 2 of us to investigate
       the matter.
 
 '
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: 81d262c64dd62704b9419beb7f3f00b4, type: 3}
     text: 'Why would we risk leaving to explore danger????
 
 '
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: f058c26aa98edc14da9c117d7cce4814, type: 3}
     text: Either we figure out what's going on out there, or we let the corruption
       get to us!
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: 8217982dbe280ee4f9e8422dd347963e, type: 3}
     text: Me and Bit can go!!
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: 15f965f678b8ef54d8200897d01721d5, type: 3}
-    text: We're not actually sending them out together right? Them together equal
+    text: We're not actually sending them out together right? Them together equals
       half a brain.
+    customSound: {fileID: 0}
   - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
     text: Lets figure something out!
+    customSound: {fileID: 0}
   iconUI: {fileID: 1571252566}
   dialogueUI: {fileID: 47837317}
+  audioSource: {fileID: 37596378}
+  blipSound: {fileID: 8300000, guid: 401cb40fa3228434c8186aa3755b74eb, type: 3}
+  volume: 1
 --- !u!4 &37596377
 Transform:
   m_ObjectHideFlags: 0
@@ -287,6 +311,103 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &37596378
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37596375}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 401cb40fa3228434c8186aa3755b74eb, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &47837316
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class DialogueController : MonoBehaviour
 {
@@ -10,12 +11,23 @@ public class DialogueController : MonoBehaviour
     {
         public Sprite characterIcon;
         [TextArea] public string text;
+        public AudioClip customSound;  // Optional per-line sound
     }
 
+    [Header("Dialogue Data")]
     public DialogueLine[] lines;
 
+    [Header("UI References")]
     public Image iconUI;
     public TMP_Text dialogueUI;
+
+    [Header("Sound Settings")]
+    public AudioSource audioSource;
+    public AudioClip blipSound;
+    public float volume = 1f;
+
+    [Header("Scene Settings")]
+    public string nextSceneName;   // <-- Add this in inspector
 
     int index = 0;
     bool isTyping = false;
@@ -37,11 +49,13 @@ public class DialogueController : MonoBehaviour
     {
         if (index >= lines.Length)
         {
-            StartCoroutine(DoGlitchThenLoadSelect());
+            LoadNextScene();
             return;
         }
 
         iconUI.sprite = lines[index].characterIcon;
+
+        PlaySoundForLine(lines[index]);
 
         StopAllCoroutines();
         StartCoroutine(TypeText(lines[index].text));
@@ -67,10 +81,17 @@ public class DialogueController : MonoBehaviour
         ShowLine();
     }
 
-    IEnumerator DoGlitchThenLoadSelect()
+    void PlaySoundForLine(DialogueLine line)
     {
-        Debug.Log("Glitch transition starting...");
-        yield return new WaitForSeconds(1.5f);
-        //SceneManager.LoadScene("Level1");
+        if (line.customSound != null)
+            audioSource.PlayOneShot(line.customSound, volume);
+        else
+            audioSource.PlayOneShot(blipSound, volume);
+    }
+
+    void LoadNextScene()
+    {
+        Debug.Log("Loading next scene: " + nextSceneName);
+        SceneManager.LoadScene(nextSceneName);
     }
 }

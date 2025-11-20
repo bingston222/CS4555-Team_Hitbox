@@ -5,14 +5,18 @@ using System.Collections;
 public class SceneTransition : MonoBehaviour
 {
     [Header("Fade Settings")]
-    public Animator animator;          // The Animator on FadeCanvas
-    public string fadeAnimationName;   // Usually "FadeToBlack"
-    public float fadeDuration = 1f;    // Length of the FadeToBlack clip
+    public Animator animator;
+    public string fadeAnimationName;
+    public float fadeDuration = 1f;
 
     [Header("Scene Settings")]
-    public string nextSceneName;       // Name of the scene to load
+    public string nextSceneName;
 
-    // You will call THIS method when both players find their controllers
+    [Header("Optional Sound")]
+    public bool playSound = false;           // <--- NEW
+    public AudioClip transitionSound;        // <--- NEW
+    public AudioSource audioSource;          // <--- NEW
+
     public void BeginTransition()
     {
         StartCoroutine(PlayTransition());
@@ -20,13 +24,18 @@ public class SceneTransition : MonoBehaviour
 
     private IEnumerator PlayTransition()
     {
-        // Play the fade animation
-        animator.Play(fadeAnimationName);
+        // OPTIONAL sound (only if playSound == true)
+        if (playSound && audioSource != null && transitionSound != null)
+        {
+            audioSource.PlayOneShot(transitionSound);
+            yield return new WaitForSeconds(transitionSound.length);
+        }
 
-        // Wait for the fade animation to finish
+        // Fade to black
+        animator.Play(fadeAnimationName);
         yield return new WaitForSeconds(fadeDuration);
 
-        // Switch scenes
+        // Load scene
         SceneManager.LoadScene(nextSceneName);
     }
 }
