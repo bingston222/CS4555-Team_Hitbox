@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class InstantHitboxUltimate : MonoBehaviour
 {
-    public KeyCode key = KeyCode.LeftShiftS;
+    public KeyCode key = KeyCode.LeftShift;   // LEFT SHIFT ✔
     public float duration = 8f;
 
     bool usingUlt = false;
@@ -20,13 +20,11 @@ public class InstantHitboxUltimate : MonoBehaviour
     {
         usingUlt = true;
 
-        // Correct variable name
         GetComponent<PlayerStatus>().guaranteedHit = true;
 
         yield return new WaitForSeconds(duration);
 
         GetComponent<PlayerStatus>().guaranteedHit = false;
-
         GetComponent<UltimateCharge>().ResetCharge();
 
         usingUlt = false;
