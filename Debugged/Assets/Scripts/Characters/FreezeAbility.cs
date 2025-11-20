@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FreezeAbility : MonoBehaviour
 {
-    public KeyCode key = KeyCode.E;
+    public KeyCode key = KeyCode.Q;
     public float duration = 7f;
     public float cooldown = 45f;
 

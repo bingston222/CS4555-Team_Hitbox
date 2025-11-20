@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HealingPatchAbility : MonoBehaviour
 {
-    public KeyCode key = KeyCode.Q;
+    public KeyCode key = KeyCode.U;
     public float cooldown = 45f;
     public GameObject healingProjectilePrefab;
     public Transform firePoint;
