@@ -71,6 +71,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 70fa5ffa6a1a62b42b3c959f0e68e93f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5397348085478208464}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 70fa5ffa6a1a62b42b3c959f0e68e93f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5731831350438222552}
   m_SourcePrefab: {fileID: 100100000, guid: 70fa5ffa6a1a62b42b3c959f0e68e93f, type: 3}
 --- !u!1 &688974443245396138 stripped
 GameObject:
@@ -113,6 +116,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 100
   invulnerable: 0
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1352784961903343752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +147,7 @@ MonoBehaviour:
   attackRange: 8
   attackCooldown: 1.5
   contactDamage: 0
+  retargetInterval: 0.5
 --- !u!114 &5397348085478208464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +164,18 @@ MonoBehaviour:
   attackRange: 8
   attackCooldown: 1.5
   contactDamage: 0
-  projectilePrefab: {fileID: 0}
-  projectileSpeed: 16
-  projectileDamage: 10
+  retargetInterval: 0.5
+  projectile: {fileID: 11400000, guid: 886fb7b0088e14a95ab8237cd918afaf, type: 2}
+  firePoint: {fileID: 0}
+--- !u!114 &5731831350438222552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688974443245396138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 175054abbead94550a050be28c217c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

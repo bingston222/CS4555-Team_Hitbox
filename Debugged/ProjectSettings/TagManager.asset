@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Player1
   - Player2
+  - Projectile
+  - P1_HealthBar
   layers:
   - Default
   - TransparentFX
@@ -19,8 +21,8 @@ TagManager:
   - wall
   - Obstacles
   - 
-  - 
-  - 
+  - Projectile
+  - Enemy
   - 
   - 
   - 

@@ -9,6 +9,11 @@ public class Health : MonoBehaviour
     public float maxHP = 100f;
     public bool invulnerable = false;
 
+    public float CurrentHP => hp;
+
+    
+
+
     // UI event
     public HealthChangeEvent onHealthChanged;
 
@@ -45,4 +50,19 @@ public class Health : MonoBehaviour
     {
         invulnerable = v;
     }
+    // In your Health script, wherever you finalize death:
+bool _dead; // guard so it runs once
+
+void Die()
+{
+    if (_dead) return;
+    _dead = true;
+
+   
+    if (TryGetComponent<EnemyDeads>(out var enemyReg))
+        enemyReg.NotifyDied();
+
+    
+}
+
 }

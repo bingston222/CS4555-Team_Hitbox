@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: phamtomAnim
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 34d678a1eb4fa46c38b1e043121c6fb6, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 34d678a1eb4fa46c38b1e043121c6fb6, type: 3}
       propertyPath: m_Controller
       value: 
@@ -172,5 +176,9 @@ MonoBehaviour:
   attackRange: 8
   attackCooldown: 1.5
   contactDamage: 0
-  teleportInterval: 2.5
-  teleportStep: 6
+  interval: 2
+  stepDistance: 6
+  minClearance: 1.5
+  blinkOutVfx: {fileID: 0}
+  blinkInVfx: {fileID: 0}
+  blinkSfx: {fileID: 0}

@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: memoryleakAnim
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 09db001222b12410abe40f2a18d3a429, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 09db001222b12410abe40f2a18d3a429, type: 3}
       propertyPath: m_Controller
       value: 
@@ -175,3 +179,6 @@ MonoBehaviour:
   puddlePrefab: {fileID: 0}
   puddleLife: 6
   dps: 8
+  castWindup: 0.25
+  castVfx: {fileID: 0}
+  castSfx: {fileID: 0}

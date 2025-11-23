@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndIntro/EndIntro.unity
     guid: 5dfbb69c528ad4c6e98cc0326242b799
+  - enabled: 1
+    path: Assets/Scenes/lvl1.unity
+    guid: c075e3964ea544a438ea9636f3f40d59
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

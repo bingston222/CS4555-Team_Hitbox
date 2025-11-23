@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: staticpopAnim
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d4cec6d3e6de549a8b560941258ffc8e, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: d4cec6d3e6de549a8b560941258ffc8e, type: 3}
       propertyPath: m_Controller
       value: 
@@ -176,5 +180,15 @@ MonoBehaviour:
   attackRange: 8
   attackCooldown: 1.5
   contactDamage: 0
-  explodeRadius: 4
-  explodeDamage: 35
+  triggerDistance: 1.8
+  windupTime: 0.5
+  radius: 4
+  damage: 35
+  knockback: 10
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  chargeVfx: {fileID: 5435998012328932994, guid: d8703a33a4eb0b84a875202fde23e8f7, type: 3}
+  explodeVfx: {fileID: 358637981425055526, guid: 8eb503696b886e04faff8fc0f480d473, type: 3}
+  chargeSfx: {fileID: 8300000, guid: 10dbe0d3efc047c49ade2a16910ba3d5, type: 3}
+  explodeSfx: {fileID: 8300000, guid: bcf57a9df9652430fa2a6c47fd5930d4, type: 3}

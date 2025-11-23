@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Collider))]
 public class DetectionZone : MonoBehaviour
@@ -9,49 +10,64 @@ public class DetectionZone : MonoBehaviour
     [Header("Debounce")]
     [SerializeField] private float perPlayerCooldown = 0.75f;
 
+    [Header("Filtering")]
+    [SerializeField] private LayerMask playerLayers = ~0; // optional: restrict detections
+
+    [SerializeField] private bool debugLogs = true;
+
     private Collider col;
-    private readonly System.Collections.Generic.Dictionary<GameObject, float> lastPing =
-        new System.Collections.Generic.Dictionary<GameObject, float>();
+    private readonly Dictionary<GameObject, float> lastPing = new();
 
     void Reset()
     {
         col = GetComponent<Collider>();
         col.isTrigger = true;
-        if (sweepingLight == null)
-            sweepingLight = GetComponentInParent<SweepingLight>();
+        if (sweepingLight == null) sweepingLight = GetComponentInParent<SweepingLight>();
     }
 
     void Awake()
     {
         col = GetComponent<Collider>();
         col.isTrigger = true;
-        if (sweepingLight == null)
-            sweepingLight = GetComponentInParent<SweepingLight>();
+        if (sweepingLight == null) sweepingLight = GetComponentInParent<SweepingLight>();
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other) => TryTrip(other);
+    void OnTriggerStay(Collider other)  => TryTrip(other);
+
+    void OnTriggerExit(Collider other)
     {
-        TryTrip(other.gameObject);
+        if (other.CompareTag("Player"))
+            lastPing.Remove(other.gameObject); // cleanup
     }
 
-    void OnTriggerStay(Collider other)
+    private void TryTrip(Collider other)
     {
-        // In case they spawn inside or linger; still respects cooldown
-        TryTrip(other.gameObject);
-    }
+        if (!other || !other.gameObject.activeInHierarchy) return;
+        if (!other.CompareTag("Player")) return;
 
-    private void TryTrip(GameObject obj)
-    {
-        if (obj.CompareTag("Player") == false) return;
-        if (sweepingLight == null || sweepingLight.IsOn == false) return;
+        // Optional layer filter
+        if ((playerLayers.value & (1 << other.gameObject.layer)) == 0) return;
+
+        if (sweepingLight == null || sweepingLight.IsOn == false)
+        {
+            if (debugLogs) Debug.Log("[DetectionZone] Ignored: light off or missing.");
+            return;
+        }
 
         float now = Time.time;
-        if (lastPing.TryGetValue(obj, out float last) && (now - last) < perPlayerCooldown) return;
+        GameObject obj = other.gameObject;
+
+        if (lastPing.TryGetValue(obj, out float last) && (now - last) < perPlayerCooldown)
+        {
+            if (debugLogs) Debug.Log("[DetectionZone] Debounced (cooldown).");
+            return;
+        }
 
         lastPing[obj] = now;
 
-        // Where the camera is raising the alarm (use the light position for spatialized SFX)
         Vector3 at = sweepingLight ? sweepingLight.transform.position : transform.position;
+        if (debugLogs) Debug.Log("[DetectionZone] TRIP! Sending TriggerAlarm.");
         AlarmManager.Instance?.TriggerAlarm(at);
     }
 }
