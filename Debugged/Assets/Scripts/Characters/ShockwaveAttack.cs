@@ -1,40 +1,51 @@
-using System.Collections;
 using UnityEngine;
 
 public class ShockwaveAttack : MonoBehaviour
 {
-    public KeyCode key = KeyCode.Mouse0;
-    public float radius = 3f;
-    public float damage = 10f;
+    [Header("Input")]
+    public KeyCode key = KeyCode.E;
+
+    [Header("Attack Settings")]
     public float cooldown = 0.4f;
+    private float cooldownTimer = 0f;
 
-    bool ready = true;
+    [Header("Projectile Settings")]
+    public GameObject orbPrefab;
+    public Transform firePoint;
 
-    void Update()
+    private PlayerStatus status;
+
+    private void Start()
     {
-        if (Input.GetKeyDown(key) && ready)
-            StartCoroutine(DoAttack());
+        status = GetComponent<PlayerStatus>();
     }
 
-    IEnumerator DoAttack()
+    private void Update()
     {
-        ready = false;
+        if (cooldownTimer > 0)
+            cooldownTimer -= Time.deltaTime;
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, radius);
-        foreach (var hit in hits)
+        if (Input.GetKeyDown(key) && cooldownTimer <= 0f)
         {
-            Health enemy = hit.GetComponent<Health>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(damage);
+            FireShockwaveOrb();
+            cooldownTimer = cooldown;
+        }
+    }
 
-                //  Add ultimate charge on hit
-                var ult = GetComponent<UltimateCharge>();
-                if (ult != null) ult.AddCharge(10f);
-            }
+    private void FireShockwaveOrb()
+    {
+        if (orbPrefab == null || firePoint == null)
+        {
+            Debug.LogWarning("ShockwaveAttack: Missing orbPrefab or firePoint!");
+            return;
         }
 
-        yield return new WaitForSeconds(cooldown);
-        ready = true;
+        // Spawn the orb
+        GameObject orb = Instantiate(orbPrefab, firePoint.position, firePoint.rotation);
+
+        // Assign guaranteed hit into the orb
+        var orbProj = orb.GetComponent<ShockwaveOrbProjectile>();
+        if (orbProj != null)
+            orbProj.guaranteedHit = status.IsGuaranteedHit;
     }
 }

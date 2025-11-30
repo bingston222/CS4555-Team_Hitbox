@@ -198,10 +198,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8475a53b3267e884e9dbd17f75b57f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 323
+  key: 101
   radius: 3
   damage: 10
   cooldown: 0.4
+  shockwaveVFX: {fileID: 5488793821149183516, guid: bee3c927f3a79e64d8ae5cae8fbe05aa, type: 3}
 --- !u!114 &8909779251830815992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +278,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f68ec47277bce64eaf9bbc6b8fc5b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerID: 1
   repairKey: 101
-  skillCheckUI: {fileID: 0}
+  skillUI: {fileID: 0}

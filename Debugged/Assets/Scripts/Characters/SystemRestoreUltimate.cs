@@ -20,16 +20,12 @@ public class SystemRestoreUltimate : MonoBehaviour
     {
         usingUlt = true;
 
-        // Correct variable name
         var status = GetComponent<PlayerStatus>();
-        status.turnEnemiesFriendly = true;
+        status.EnemiesFriendlyAbility(duration);
 
         yield return new WaitForSeconds(duration);
 
-        status.turnEnemiesFriendly = false;
-
         GetComponent<UltimateCharge>().ResetCharge();
-
         usingUlt = false;
     }
 }

@@ -20,9 +20,7 @@ public class ClockReset : MonoBehaviour
 
         PlayerStatus ps = FindObjectOfType<PlayerStatus>();
         if (ps != null)
-        {
-            ps.DisableAbilities(duration);   // uses the coroutine in PlayerStatus
-        }
+            ps.DisableAbilities(duration);
 
         yield return new WaitForSeconds(cooldown);
         canCast = true;

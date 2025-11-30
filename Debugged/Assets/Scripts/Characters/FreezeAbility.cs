@@ -1,46 +1,59 @@
-using System.Collections;
 using UnityEngine;
 
 public class FreezeAbility : MonoBehaviour
 {
-    public KeyCode key = KeyCode.Q;
+    public KeyCode key = KeyCode.LeftShift;
     public float duration = 7f;
     public float cooldown = 45f;
 
-    bool ready = true;
-    AbilityUI ui;
+    public GameObject freezeSphere;
+
+    private PlayerStatus status;
+    private bool onCooldown = false;
 
     void Start()
     {
-        ui = GetComponent<AbilityUI>();
+        status = GetComponent<PlayerStatus>();
+        freezeSphere.SetActive(false);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(key) && ready)
-            StartCoroutine(DoFreeze());
+        if (Input.GetKeyDown(key) && !onCooldown)
+        {
+            ActivateFreeze();
+        }
     }
 
-    IEnumerator DoFreeze()
+    void ActivateFreeze()
     {
-        ready = false;
-        ui.UpdateAbilityCooldown(1f);
+        onCooldown = true;
 
-        GetComponent<PlayerStatus>().invulnerable = true;
+        // Activate shield sphere
+        freezeSphere.SetActive(true);
 
-        yield return new WaitForSeconds(duration);
+        // Make player invulnerable
+        status.SetInvulnerable(true);
 
-        GetComponent<PlayerStatus>().invulnerable = false;
+        // Disable abilities for duration
+        status.DisableAbilities(duration);
 
-        float t = cooldown;
-        while (t > 0f)
-        {
-            t -= Time.deltaTime;
-            ui.UpdateAbilityCooldown(t / cooldown);
-            yield return null;
-        }
+        // End freeze visuals and invulnerability
+        Invoke(nameof(EndFreeze), duration);
 
-        ui.UpdateAbilityCooldown(0f);
-        ready = true;
+        // End cooldown timer
+        Invoke(nameof(ResetCooldown), cooldown);
+    }
+
+    void EndFreeze()
+    {
+        freezeSphere.SetActive(false);
+        status.SetInvulnerable(false);
+        // DO NOT call DisableAbilities(false) — coroutine resets automatically
+    }
+
+    void ResetCooldown()
+    {
+        onCooldown = false;
     }
 }

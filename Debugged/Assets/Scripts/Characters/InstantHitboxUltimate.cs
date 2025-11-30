@@ -1,11 +1,10 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
 public class InstantHitboxUltimate : MonoBehaviour
 {
-    public KeyCode key = KeyCode.LeftShiftS;
+    public KeyCode key = KeyCode.LeftShift;
     public float duration = 8f;
-
     bool usingUlt = false;
 
     void Update()
@@ -20,15 +19,13 @@ public class InstantHitboxUltimate : MonoBehaviour
     {
         usingUlt = true;
 
-        // Correct variable name
-        GetComponent<PlayerStatus>().guaranteedHit = true;
+        // Activate guaranteed hit for the duration
+        GetComponent<PlayerStatus>().GuaranteedHitAbility(duration);
 
         yield return new WaitForSeconds(duration);
 
-        GetComponent<PlayerStatus>().guaranteedHit = false;
-
+        // Reset ultimate charge after use
         GetComponent<UltimateCharge>().ResetCharge();
-
         usingUlt = false;
     }
 }

@@ -3,66 +3,92 @@ using System.Collections;
 
 public class PlayerStatus : MonoBehaviour
 {
-    // -------------------------
-    // MOVEMENT EFFECTS
-    // -------------------------
-    public bool reverseInput = false;
-    public float moveMultiplier = 1f;
-    public bool abilitiesDisabled = false;
+    // ---- INVULNERABILITY ----
+    private bool invulnerable = false;
+    public bool IsInvulnerable => invulnerable;
 
-    // -------------------------
-    // ABILITY STATUS FLAGS
-    // -------------------------
-
-    // Freeze Ability uses this
-    public bool invulnerable = false;
-
-    // HitBox Ultimate uses this
-    public bool guaranteedHit = false;
-
-    // PatchNotes Ultimate uses this
-    public bool turnEnemiesFriendly = false;
-
-    // -------------------------
-    // EFFECT FUNCTIONS
-    // -------------------------
-
-    // Lag / Slow Effect
-    public void ApplyLag(float duration)
+    public void SetInvulnerable(bool state)
     {
-        StartCoroutine(LagRoutine(duration));
+        invulnerable = state;
     }
 
-    IEnumerator LagRoutine(float time)
+    // ---- GUARANTEED HIT (InstantHitboxUltimate) ----
+    private bool guaranteedHit = false;
+    public bool IsGuaranteedHit => guaranteedHit;
+
+    public void GuaranteedHitAbility(float duration)
     {
-        moveMultiplier = 0.5f;
-        yield return new WaitForSeconds(time);
-        moveMultiplier = 1f;
+        StartCoroutine(GuaranteedHitRoutine(duration));
     }
 
-    // Reverse Controls
-    public void ReverseControls(float duration)
+    IEnumerator GuaranteedHitRoutine(float duration)
+    {
+        guaranteedHit = true;
+        yield return new WaitForSeconds(duration);
+        guaranteedHit = false;
+    }
+
+    // ---- TURN ENEMIES FRIENDLY (SystemRestoreUltimate) ----
+    private bool enemiesFriendly = false;
+    public bool AreEnemiesFriendly => enemiesFriendly;
+
+    public void SetEnemiesFriendly(bool state)
+    {
+        enemiesFriendly = state;
+    }
+
+    public void EnemiesFriendlyAbility(float duration)
+    {
+        StartCoroutine(FriendlyRoutine(duration));
+    }
+
+    IEnumerator FriendlyRoutine(float duration)
+    {
+        enemiesFriendly = true;
+        yield return new WaitForSeconds(duration);
+        enemiesFriendly = false;
+    }
+
+    // ---- REVERSE CONTROLS (RedirectProtocol) ----
+    private bool reverseControls = false;
+    public bool ReverseControls => reverseControls;
+
+    public void ReverseControlsAbility(float duration)
     {
         StartCoroutine(ReverseRoutine(duration));
     }
 
-    IEnumerator ReverseRoutine(float time)
+    IEnumerator ReverseRoutine(float duration)
     {
-        reverseInput = true;
-        yield return new WaitForSeconds(time);
-        reverseInput = false;
+        reverseControls = true;
+        yield return new WaitForSeconds(duration);
+        reverseControls = false;
     }
 
-    // Silence / Disable Abilities
+    // ---- LAG / SLOW EFFECT (PulseBeam) ----
+    private float lagMultiplier = 1f;
+    public float LagMultiplier => lagMultiplier;
+
+    public void ApplyLag(float multiplier)
+    {
+        lagMultiplier = multiplier;
+    }
+
+    // ---- MOVEMENT MULTIPLIER (TimeSlice) ----
+    public float moveMultiplier = 1f;
+
+    // ---- ABILITY DISABLE (ClockReset) ----
+    public bool abilitiesDisabled = false;
+
     public void DisableAbilities(float duration)
     {
-        StartCoroutine(DisableAbilitiesRoutine(duration));
+        StartCoroutine(DisableRoutine(duration));
     }
 
-    IEnumerator DisableAbilitiesRoutine(float time)
+    IEnumerator DisableRoutine(float duration)
     {
         abilitiesDisabled = true;
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(duration);
         abilitiesDisabled = false;
     }
 }

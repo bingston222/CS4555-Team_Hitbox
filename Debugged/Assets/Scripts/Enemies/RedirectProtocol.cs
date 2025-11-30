@@ -18,7 +18,7 @@ public class RedirectProtocol : MonoBehaviour
         canCast = false;
 
         PlayerStatus p = FindObjectOfType<PlayerStatus>();
-        if (p) p.ReverseControls(duration);
+        if (p) p.ReverseControlsAbility(duration);
 
         yield return new WaitForSeconds(cooldown);
         canCast = true;
