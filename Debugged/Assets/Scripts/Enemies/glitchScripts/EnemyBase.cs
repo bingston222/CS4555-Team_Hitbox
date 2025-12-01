@@ -22,6 +22,11 @@ public class EnemyBase : MonoBehaviour
     float cd;
     float retargetTimer;
 
+    // ------------------------------
+    // PATCH NOTES ULTIMATE SUPPORT
+    // ------------------------------
+    PlayerStatus charmer; // player who activated System Restore
+
     protected virtual void Awake()
     {
         agent  = GetComponent<NavMeshAgent>();
@@ -34,6 +39,25 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Update()
     {
+        // ---------------------------------------------------
+        // CHARM CHECK — SYSTEM RESTORE ULTIMATE ACTIVE
+        // ---------------------------------------------------
+        if (charmer && charmer.turnEnemiesFriendly)
+        {
+            // Stop all movement + attacking
+            SafeStopAgent();
+            cd = attackCooldown; // prevent queued attacks
+
+            return; // Exit Update — enemy does nothing while charmed
+        }
+        else
+        {
+            // Charm ended — ensure normal behavior resumes
+            if (charmer && !charmer.turnEnemiesFriendly)
+                charmer = null;
+        }
+        // ---------------------------------------------------
+
         // periodic re-target (and also if current target died/vanished/out of range)
         retargetTimer -= Time.deltaTime;
         if (retargetTimer <= 0f || !IsValidTarget(target))
@@ -90,7 +114,6 @@ public class EnemyBase : MonoBehaviour
             if (!IsValidTarget(p)) continue;
 
             float dist = Vector3.Distance(transform.position, p.position);
-            // allow small hysteresis so we still pick someone even slightly outside sight range
             if (dist < bestDist && dist <= sightRange * 1.25f)
             {
                 best = p;
@@ -100,6 +123,19 @@ public class EnemyBase : MonoBehaviour
 
         target = best;
 
+        // ---------------------------------------------
+        // SYSTEM RESTORE ULT — DETECT IF THIS PLAYER IS THE CHARMER
+        // ---------------------------------------------
+        if (target)
+        {
+            var ps = target.GetComponent<PlayerStatus>();
+            if (ps && ps.turnEnemiesFriendly)
+            {
+                charmer = ps; // store who charmed them
+            }
+        }
+        // ---------------------------------------------
+
         if (initial)
             Debug.Log($"{name} target {(target ? target.name : "NONE")} (players:{PlayerLocator.Players.Count})", this);
     }
@@ -107,7 +143,6 @@ public class EnemyBase : MonoBehaviour
     bool IsValidTarget(Transform t)
     {
         if (!t) return false;
-        // if players have Health, prefer alive-only
         var hp = t.GetComponent<Health>();
         if (hp && hp.CurrentHP <= 0f) return false;
         return true;
