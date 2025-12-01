@@ -15,7 +15,6 @@ public class SceneBeats : MonoBehaviour
 
     // In SceneBeats
 public UnifiedDialogueController.DialogueLine[] zoneB_Intro;
-public UnifiedDialogueController.DialogueLine[] zoneB_PuzzleHint;
 public UnifiedDialogueController.DialogueLine[] zoneB_Complete;
 
 
@@ -48,7 +47,20 @@ public UnifiedDialogueController.DialogueLine[] zoneB_Complete;
 
     // Call from Timeline Signal / UnityEvent / other scripts
 public void PlayZoneB_Intro()       => StartCoroutine(PlayOnce("zoneB.intro", zoneB_Intro));
-public void PlayZoneB_PuzzleHint()  => StartCoroutine(PlayOnce("zoneB.hint",  zoneB_PuzzleHint));
+
 public void PlayZoneB_Complete()    => StartCoroutine(PlayOnce("zoneB.done",  zoneB_Complete));
+
+// In SceneBeats.cs (same class you pasted)
+
+// --- Zone C (new) ---
+[Header("Zone C Dialogue Sets")]
+public UnifiedDialogueController.DialogueLine[] zoneC_Intro;
+public UnifiedDialogueController.DialogueLine[] zoneC_Complete;
+
+// Optional convenience methods (so you can call from Timeline/UnityEvent)
+public void PlayZoneC_Intro()    => StartCoroutine(PlayOnce("zoneC.intro", zoneC_Intro));
+public void PlayZoneC_Complete() => StartCoroutine(PlayOnce("zoneC.done",  zoneC_Complete));
+
+
 
 }
