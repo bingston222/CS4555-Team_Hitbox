@@ -11,7 +11,7 @@ public class GlitchPhantom : EnemyBase
     [Header("VFX / SFX")]
     public GameObject blinkOutVfx;
     public GameObject blinkInVfx;
-    public AudioClip  blinkSfx;
+    public AudioClip blinkSfx;
 
     float t;
 
@@ -20,11 +20,23 @@ public class GlitchPhantom : EnemyBase
         base.Update();
         if (!target || !agent) return;
 
+        // Regular timed blink
         t += Time.deltaTime;
         if (t >= interval)
         {
             t = 0f;
             BlinkToward(target.position);
+        }
+
+        // ===================================================
+        // TEMPORARY TESTING KEY
+        // Press B to test blink VFX manually
+        // Remove this block once testing is done.
+        // ===================================================
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Vector3 testPos = transform.position + transform.forward * 3f;
+            BlinkToward(testPos);
         }
     }
 
@@ -37,17 +49,34 @@ public class GlitchPhantom : EnemyBase
         Vector3 dir = to.normalized;
         Vector3 desired = transform.position + dir * Mathf.Min(stepDistance, maxStep);
 
+        // Validate teleport location on NavMesh
         if (NavMesh.SamplePosition(desired, out var hit, 2f, NavMesh.AllAreas))
         {
-            // Use the SAME Attack anim as the “blink” gesture
+            // Blink animation trigger
             GetComponent<GlitchAnimatorDriver>()?.PlayAttack();
 
-            if (blinkOutVfx) Destroy(Instantiate(blinkOutVfx, transform.position, Quaternion.identity), 2f);
-            if (blinkSfx) AudioSource.PlayClipAtPoint(blinkSfx, transform.position, 1f);
+            // Blink OUT effect
+            if (blinkOutVfx)
+                Destroy(Instantiate(blinkOutVfx,
+                    transform.position,
+                    Quaternion.identity),
+                    2f);
 
+            // Blink sound
+            if (blinkSfx)
+                AudioSource.PlayClipAtPoint(blinkSfx,
+                    transform.position,
+                    1f);
+
+            // TELEPORT
             agent.Warp(hit.position);
 
-            if (blinkInVfx) Destroy(Instantiate(blinkInVfx, transform.position, Quaternion.identity), 2f);
+            // Blink IN effect
+            if (blinkInVfx)
+                Destroy(Instantiate(blinkInVfx,
+                    transform.position,
+                    Quaternion.identity),
+                    2f);
         }
     }
 }
