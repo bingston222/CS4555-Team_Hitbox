@@ -6029,6 +6029,8 @@ MonoBehaviour:
   blipSound: {fileID: 8300000, guid: 401cb40fa3228434c8186aa3755b74eb, type: 3}
   volume: 1
   nextSceneName: 
+  stayInScene: 1
+  freezePlayers: 1
 --- !u!4 &1188242985
 Transform:
   m_ObjectHideFlags: 0
@@ -6044,6 +6046,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1194904637 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 886175126323581193, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
+  m_PrefabInstance: {fileID: 2084217104}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1194904651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194904637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8260205fcbc0a40a5839c0546481da27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBlocked: 0
 --- !u!1 &1226517531 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: bdd9a246f71230349b340130b899e056, type: 3}
@@ -6334,6 +6354,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: c0b2264371dda4d46b1b0a11ea4d5f03, type: 3}
+--- !u!1 &1340208401 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7780676415158651593, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+  m_PrefabInstance: {fileID: 1651125872}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1340208416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340208401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8260205fcbc0a40a5839c0546481da27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBlocked: 0
 --- !u!1001 &1341378471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7846,7 +7884,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7780676415158651593, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1340208416}
   m_SourcePrefab: {fileID: 100100000, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
 --- !u!1 &1652735921
 GameObject:
@@ -10245,7 +10286,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 886175126323581193, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1194904651}
   m_SourcePrefab: {fileID: 100100000, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
 --- !u!4 &2108461969 stripped
 Transform:
