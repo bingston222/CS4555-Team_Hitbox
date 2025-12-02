@@ -27460,12 +27460,9 @@ MonoBehaviour:
   holdIntroCam: 1
   blendDelay: 1
   radioDelay: 0.5
-  triggerDialogueOnEnd: 1
-  testOrbPrefab: {fileID: 6675829998312619582, guid: f5a7430c253e54322bdeb207140bf228, type: 3}
-  orbSpawn1: {fileID: 1525652820}
-  orbSpawn2: {fileID: 926106511}
-  firewallDoor: {fileID: 2001285134}
-  doorWhoosh: {fileID: 1480993962}
+  introDialogue: {fileID: 0}
+  lockControlsDuringDialogue: 1
+  calibration: {fileID: 0}
 --- !u!114 &807551462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45355,7 +45352,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -52524,7 +52522,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicManager: {fileID: 1393835067}
-  purifiedRoom: 0
 --- !u!1001 &1379284490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59548,11 +59545,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1398270588}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!222 &1568011381
+CanvasRenderer:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1568927130
 PrefabInstance:
   m_ObjectHideFlags: 0
