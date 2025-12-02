@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 7223804160083082608}
   - component: {fileID: 4035437796030506666}
   m_Layer: 5
-  m_Name: FadeFromBlackCanvas
+  m_Name: FadeFromBlackCanvas 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
