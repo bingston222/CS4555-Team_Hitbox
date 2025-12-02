@@ -2,35 +2,58 @@ using UnityEngine;
 
 public class RoomTrigger : MonoBehaviour
 {
-    public SceneTransition sceneTransition;  // drag your FadeCanvas here
+    [Header("Scene Transition")]
+    public SceneTransition sceneTransition;
 
-    private bool player1Inside = false;
-    private bool player2Inside = false;
+    [Header("Skill Checks Required")]
+    public InteractableFixable[] requiredFixables;
+
+    [Header("Players")]
+    public int totalPlayers = 2;
+    private int playersInRoom = 0;
+
+    private bool IsPlayer(Collider other)
+    {
+        // Accept both tags
+        return other.CompareTag("Player1") || other.CompareTag("Player2");
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player1"))
-        {
-            player1Inside = true;
-        }
-        else if (other.CompareTag("Player2"))
-        {
-            player2Inside = true;
-        }
+        if (!IsPlayer(other))
+            return;
 
-        // If both are inside → Fade
-        if (player1Inside && player2Inside)
+        playersInRoom++;
+
+        // Only trigger when enough players are inside AND all checks done
+        if (playersInRoom >= totalPlayers && AllSkillChecksDone())
         {
-            sceneTransition.BeginTransition();
+            if (sceneTransition != null)
+            {
+                sceneTransition.BeginTransition();   // <--- use BeginTransition
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player1"))
-            player1Inside = false;
+        if (!IsPlayer(other))
+            return;
 
-        if (other.CompareTag("Player2"))
-            player2Inside = false;
+        playersInRoom = Mathf.Max(playersInRoom - 1, 0);
+    }
+
+    private bool AllSkillChecksDone()
+    {
+        if (requiredFixables == null || requiredFixables.Length == 0)
+            return false;
+
+        foreach (var fixable in requiredFixables)
+        {
+            if (fixable == null || !fixable.isFixed)
+                return false;
+        }
+
+        return true;
     }
 }
