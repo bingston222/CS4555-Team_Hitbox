@@ -6,7 +6,7 @@ public class ThirdPersonController : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 5f, sprintSpeed = 8f, jumpForce = 7f, gravity = -20f;
     public float turnSmooth = 12f;
-    public Transform cameraPivot; // assign your camera rig / follow target
+    public Transform cameraPivot;
 
     [Header("Player Keys")]
     public KeyCode up = KeyCode.W, down = KeyCode.S, left = KeyCode.A, right = KeyCode.D;
@@ -20,23 +20,21 @@ public class ThirdPersonController : MonoBehaviour
 
     CharacterController cc;
     Animator anim;
+    PlayerInputBlocker inputBlocker;   // ⭐ NEW
     Vector3 vel;
     bool isJumping;
 
     void Awake()
     {
-        cc  = GetComponent<CharacterController>();
+        cc = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
+        inputBlocker = GetComponent<PlayerInputBlocker>();  // ⭐ NEW
 
-        // CC sanity
         cc.skinWidth = Mathf.Max(cc.skinWidth, 0.05f);
         if (cc.height < 1f) cc.height = 1.8f;
         if (cc.radius < 0.1f) cc.radius = 0.3f;
 
         vel = Vector3.zero;
-
-        // ensure animator doesn’t try to drive root motion
-        //if (anim) anim.applyRootMotion = false;
     }
 
     void OnEnable()
@@ -48,7 +46,6 @@ public class ThirdPersonController : MonoBehaviour
         {
             SafeResetTrigger(jumpTrigger);
             SafeSetBool(jumpingBool, false);
-            // removed old "isWalking" usage (param didn’t exist)
         }
     }
 
@@ -56,14 +53,27 @@ public class ThirdPersonController : MonoBehaviour
     {
         if (!cc || !cc.enabled) return;
 
-        // Input
+        // ⭐ BLOCK INPUT DURING DIALOGUE
+        if (inputBlocker != null && inputBlocker.IsBlocked())
+        {
+            // Stop movement but don't break animations
+            SafeSetFloat(speedParam, 0f, 0.1f);
+            SafeSetBool(sprintBool, false);
+
+            // No movement allowed
+            return;
+        }
+
+        // ------------------------------------
+        // ORIGINAL MOVEMENT BELOW THIS POINT
+        // ------------------------------------
+
         float h = (Input.GetKey(left) ? -1f : 0f) + (Input.GetKey(right) ? 1f : 0f);
         float v = (Input.GetKey(down) ? -1f : 0f) + (Input.GetKey(up) ? 1f : 0f);
         Vector3 inputDir = new Vector3(h, 0f, v).normalized;
 
         float baseSpeed = Input.GetKey(sprintKey) ? sprintSpeed : moveSpeed;
 
-        // Planar move (camera-relative if pivot assigned)
         Vector3 planarMove = Vector3.zero;
         if (inputDir.sqrMagnitude > 0.01f)
         {
@@ -73,10 +83,9 @@ public class ThirdPersonController : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            planarMove = moveDir * baseSpeed; // m/s
+            planarMove = moveDir * baseSpeed;
         }
 
-        // Ground / jump
         if (cc.isGrounded)
         {
             if (isJumping)
@@ -97,22 +106,18 @@ public class ThirdPersonController : MonoBehaviour
             }
         }
 
-        // Gravity
         vel.y += gravity * Time.deltaTime;
 
-        // One Move
         Vector3 motion = planarMove;
         motion.y = vel.y;
         cc.Move(motion * Time.deltaTime);
 
-        // Animator params
         float horizSpeed = planarMove.magnitude;
-        float walkNorm   = Mathf.InverseLerp(0f, moveSpeed, horizSpeed);
+        float walkNorm = Mathf.InverseLerp(0f, moveSpeed, horizSpeed);
         SafeSetFloat(speedParam, walkNorm, 0.1f);
         SafeSetBool(sprintBool, Input.GetKey(sprintKey) && horizSpeed > 0.1f);
     }
 
-    // ---- Safe animator helpers (avoid missing-param warnings) ----
     bool HasParam(string name, AnimatorControllerParameterType type)
     {
         if (!anim) return false;
