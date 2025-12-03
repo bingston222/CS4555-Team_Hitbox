@@ -15,7 +15,6 @@ public class SceneBeats : MonoBehaviour
 
     // In SceneBeats
 public UnifiedDialogueController.DialogueLine[] zoneB_Intro;
-
 public UnifiedDialogueController.DialogueLine[] zoneB_Complete;
 
 
