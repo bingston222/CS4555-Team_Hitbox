@@ -61,6 +61,12 @@ public UnifiedDialogueController.DialogueLine[] zoneC_Complete;
 public void PlayZoneC_Intro()    => StartCoroutine(PlayOnce("zoneC.intro", zoneC_Intro));
 public void PlayZoneC_Complete() => StartCoroutine(PlayOnce("zoneC.done",  zoneC_Complete));
 
+// --- Boss room (new) ---
+[Header("Boss Room Dialogue")]
+public UnifiedDialogueController.DialogueLine[] bossRoom_Complete;
+
+public void PlayBossRoom_Complete()
+    => StartCoroutine(PlayOnce("bossRoom.done", bossRoom_Complete));
 
 
 }
