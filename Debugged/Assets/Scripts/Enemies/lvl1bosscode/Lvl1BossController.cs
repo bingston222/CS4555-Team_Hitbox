@@ -4,51 +4,32 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Animator))]
 public class Lvl1BossController : MonoBehaviour
 {
-    public PulseBeam pulseBeam; // drag your PulseBeam component here in Inspector
-
     private Animator anim;
-    private NavMeshAgent agent;   // optional if you use NavMesh
+    private NavMeshAgent agent;
+    private Rigidbody rb;
 
-    void Awake()
+    private void Awake()
     {
         anim = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();   // can be null if you don't use it
+        agent = GetComponent<NavMeshAgent>();
+        rb    = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    private void Update()
     {
-        // ----- locomotion (idle / walk) -----
         float speed = 0f;
 
-        if (agent != null)
+        if (agent != null && agent.enabled)
         {
             speed = agent.velocity.magnitude;
         }
-        else
+        else if (rb != null)
         {
-            // if you're moving with Rigidbody or manually:
-            Vector3 vel = GetComponent<Rigidbody>()?.linearVelocity ?? Vector3.zero;
-            vel.y = 0;
+            Vector3 vel = rb.linearVelocity;
+            vel.y = 0f;
             speed = vel.magnitude;
         }
 
         anim.SetFloat("Speed", speed);
-    }
-
-    // Call this from your AI when you want to fire the beam
-    public void FirePulseBeam()
-    {
-        if (pulseBeam != null && !pulseBeam.isFiring)
-        {
-            anim.SetTrigger("FirePulse");  // goes to pulseBeam state
-            // actual beam start is triggered by an animation event below
-        }
-    }
-
-    // This is called by an Animation Event on the pulseBeam clip
-    public void StartPulseFromAnim()
-    {
-        if (pulseBeam != null)
-            pulseBeam.StartBeam();
     }
 }
