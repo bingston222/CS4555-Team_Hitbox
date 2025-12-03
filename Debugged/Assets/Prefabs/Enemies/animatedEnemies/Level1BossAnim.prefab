@@ -69,9 +69,6 @@ PrefabInstance:
       addedObject: {fileID: 4264446619609294717}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f70734ce31f5547db8b9994aba27a255, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1081252701295255135}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f70734ce31f5547db8b9994aba27a255, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3213850373250957186}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f70734ce31f5547db8b9994aba27a255, type: 3}
       insertIndex: -1
@@ -79,6 +76,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f70734ce31f5547db8b9994aba27a255, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1489643505171723992}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f70734ce31f5547db8b9994aba27a255, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -283459981395927415}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f70734ce31f5547db8b9994aba27a255, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2025189472538403793}
   m_SourcePrefab: {fileID: 100100000, guid: f70734ce31f5547db8b9994aba27a255, type: 3}
 --- !u!1 &3209091736033836110 stripped
 GameObject:
@@ -100,23 +103,6 @@ MonoBehaviour:
   maxHP: 150
   currentHP: 0
   isWeakened: 0
---- !u!114 &1081252701295255135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3209091736033836110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 850174d8a6a94d54899383922fea5a57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFiring: 0
-  damagePerSecond: 10
-  beam: {fileID: 0}
-  firePoint: {fileID: 0}
-  duration: 2
 --- !u!114 &3213850373250957186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +135,11 @@ MonoBehaviour:
   pulseBeam: {fileID: 0}
   shield: {fileID: 0}
   overheat: {fileID: 0}
+  targets: []
+  agent: {fileID: 0}
+  chaseRange: 25
+  attackRange: 15
+  attackCooldown: 5
 --- !u!114 &1489643505171723992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,3 +155,34 @@ MonoBehaviour:
   hasTriggered: 0
   flamePrefab: {fileID: 0}
   flameSpots: []
+--- !u!114 &-283459981395927415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3209091736033836110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0035169610bd430c93d540f3b61fd5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pulseBeam: {fileID: 0}
+--- !u!114 &2025189472538403793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3209091736033836110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 850174d8a6a94d54899383922fea5a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFiring: 0
+  damagePerSecond: 10
+  beam: {fileID: 0}
+  firePoint: {fileID: 0}
+  duration: 2
+  maxDistance: 50

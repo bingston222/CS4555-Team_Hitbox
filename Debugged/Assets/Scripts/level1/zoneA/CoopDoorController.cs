@@ -7,7 +7,10 @@ public class CoopDoorController : MonoBehaviour
     public PressurePad[] pads;
     public DoorMover door;
     public Collider doorBlocker;          // optional
-    public DoorThroughWatcher through;    // <-- NEW
+    public DoorThroughWatcher through;
+
+    [Header("Objective (optional)")]
+    public InteractableFixable levelObjective;   // NEW: fuse box
 
     [Header("Audio")]
     public AudioSource audioSource;
@@ -16,7 +19,7 @@ public class CoopDoorController : MonoBehaviour
     [Range(0,1)] public float volume = 1f;
 
     [Header("Timing")]
-    public float closeDelay = 0.5f;       // small grace after both are through
+    public float closeDelay = 0.5f;
 
     [Header("Dialogue")]
     [SerializeField] SceneBeats beats;
@@ -31,38 +34,43 @@ public class CoopDoorController : MonoBehaviour
         int occupied = 0;
         foreach (var p in pads) if (p && p.IsOccupied) occupied++;
 
-        // open when both on pads
-        if (!opened && occupied >= 2) StartCoroutine(OpenSequence());
+        // 🔹 objective condition:
+        // - if levelObjective is NOT set -> treat as true (old behavior)
+        // - if it IS set -> require isFixed == true
+        bool objectiveOk = (levelObjective == null) || levelObjective.isFixed;
+
+        // open when both on pads AND objective is ok
+        if (!opened && occupied >= 2 && objectiveOk)
+            StartCoroutine(OpenSequence());
     }
 
     IEnumerator OpenSequence()
-{
-    if (isOpening) yield break;
-    isOpening = true;
+    {
+        if (isOpening) yield break;
+        isOpening = true;
 
-    if (audioSource && openSound)
-        audioSource.PlayOneShot(openSound, volume);
+        if (audioSource && openSound)
+            audioSource.PlayOneShot(openSound, volume);
 
-    door.Open();
-    if (doorBlocker) doorBlocker.enabled = false;
+        door.Open();
+        if (doorBlocker) doorBlocker.enabled = false;
 
-    // 🔹 trigger Zone B Intro dialogue
-    if (beats)
-        StartCoroutine(beats.PlayOnce("zoneB.intro", beats.zoneB_Intro));
+        // Zone B Intro dialogue
+        if (beats)
+            StartCoroutine(beats.PlayOnce("zoneB.intro", beats.zoneB_Intro));
 
-    opened = true;
-    isOpening = false;
+        opened = true;
+        isOpening = false;
 
-    if (through) through.ResetCount();
-    if (through)
-        yield return new WaitUntil(() => through.BothThrough);
-    else
-        yield break;
+        if (through) through.ResetCount();
+        if (through)
+            yield return new WaitUntil(() => through.BothThrough);
+        else
+            yield break;
 
-    yield return new WaitForSeconds(closeDelay);
-    StartCoroutine(CloseSequence());
-}
-
+        yield return new WaitForSeconds(closeDelay);
+        StartCoroutine(CloseSequence());
+    }
 
     IEnumerator CloseSequence()
     {
@@ -75,6 +83,5 @@ public class CoopDoorController : MonoBehaviour
 
         opened = false;
         isClosing = false;
-        yield break;
     }
 }
