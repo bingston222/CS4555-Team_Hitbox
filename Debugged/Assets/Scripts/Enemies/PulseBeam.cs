@@ -22,6 +22,14 @@ public class PulseBeam : MonoBehaviour
             StartCoroutine(FireBeam());
     }
 
+    // <<< add this to keep old code working >>>
+    public void TryFire()
+    {
+        if (!isFiring)
+            StartBeam();
+    }
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
     IEnumerator FireBeam()
     {
         isFiring = true;
@@ -32,8 +40,7 @@ public class PulseBeam : MonoBehaviour
         {
             t += Time.deltaTime;
 
-            if (Physics.Raycast(firePoint.position, firePoint.forward,
-                                out RaycastHit hit, maxDistance))
+            if (Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit hit, maxDistance))
             {
                 if (hit.collider.CompareTag("Player"))
                 {
