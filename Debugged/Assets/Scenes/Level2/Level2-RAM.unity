@@ -823,7 +823,7 @@ PrefabInstance:
       objectReference: {fileID: 1227955091}
     - target: {fileID: 1948896617911131201, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
       propertyPath: nextSceneName
-      value: level2pt2
+      value: level3_Screne
       objectReference: {fileID: 0}
     - target: {fileID: 1948896617911131201, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
       propertyPath: transitionSound
@@ -8419,9 +8419,13 @@ PrefabInstance:
       propertyPath: skillUI
       value: 
       objectReference: {fileID: 1843199779}
+    - target: {fileID: -7545795649602807864, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+      propertyPath: repairKey
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3914049746712857097, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6967441724523860083, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: m_LocalScale.x
