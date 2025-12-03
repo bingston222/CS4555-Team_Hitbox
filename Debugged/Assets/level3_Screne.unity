@@ -9332,8 +9332,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority:
-    Enabled: 0
-    m_Value: 0
+    Enabled: 1
+    m_Value: 1
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -30397,6 +30397,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6735966540646113996, guid: fdacff789ea876c40affc1c2ea83ec41, type: 3}
   m_PrefabInstance: {fileID: 411208337}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &412642948 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 886175126323581193, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
+  m_PrefabInstance: {fileID: 1325352153}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &412642963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412642948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d77d657f42623a4a8baf8a99fb9e0d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  sprintSpeed: 8
+  jumpForce: 7
+  gravity: -20
+  turnSmooth: 12
+  cameraPivot: {fileID: 0}
+  up: 119
+  down: 115
+  left: 97
+  right: 100
+  jumpKey: 102
+  sprintKey: 99
+  speedParam: Speed
+  sprintBool: isSprinting
+  jumpTrigger: Jump
+  jumpingBool: isJumping
 --- !u!1001 &412986876
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44468,10 +44501,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: patchnoteAnim
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7784763526970129775, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7780676415158651593, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 818832657}
   m_SourcePrefab: {fileID: 100100000, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
 --- !u!1001 &605681139
 PrefabInstance:
@@ -60561,6 +60598,39 @@ Transform:
   - {fileID: 1764563911}
   m_Father: {fileID: 98705058}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &818832641 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7780676415158651593, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+  m_PrefabInstance: {fileID: 605431520}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &818832657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818832641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d77d657f42623a4a8baf8a99fb9e0d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  sprintSpeed: 8
+  jumpForce: 7
+  gravity: -20
+  turnSmooth: 12
+  cameraPivot: {fileID: 0}
+  up: 105
+  down: 107
+  left: 106
+  right: 108
+  jumpKey: 104
+  sprintKey: 110
+  speedParam: Speed
+  sprintBool: isSprinting
+  jumpTrigger: Jump
+  jumpingBool: isJumping
 --- !u!1001 &822889462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -99148,7 +99218,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 506517766488820659, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -78.42
+      value: -78.43
       objectReference: {fileID: 0}
     - target: {fileID: 506517766488820659, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
       propertyPath: m_LocalRotation.w
@@ -99206,10 +99276,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 4.85
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2210015566253269583, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 886175126323581193, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 412642963}
   m_SourcePrefab: {fileID: 100100000, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
 --- !u!1001 &1325372247
 PrefabInstance:
