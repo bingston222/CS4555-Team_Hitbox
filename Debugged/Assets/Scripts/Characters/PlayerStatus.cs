@@ -3,66 +3,108 @@ using System.Collections;
 
 public class PlayerStatus : MonoBehaviour
 {
-    // -------------------------
-    // MOVEMENT EFFECTS
-    // -------------------------
-    public bool reverseInput = false;
-    public float moveMultiplier = 1f;
-    public bool abilitiesDisabled = false;
+    [Header("Health")]
+    public float maxHP = 100f;
+    public float currentHP = 100f;
 
-    // -------------------------
-    // ABILITY STATUS FLAGS
-    // -------------------------
+    [Header("Respawn Settings")]
+    public Transform spawnPoint;
+    public float respawnDelay = 1.2f;
 
-    // Freeze Ability uses this
-    public bool invulnerable = false;
+    // =======================
+    // Movement & Status Flags
+    // =======================
+    [Header("Movement Modifiers")]
+    public bool ReverseControls = false;     // used by RedirectProtocol
+    public float moveMultiplier = 1f;        // used by speed effects
 
-    // HitBox Ultimate uses this
-    public bool guaranteedHit = false;
+    // =======================
+    // Ability Flags / Toggles
+    // =======================
+    [HideInInspector] public bool guaranteedHit = false;
+    [HideInInspector] public bool turnEnemiesFriendly = false;
+    [HideInInspector] public bool abilitiesDisabled = false;
+    private bool isRespawning = false;
 
-    // PatchNotes Ultimate uses this
-    public bool turnEnemiesFriendly = false;
-
-    // -------------------------
-    // EFFECT FUNCTIONS
-    // -------------------------
-
-    // Lag / Slow Effect
-    public void ApplyLag(float duration)
+    void Start()
     {
-        StartCoroutine(LagRoutine(duration));
+        if (spawnPoint == null)
+        {
+            GameObject sp = GameObject.Find(gameObject.name + "_Spawn");
+            if (sp != null) spawnPoint = sp.transform;
+            else spawnPoint = transform;
+        }
+
+        currentHP = maxHP;
     }
 
-    IEnumerator LagRoutine(float time)
+    // ============================================
+    // DAMAGE + DEATH (PLAYERS NEVER DESPAWN)
+    // ============================================
+    public void TakeDamage(float dmg)
     {
-        moveMultiplier = 0.5f;
-        yield return new WaitForSeconds(time);
+        if (isRespawning) return;
+
+        currentHP -= dmg;
+
+        if (currentHP <= 0)
+        {
+            currentHP = 0;
+            StartCoroutine(PlayerRespawn());
+        }
+    }
+
+    private IEnumerator PlayerRespawn()
+    {
+        isRespawning = true;
+
+        DisableAbilities(0.5f);
+
+        yield return new WaitForSeconds(respawnDelay);
+
+        // reset everything
+        currentHP = maxHP;
+        ReverseControls = false;
+        moveMultiplier = 1f;
+
+        // teleport back to spawn
+        transform.position = spawnPoint.position;
+
+        isRespawning = false;
+    }
+
+    // ============================================
+    // RESET EVERYTHING TO FULL (Patchnotes heal)
+    // ============================================
+    public void ResetFull()
+    {
+        currentHP = maxHP;
+        ReverseControls = false;
         moveMultiplier = 1f;
     }
 
-    // Reverse Controls
-    public void ReverseControls(float duration)
+    // ============================================
+    // TEMPORARY REVERSE CONTROLS (RedirectProtocol)
+    // ============================================
+    public IEnumerator TempReverseControls(float duration)
     {
-        StartCoroutine(ReverseRoutine(duration));
+        ReverseControls = true;
+        yield return new WaitForSeconds(duration);
+        ReverseControls = false;
     }
 
-    IEnumerator ReverseRoutine(float time)
-    {
-        reverseInput = true;
-        yield return new WaitForSeconds(time);
-        reverseInput = false;
-    }
-
-    // Silence / Disable Abilities
+    // ============================================
+    // ABILITY DISABLING SYSTEM
+    // ============================================
     public void DisableAbilities(float duration)
     {
         StartCoroutine(DisableAbilitiesRoutine(duration));
     }
 
-    IEnumerator DisableAbilitiesRoutine(float time)
+    private IEnumerator DisableAbilitiesRoutine(float duration)
     {
         abilitiesDisabled = true;
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(duration);
         abilitiesDisabled = false;
     }
 }
