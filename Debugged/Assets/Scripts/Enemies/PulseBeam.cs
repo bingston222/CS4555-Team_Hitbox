@@ -8,8 +8,15 @@ public class PulseBeam : MonoBehaviour
     public LineRenderer beam;
     public Transform firePoint;
     public float duration = 2f;
+    public float maxDistance = 50f;
 
-    public void TryFire()
+    void Awake()
+    {
+        if (beam != null)
+            beam.enabled = false;
+    }
+
+    public void StartBeam()
     {
         if (!isFiring)
             StartCoroutine(FireBeam());
@@ -20,12 +27,13 @@ public class PulseBeam : MonoBehaviour
         isFiring = true;
         beam.enabled = true;
 
-        float t = 0;
+        float t = 0f;
         while (t < duration)
         {
             t += Time.deltaTime;
 
-            if (Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit hit))
+            if (Physics.Raycast(firePoint.position, firePoint.forward,
+                                out RaycastHit hit, maxDistance))
             {
                 if (hit.collider.CompareTag("Player"))
                 {
@@ -38,6 +46,11 @@ public class PulseBeam : MonoBehaviour
 
                 beam.SetPosition(0, firePoint.position);
                 beam.SetPosition(1, hit.point);
+            }
+            else
+            {
+                beam.SetPosition(0, firePoint.position);
+                beam.SetPosition(1, firePoint.position + firePoint.forward * maxDistance);
             }
 
             yield return null;
