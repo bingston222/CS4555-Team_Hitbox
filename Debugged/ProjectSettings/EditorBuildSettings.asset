@@ -5,24 +5,27 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scripts/UI/StartScreen/StartScreen.unity
+    guid: 45ea6b4cf8ac2b3419647db30c0868e1
   - enabled: 1
     path: Assets/Bedroom Set/Interior 01/BRP Sample Scene.unity
     guid: 923d0fdfeea77274ca966167e1470f7e
   - enabled: 1
     path: Assets/Scenes/IntroCutscene1/IntroCutscene.unity
     guid: 494bdf35d19bf4dfe9ff873114ca05d5
-  - enabled: 0
-    path: Assets/EndIntroDialoge/EndIntro.unity
-    guid: 3b8bf4116e32b7c4eb974bc94b44c992
   - enabled: 1
     path: Assets/Scenes/EndIntro/EndIntro.unity
     guid: 5dfbb69c528ad4c6e98cc0326242b799
   - enabled: 1
     path: Assets/Scenes/lvl1.unity
     guid: c075e3964ea544a438ea9636f3f40d59
+  - enabled: 1
+    path: Assets/Scenes/Level2/Level2-RAM.unity
+    guid: 794971afd297346159895585d37aca4c
+  - enabled: 1
+    path: Assets/level3_Screne.unity
+    guid: fd668d314122033458ebf5c8ae5a02f9
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
