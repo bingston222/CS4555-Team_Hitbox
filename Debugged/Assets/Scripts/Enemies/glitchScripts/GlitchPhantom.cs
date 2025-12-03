@@ -20,7 +20,6 @@ public class GlitchPhantom : EnemyBase
         base.Update();
         if (!target || !agent) return;
 
-        // Regular timed blink
         t += Time.deltaTime;
         if (t >= interval)
         {
@@ -28,16 +27,17 @@ public class GlitchPhantom : EnemyBase
             BlinkToward(target.position);
         }
 
-        // ===================================================
-        // TEMPORARY TESTING KEY
-        // Press B to test blink VFX manually
-        // Remove this block once testing is done.
-        // ===================================================
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Vector3 testPos = transform.position + transform.forward * 3f;
-            BlinkToward(testPos);
-        }
+        // Debug key (optional)
+      //  if (Input.GetKeyDown(KeyCode.B))
+      //  {
+       //     BlinkToward(transform.position + transform.forward * 3f);
+       // }
+    }
+
+    // 🔧 FIXED: must be protected, not public
+    protected override void Attack()
+    {
+        BlinkToward(target.position);
     }
 
     void BlinkToward(Vector3 goal)
@@ -49,34 +49,20 @@ public class GlitchPhantom : EnemyBase
         Vector3 dir = to.normalized;
         Vector3 desired = transform.position + dir * Mathf.Min(stepDistance, maxStep);
 
-        // Validate teleport location on NavMesh
         if (NavMesh.SamplePosition(desired, out var hit, 2f, NavMesh.AllAreas))
         {
-            // Blink animation trigger
             GetComponent<GlitchAnimatorDriver>()?.PlayAttack();
 
-            // Blink OUT effect
             if (blinkOutVfx)
-                Destroy(Instantiate(blinkOutVfx,
-                    transform.position,
-                    Quaternion.identity),
-                    2f);
+                Destroy(Instantiate(blinkOutVfx, transform.position, Quaternion.identity), 2f);
 
-            // Blink sound
             if (blinkSfx)
-                AudioSource.PlayClipAtPoint(blinkSfx,
-                    transform.position,
-                    1f);
+                AudioSource.PlayClipAtPoint(blinkSfx, transform.position, 1f);
 
-            // TELEPORT
             agent.Warp(hit.position);
 
-            // Blink IN effect
             if (blinkInVfx)
-                Destroy(Instantiate(blinkInVfx,
-                    transform.position,
-                    Quaternion.identity),
-                    2f);
+                Destroy(Instantiate(blinkInVfx, transform.position, Quaternion.identity), 2f);
         }
     }
 }

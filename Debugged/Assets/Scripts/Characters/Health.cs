@@ -1,68 +1,98 @@
 using UnityEngine;
-using UnityEngine.Events;
+using System;
 
 public class Health : MonoBehaviour
 {
-    [System.Serializable]
-    public class HealthChangeEvent : UnityEvent<float, float> { }
-
+    [Header("Health Settings")]
     public float maxHP = 100f;
-    public bool invulnerable = false;
 
-    public float CurrentHP => hp;
+    [Tooltip("If TRUE, this object is destroyed on 0 HP (enemies). If FALSE, object stays (players).")]
+    public bool destroyOnDeath = true;
 
-    
+    public float CurrentHP { get; private set; }
 
+    // HP change event (current, max)
+    public event Action<float, float> onHealthChanged;
 
-    // UI event
-    public HealthChangeEvent onHealthChanged;
+    // Death event
+    public event Action onDeath;
 
-    // Gameplay event (easier for enemies)
-    public System.Action onDeath;
+    private bool isDead = false;
+    private bool invulnerable = false;
 
-    private float hp;
-
-    void Start()
+    private void Awake()
     {
-        hp = maxHP;
-        onHealthChanged?.Invoke(hp, maxHP);
+        CurrentHP = maxHP;
+
+        // Send initial value to UI
+        onHealthChanged?.Invoke(CurrentHP, maxHP);
     }
 
-    public void TakeDamage(float dmg)
+    // ------ External helpers for older scripts ------
+    public void InvokeHealthChanged(float current, float max)
     {
-        if (invulnerable || hp <= 0f)
-            return;
-
-        hp = Mathf.Max(0f, hp - dmg);
-        onHealthChanged?.Invoke(hp, maxHP);
-
-        if (hp <= 0f)
-            onDeath?.Invoke();
+        onHealthChanged?.Invoke(current, max);
     }
 
-    public void Heal(float amt)
+    public void ForceUpdateEvent()
     {
-        hp = Mathf.Min(maxHP, hp + amt);
-        onHealthChanged?.Invoke(hp, maxHP);
+        onHealthChanged?.Invoke(CurrentHP, maxHP);
+    }
+    // -------------------------------------------------
+
+    public void SetInvulnerable(bool value)
+    {
+        invulnerable = value;
     }
 
-    public void SetInvulnerable(bool v)
+    public void TakeDamage(float amount)
     {
-        invulnerable = v;
+        if (isDead) return;
+        if (invulnerable) return;
+
+        CurrentHP -= amount;
+        if (CurrentHP < 0) CurrentHP = 0;
+
+        onHealthChanged?.Invoke(CurrentHP, maxHP);
+
+        if (CurrentHP <= 0)
+            Die();
     }
-    // In your Health script, wherever you finalize death:
-bool _dead; // guard so it runs once
 
-void Die()
-{
-    if (_dead) return;
-    _dead = true;
+    public void Heal(float amount)
+    {
+        if (isDead) return;
 
-   
-    if (TryGetComponent<EnemyDeads>(out var enemyReg))
-        enemyReg.NotifyDied();
+        CurrentHP += amount;
+        if (CurrentHP > maxHP)
+            CurrentHP = maxHP;
 
-    
-}
+        onHealthChanged?.Invoke(CurrentHP, maxHP);
+    }
 
+    private void Die()
+    {
+        if (isDead) return;
+        isDead = true;
+
+        // Fire death event for other systems (optional)
+        onDeath?.Invoke();
+
+        // ENEMIES DESPAWN — PLAYERS DO NOT
+        if (destroyOnDeath)
+        {
+            Destroy(gameObject);        // Instant despawn — time-friendly
+        }
+        else
+        {
+            // Player death behavior (simple freeze)
+            var playerStatus = GetComponent<PlayerStatus>();
+            if (playerStatus)
+                playerStatus.abilitiesDisabled = true;
+
+            var rb = GetComponent<Rigidbody>();
+            if (rb)
+                rb.isKinematic = true;
+        }
+    }
 }

@@ -2,42 +2,47 @@ using UnityEngine;
 
 public class GlitchBasic : EnemyBase
 {
-    [Header("Ranged")]
-    public ProjectileData projectile;     // assign your PD asset here
-    public Transform firePoint;           // optional hand/head; otherwise uses body offset
+    [Header("Ranged Attack")]
+    public ProjectileData projectile;
+    public Transform firePoint;
+    public float shootDistance = 12f;
 
-    protected override void Attack()
+    protected override void Update()
     {
-        if (!target || !projectile || !projectile.prefab) return;
+        base.Update();
 
-        // decide where to spawn and where to aim
-        Vector3 spawnPos = firePoint ? firePoint.position : (transform.position + Vector3.up * 1.2f);
-        Vector3 aimPos   = target.position + Vector3.up * 0.6f;
-        Vector3 dir      = (aimPos - spawnPos).normalized;
+        if (!target) return;
+        if (attackTimer > 0f) return;
 
-        // --- Muzzle VFX + Fire SFX at the shooter ---
+        float dist = Vector3.Distance(transform.position, target.position);
+        if (dist <= shootDistance)
+        {
+            Attack();
+            attackTimer = attackCooldown;
+        }
+    }
+
+    protected override void Attack()   // ✔ FIXED: protected not public
+    {
+        if (!projectile || !projectile.prefab) return;
+
+        Vector3 spawnPos = firePoint ? firePoint.position : transform.position + Vector3.up * 1.2f;
+        Vector3 aim = target.position + Vector3.up * 0.6f;
+        Vector3 dir = (aim - spawnPos).normalized;
+
         if (projectile.muzzleVfxPrefab)
             Destroy(Instantiate(projectile.muzzleVfxPrefab, spawnPos, Quaternion.LookRotation(dir)), 3f);
+
         if (projectile.fireSfx)
-            AudioSource.PlayClipAtPoint(projectile.fireSfx, spawnPos, 1f);
+            AudioSource.PlayClipAtPoint(projectile.fireSfx, spawnPos);
 
-        // --- Spawn projectile prefab ---
         GameObject go = Instantiate(projectile.prefab, spawnPos, Quaternion.LookRotation(dir));
-        go.tag = "Projectile"; // optional; create the tag or remove this line
-
-        GetComponent<GlitchAnimatorDriver>()?.PlayAttack();
-
-        // ensure components exist & init
-        Rigidbody rb = go.GetComponent<Rigidbody>() ?? go.AddComponent<Rigidbody>();
+        var rb = go.GetComponent<Rigidbody>() ?? go.AddComponent<Rigidbody>();
         rb.useGravity = projectile.useGravity;
-        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        rb.interpolation          = RigidbodyInterpolation.Interpolate;
 
-        // projectile behaviour
-        EnemyProjectileGlitch proj = go.GetComponent<EnemyProjectileGlitch>() ?? go.AddComponent<EnemyProjectileGlitch>();
+        var proj = go.GetComponent<EnemyProjectileGlitch>() ?? go.AddComponent<EnemyProjectileGlitch>();
         proj.Init(projectile, transform, dir);
 
-        // (optional) visualize aim for debugging
-        // Debug.DrawLine(spawnPos, spawnPos + dir * 3f, Color.cyan, 1f);
+        GetComponent<GlitchAnimatorDriver>()?.PlayAttack();
     }
 }

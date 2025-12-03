@@ -9,13 +9,13 @@ public class GlitchStaticPop : EnemyBase
     public float radius = 4f;
     public float damage = 35f;
     public float knockback = 10f;
-    public LayerMask playerMask;     // set to Player
+    public LayerMask playerMask;
 
     [Header("VFX / SFX")]
     public GameObject chargeVfx;
     public GameObject explodeVfx;
-    public AudioClip  chargeSfx;
-    public AudioClip  explodeSfx;
+    public AudioClip chargeSfx;
+    public AudioClip explodeSfx;
 
     bool detonating;
     GameObject chargeInstance;
@@ -29,6 +29,7 @@ public class GlitchStaticPop : EnemyBase
             StartCoroutine(Detonate());
     }
 
+    // FIXED: match EnemyBase
     protected override void Attack()
     {
         if (!detonating) StartCoroutine(Detonate());
@@ -39,7 +40,6 @@ public class GlitchStaticPop : EnemyBase
         detonating = true;
         SafeStopAgent();
 
-        // Use the SAME Attack anim as your “charge” telegraph
         GetComponent<GlitchAnimatorDriver>()?.PlayAttack();
 
         if (chargeVfx) chargeInstance = Instantiate(chargeVfx, transform.position, Quaternion.identity, transform);
@@ -56,17 +56,14 @@ public class GlitchStaticPop : EnemyBase
         if (explodeVfx) Destroy(Instantiate(explodeVfx, transform.position, Quaternion.identity), 3f);
         if (explodeSfx) AudioSource.PlayClipAtPoint(explodeSfx, transform.position, 1f);
 
-        var hits = Physics.OverlapSphere(transform.position, radius, playerMask, QueryTriggerInteraction.Collide);
+        var hits = Physics.OverlapSphere(transform.position, radius, playerMask);
         foreach (var h in hits)
         {
             h.GetComponent<Health>()?.TakeDamage(damage);
             var rb = h.attachedRigidbody;
-            if (rb) rb.AddExplosionForce(knockback, transform.position, radius, 0.25f, ForceMode.Impulse);
+            if (rb) rb.AddExplosionForce(knockback, transform.position, radius);
         }
+
         Destroy(gameObject);
     }
-
-#if UNITY_EDITOR
-    void OnDrawGizmosSelected(){ Gizmos.color = new Color(1,0,0,.35f); Gizmos.DrawWireSphere(transform.position, radius); }
-#endif
 }
