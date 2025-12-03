@@ -91,6 +91,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d4cec6d3e6de549a8b560941258ffc8e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1700357351845651202}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d4cec6d3e6de549a8b560941258ffc8e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7399934491044444001}
   m_SourcePrefab: {fileID: 100100000, guid: d4cec6d3e6de549a8b560941258ffc8e, type: 3}
 --- !u!1 &308241040142561028 stripped
 GameObject:
@@ -164,6 +167,7 @@ MonoBehaviour:
   attackRange: 8
   attackCooldown: 1.5
   contactDamage: 0
+  retargetInterval: 0.5
 --- !u!114 &1700357351845651202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +184,7 @@ MonoBehaviour:
   attackRange: 8
   attackCooldown: 1.5
   contactDamage: 0
+  retargetInterval: 0.5
   triggerDistance: 1.8
   windupTime: 0.5
   radius: 4
@@ -192,3 +197,25 @@ MonoBehaviour:
   explodeVfx: {fileID: 358637981425055526, guid: 8eb503696b886e04faff8fc0f480d473, type: 3}
   chargeSfx: {fileID: 8300000, guid: 10dbe0d3efc047c49ade2a16910ba3d5, type: 3}
   explodeSfx: {fileID: 8300000, guid: bcf57a9df9652430fa2a6c47fd5930d4, type: 3}
+--- !u!95 &7399934491044444001
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308241040142561028}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: d4cec6d3e6de549a8b560941258ffc8e, type: 3}
+  m_Controller: {fileID: 9100000, guid: 2d62b5e7445af4c5192ed3c234550b4d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
