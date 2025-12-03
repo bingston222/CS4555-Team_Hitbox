@@ -6,93 +6,101 @@ public class Health : MonoBehaviour
     [Header("Health Settings")]
     public float maxHP = 100f;
 
-    [Tooltip("If TRUE, this object is destroyed on 0 HP (enemies). If FALSE, object stays (players).")]
-    public bool destroyOnDeath = true;
+    // Other scripts read this directly
+    public float CurrentHP;
 
-    public float CurrentHP { get; private set; }
-
-    // HP change event (current, max)
-    public event Action<float, float> onHealthChanged;
-
-    // Death event
+    // Events for UI and status scripts
+    public event Action<float, float> onHealthChanged; // (current, max)
     public event Action onDeath;
 
-    private bool isDead = false;
     private bool invulnerable = false;
+    private bool isDead = false;
+
+    // Used only to know if this is a player (players have PlayerStatus)
+    private PlayerStatus playerStatus;
 
     private void Awake()
     {
         CurrentHP = maxHP;
-
-        // Send initial value to UI
-        onHealthChanged?.Invoke(CurrentHP, maxHP);
+        playerStatus = GetComponent<PlayerStatus>();   // null on enemies, not null on players
+        RaiseHealthChanged();
     }
 
-    // ------ External helpers for older scripts ------
-    public void InvokeHealthChanged(float current, float max)
+    // ------------------ Public API ------------------
+
+    public void TakeDamage(float amount)
     {
-        onHealthChanged?.Invoke(current, max);
+        if (isDead) return;
+        if (invulnerable) return;
+        if (amount <= 0f) return;
+
+        CurrentHP -= amount;
+        if (CurrentHP < 0f) CurrentHP = 0f;
+
+        RaiseHealthChanged();
+
+        if (CurrentHP <= 0f)
+        {
+            Die();
+        }
     }
 
-    public void ForceUpdateEvent()
+    public void Heal(float amount)
     {
-        onHealthChanged?.Invoke(CurrentHP, maxHP);
+        if (isDead) return;
+        if (amount <= 0f) return;
+
+        CurrentHP += amount;
+        if (CurrentHP > maxHP) CurrentHP = maxHP;
+
+        RaiseHealthChanged();
     }
-    // -------------------------------------------------
 
     public void SetInvulnerable(bool value)
     {
         invulnerable = value;
     }
 
-    public void TakeDamage(float amount)
-    {
-        if (isDead) return;
-        if (invulnerable) return;
-
-        CurrentHP -= amount;
-        if (CurrentHP < 0) CurrentHP = 0;
-
-        onHealthChanged?.Invoke(CurrentHP, maxHP);
-
-        if (CurrentHP <= 0)
-            Die();
-    }
-
-    public void Heal(float amount)
+    // Some scripts may call this directly
+    public void Kill()
     {
         if (isDead) return;
 
-        CurrentHP += amount;
-        if (CurrentHP > maxHP)
-            CurrentHP = maxHP;
-
-        onHealthChanged?.Invoke(CurrentHP, maxHP);
+        CurrentHP = 0f;
+        RaiseHealthChanged();
+        Die();
     }
+
+    /// <summary>
+    /// Used by PlayerStatus when respawning the player.
+    /// </summary>
+    public void ResetFull()
+    {
+        isDead = false;
+        CurrentHP = maxHP;
+        RaiseHealthChanged();
+    }
+
+    // ------------------ Internal ------------------
 
     private void Die()
     {
         if (isDead) return;
         isDead = true;
 
-        // Fire death event for other systems (optional)
+        // Notify listeners first (PlayerStatus listens to this)
         onDeath?.Invoke();
 
-        // ENEMIES DESPAWN — PLAYERS DO NOT
-        if (destroyOnDeath)
+        // If this is NOT a player, destroy the object (enemies despawn)
+        if (playerStatus == null)
         {
-            Destroy(gameObject);        // Instant despawn — time-friendly
+            Destroy(gameObject);
         }
-        else
-        {
-            // Player death behavior (simple freeze)
-            var playerStatus = GetComponent<PlayerStatus>();
-            if (playerStatus)
-                playerStatus.abilitiesDisabled = true;
+        // If it IS a player, PlayerStatus will handle respawn via onDeath.
+    }
 
-            var rb = GetComponent<Rigidbody>();
-            if (rb)
-                rb.isKinematic = true;
-        }
+    private void RaiseHealthChanged()
+    {
+        onHealthChanged?.Invoke(CurrentHP, maxHP);
     }
 }
