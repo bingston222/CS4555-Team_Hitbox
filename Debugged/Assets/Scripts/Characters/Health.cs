@@ -1,68 +1,106 @@
 using UnityEngine;
-using UnityEngine.Events;
+using System;
 
 public class Health : MonoBehaviour
 {
-    [System.Serializable]
-    public class HealthChangeEvent : UnityEvent<float, float> { }
-
+    [Header("Health Settings")]
     public float maxHP = 100f;
-    public bool invulnerable = false;
 
-    public float CurrentHP => hp;
+    // Other scripts read this directly
+    public float CurrentHP;
 
-    
+    // Events for UI and status scripts
+    public event Action<float, float> onHealthChanged; // (current, max)
+    public event Action onDeath;
 
+    private bool invulnerable = false;
+    private bool isDead = false;
 
-    // UI event
-    public HealthChangeEvent onHealthChanged;
+    // Used only to know if this is a player (players have PlayerStatus)
+    private PlayerStatus playerStatus;
 
-    // Gameplay event (easier for enemies)
-    public System.Action onDeath;
-
-    private float hp;
-
-    void Start()
+    private void Awake()
     {
-        hp = maxHP;
-        onHealthChanged?.Invoke(hp, maxHP);
+        CurrentHP = maxHP;
+        playerStatus = GetComponent<PlayerStatus>();   // null on enemies, not null on players
+        RaiseHealthChanged();
     }
 
-    public void TakeDamage(float dmg)
+    // ------------------ Public API ------------------
+
+    public void TakeDamage(float amount)
     {
-        if (invulnerable || hp <= 0f)
-            return;
+        if (isDead) return;
+        if (invulnerable) return;
+        if (amount <= 0f) return;
 
-        hp = Mathf.Max(0f, hp - dmg);
-        onHealthChanged?.Invoke(hp, maxHP);
+        CurrentHP -= amount;
+        if (CurrentHP < 0f) CurrentHP = 0f;
 
-        if (hp <= 0f)
-            onDeath?.Invoke();
+        RaiseHealthChanged();
+
+        if (CurrentHP <= 0f)
+        {
+            Die();
+        }
     }
 
-    public void Heal(float amt)
+    public void Heal(float amount)
     {
-        hp = Mathf.Min(maxHP, hp + amt);
-        onHealthChanged?.Invoke(hp, maxHP);
+        if (isDead) return;
+        if (amount <= 0f) return;
+
+        CurrentHP += amount;
+        if (CurrentHP > maxHP) CurrentHP = maxHP;
+
+        RaiseHealthChanged();
     }
 
-    public void SetInvulnerable(bool v)
+    public void SetInvulnerable(bool value)
     {
-        invulnerable = v;
+        invulnerable = value;
     }
-    // In your Health script, wherever you finalize death:
-bool _dead; // guard so it runs once
 
-void Die()
-{
-    if (_dead) return;
-    _dead = true;
+    // Some scripts may call this directly
+    public void Kill()
+    {
+        if (isDead) return;
 
-   
-    if (TryGetComponent<EnemyDeads>(out var enemyReg))
-        enemyReg.NotifyDied();
+        CurrentHP = 0f;
+        RaiseHealthChanged();
+        Die();
+    }
 
-    
-}
+    /// <summary>
+    /// Used by PlayerStatus when respawning the player.
+    /// </summary>
+    public void ResetFull()
+    {
+        isDead = false;
+        CurrentHP = maxHP;
+        RaiseHealthChanged();
+    }
 
+    // ------------------ Internal ------------------
+
+    private void Die()
+    {
+        if (isDead) return;
+        isDead = true;
+
+        // Notify listeners first (PlayerStatus listens to this)
+        onDeath?.Invoke();
+
+        // If this is NOT a player, destroy the object (enemies despawn)
+        if (playerStatus == null)
+        {
+            Destroy(gameObject);
+        }
+        // If it IS a player, PlayerStatus will handle respawn via onDeath.
+    }
+
+    private void RaiseHealthChanged()
+    {
+        onHealthChanged?.Invoke(CurrentHP, maxHP);
+    }
 }

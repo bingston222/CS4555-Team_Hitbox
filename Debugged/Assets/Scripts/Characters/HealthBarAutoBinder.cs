@@ -4,13 +4,8 @@ using UnityEngine;
 public class HealthBarAutoBinder : MonoBehaviour
 {
     [Header("How to find the UI (choose ONE)")]
-    [Tooltip("If set, this exact HealthBarUI will be used and other options are ignored.")]
     public HealthBarUI directReference;
-
-    [Tooltip("Optional tag of the bar to bind to, e.g. P1_HealthBar, P2_HealthBar.")]
     public string healthBarTag;
-
-    [Tooltip("If > 0, will look for a tag named P{PlayerIndex}_HealthBar. Ignored if Direct Reference is set.")]
     public int playerIndex = 0;
 
     [Header("Debug")]
@@ -26,53 +21,44 @@ public class HealthBarAutoBinder : MonoBehaviour
 
         if (!ui)
         {
-            Debug.LogWarning(
-                $"[HealthBarAutoBinder:{name}] Could not resolve a HealthBarUI. " +
-                "Assign 'directReference', or set 'healthBarTag' / 'playerIndex'."
-            );
+            Debug.LogWarning($"[HealthBarAutoBinder:{name}] Could not resolve a HealthBarUI.");
         }
     }
 
     void OnEnable()
     {
-        if (health) health.onHealthChanged.AddListener(OnHealthChanged);
+        if (health)
+            health.onHealthChanged += OnHealthChanged;   // FIXED
     }
 
     void OnDisable()
     {
-        if (health) health.onHealthChanged.RemoveListener(OnHealthChanged);
+        if (health)
+            health.onHealthChanged -= OnHealthChanged;   // FIXED
     }
 
     void Start()
     {
-        if (ui && health) ui.UpdateBar(health.maxHP, health.maxHP);
-        if (logBinding)
-        {
-            string uiName = ui ? ui.name : "NULL";
-            Debug.Log($"[HealthBarAutoBinder:{name}] Bound to UI: {uiName}");
-        }
+        if (ui && health)
+            ui.UpdateBar(health.maxHP, health.maxHP);
     }
 
     private void OnHealthChanged(float current, float max)
     {
-        if (ui) ui.UpdateBar(current, max);
+        if (ui)
+            ui.UpdateBar(current, max);
     }
-
-    // --------- Helpers ---------
 
     private HealthBarUI ResolveHealthBar()
     {
-        // 1) Direct reference wins
         if (directReference) return directReference;
 
-        // 2) Tag (explicit)
         if (!string.IsNullOrEmpty(healthBarTag))
         {
             GameObject go = GameObject.FindGameObjectWithTag(healthBarTag);
             if (go) return go.GetComponent<HealthBarUI>();
         }
 
-        // 3) Player index → P{index}_HealthBar
         if (playerIndex > 0)
         {
             string autoTag = $"P{playerIndex}_HealthBar";
@@ -80,43 +66,12 @@ public class HealthBarAutoBinder : MonoBehaviour
             if (go) return go.GetComponent<HealthBarUI>();
         }
 
-        // 4) Fallback: first HealthBarUI in scene
         return FindObjectOfType<HealthBarUI>();
     }
 
-    // Safer tag finder (prevents exception if tag doesn't exist)
     private GameObject SafeFindWithTag(string tag)
     {
-        try
-        {
-            return GameObject.FindGameObjectWithTag(tag);
-        }
-        catch
-        {
-            if (logBinding)
-                Debug.LogWarning($"[HealthBarAutoBinder:{name}] Tag '{tag}' does not exist in this project.");
-            return null;
-        }
-    }
-
-#if UNITY_EDITOR
-    // Editor convenience: warn if you configured overlapping methods
-    void OnValidate()
-    {
-        if (directReference && (!string.IsNullOrEmpty(healthBarTag) || playerIndex > 0))
-        {
-            Debug.LogWarning($"[HealthBarAutoBinder:{name}] 'directReference' is set; tag/index settings will be ignored.");
-        }
-    }
-#endif
-
-    // ---- Optional debug shortcut (remove if undesired) ----
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            health?.TakeDamage(10f);
-            if (logBinding) Debug.Log("[HealthBarAutoBinder] test damage -10");
-        }
+        try { return GameObject.FindGameObjectWithTag(tag); }
+        catch { return null; }
     }
 }

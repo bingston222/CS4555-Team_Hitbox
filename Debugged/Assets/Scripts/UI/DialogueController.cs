@@ -9,17 +9,17 @@ public class DialogueController : MonoBehaviour
     [System.Serializable]
     public class DialogueLine
     {
-        public Sprite characterIcon;
-        [TextArea] public string text;
-        public AudioClip customSound;
+        public Sprite characterIcon;     
+        [TextArea] public string text;   
+        public AudioClip customSound;    
     }
 
     [Header("Dialogue Data")]
     public DialogueLine[] lines;
 
     [Header("UI References")]
-    public Image iconUI;
-    public TMP_Text dialogueUI;
+    public Image iconUI;         
+    public TMP_Text dialogueUI;  
 
     [Header("Sound Settings")]
     public AudioSource audioSource;
@@ -29,18 +29,33 @@ public class DialogueController : MonoBehaviour
     [Header("Scene Settings")]
     public string nextSceneName;
 
-    // OPTIONAL — only enabled in scenes that need freezing and no scene transition
     [Header("Optional Behavior")]
-    public bool stayInScene = false;
-    public bool freezePlayers = false;
+    public bool stayInScene = true;    
+    public bool freezePlayers = true;  
+
+    [Header("UI To Hide During Dialogue")]
+    public GameObject[] uiToHide;       
 
     int index = 0;
     bool isTyping = false;
 
     void Start()
     {
+        // Prevent audio muting during Pause states
+        if (audioSource != null)
+        {
+            audioSource.ignoreListenerPause = true;
+            audioSource.ignoreListenerVolume = true;
+        }
+
+        // Freeze players if needed
         if (freezePlayers)
             BlockAllPlayerInput();
+
+        // Hide HUD
+        foreach (var ui in uiToHide)
+            if (ui != null)
+                ui.SetActive(false);
 
         ShowLine();
     }
@@ -51,6 +66,8 @@ public class DialogueController : MonoBehaviour
             NextLine();
     }
 
+    // ------------------------ DIALOGUE HANDLING ------------------------
+
     void ShowLine()
     {
         if (index >= lines.Length)
@@ -59,8 +76,11 @@ public class DialogueController : MonoBehaviour
             return;
         }
 
-        iconUI.sprite = lines[index].characterIcon;
+        // Set portrait
+        if (iconUI != null)
+            iconUI.sprite = lines[index].characterIcon;
 
+        // Play SFX
         PlaySoundForLine(lines[index]);
 
         StopAllCoroutines();
@@ -71,6 +91,9 @@ public class DialogueController : MonoBehaviour
     {
         isTyping = true;
         dialogueUI.text = "";
+
+        if (string.IsNullOrEmpty(text))
+            text = " "; // prevents instant-skip
 
         foreach (char c in text)
         {
@@ -89,44 +112,36 @@ public class DialogueController : MonoBehaviour
 
     void PlaySoundForLine(DialogueLine line)
     {
+        if (audioSource == null) return;
+
         if (line.customSound != null)
             audioSource.PlayOneShot(line.customSound, volume);
-        else
+        else if (blipSound != null)
             audioSource.PlayOneShot(blipSound, volume);
     }
 
+    // ------------------------ END DIALOGUE ------------------------
+
     void FinishDialogue()
     {
+        // Restore movement
         if (freezePlayers)
             UnblockAllPlayerInput();
 
-        if (stayInScene)
-        {
-            // Hide the entire dialogue UI panel
-            dialogueUI.transform.parent.gameObject.SetActive(false);
-            Debug.Log("Dialogue finished — staying in scene.");
-            return;
-        }
+        // Restore HUD
+        foreach (var ui in uiToHide)
+            if (ui != null)
+                ui.SetActive(true);
 
-        LoadNextScene();
-    }
+        // 🔥 Hide the ENTIRE DialogueCanvas object
+        gameObject.SetActive(false);
 
-    void LoadNextScene()
-    {
+        // Load next scene if assigned
         if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            Debug.Log("Loading next scene: " + nextSceneName);
             SceneManager.LoadScene(nextSceneName);
-        }
-        else
-        {
-            Debug.LogWarning("Next scene name is empty — no scene to load.");
-        }
     }
 
-    // ----------------------------------------------------------
-    // Freezing / Unfreezing Player Input
-    // ----------------------------------------------------------
+    // ------------------------ PLAYER INPUT BLOCKING ------------------------
 
     void BlockAllPlayerInput()
     {
@@ -140,3 +155,4 @@ public class DialogueController : MonoBehaviour
             blocker.inputBlocked = false;
     }
 }
+
