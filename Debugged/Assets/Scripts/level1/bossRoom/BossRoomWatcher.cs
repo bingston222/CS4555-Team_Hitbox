@@ -1,12 +1,16 @@
 using UnityEngine;
+using System.Collections;
 
 public class BossRoomWatcher : MonoBehaviour
 {
     [Header("Bosses in this room")]
-    public GameObject[] bosses;      // drag each boss here
+    public GameObject[] bosses;
 
     [Header("Dialogue")]
-    public SceneBeats sceneBeats;    // drag your SceneBeatsManager
+    public SceneBeats sceneBeats;
+
+    [Header("Scene Transition")]
+    public SceneTransition sceneTransition;
 
     private bool hasPlayed = false;
 
@@ -17,10 +21,9 @@ public class BossRoomWatcher : MonoBehaviour
 
         bool allDead = true;
 
-        // If any boss GameObject still exists, they’re not all dead yet
         foreach (var boss in bosses)
         {
-            if (boss != null)      // still alive
+            if (boss != null)
             {
                 allDead = false;
                 break;
@@ -30,8 +33,19 @@ public class BossRoomWatcher : MonoBehaviour
         if (!allDead) return;
 
         hasPlayed = true;
-
-        // Use your SceneBeats helper (respects PlayOnce guard too)
-        sceneBeats.PlayBossRoom_Complete();
+        StartCoroutine(BossRoomSequence());
     }
+
+    private IEnumerator BossRoomSequence()
+{
+    // 1. Play final dialogue
+    yield return sceneBeats.PlayOnce("bossRoom.done", sceneBeats.bossRoom_Complete);
+
+    // 2. WAIT before fading
+    yield return new WaitForSeconds(8f);   // <--- Wait 8 seconds
+
+    // 3. Fade out
+    if (sceneTransition != null)
+        sceneTransition.BeginTransition();
+}
 }

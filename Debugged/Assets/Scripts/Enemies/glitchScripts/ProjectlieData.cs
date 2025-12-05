@@ -1,47 +1,45 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Glitch/Projectile Data", fileName = "ProjectileData")]
+[CreateAssetMenu(menuName = "Combat/Projectile Data", fileName = "ProjectileData")]
 public class ProjectileData : ScriptableObject
 {
     [Header("Prefab & VFX")]
-    [Tooltip("Projectile prefab that gets instantiated and launched.")]
+    [Tooltip("The projectile prefab that gets instantiated and launched.")]
     public GameObject prefab;
 
-    [Tooltip("One-shot VFX that appears at fire point.")]
+    [Tooltip("One-shot effect spawned at the shooter when fired.")]
     public GameObject muzzleVfxPrefab;
 
-    [Tooltip("Looping FX that follows projectile during flight.")]
-    public GameObject flightVfxPrefab;
+    public GameObject flightVfxPrefab;  // continuous FX that travels with projectile
 
-    [Tooltip("Impact VFX spawned when projectile hits something.")]
+
+    [Tooltip("Impact effect spawned where the projectile hits.")]
     public GameObject hitVfxPrefab;
 
-    [Header("Audio")]
-    [Tooltip("Sound played when projectile is fired.")]
+    [Tooltip("Sound played at fire time.")]
     public AudioClip fireSfx;
 
-    [Tooltip("Sound played when projectile hits.")]
+    [Tooltip("Sound played on impact.")]
     public AudioClip hitSfx;
 
-    [Header("Stats")]
+    [Header("Tuning")]
     public float speed = 16f;
     public float damage = 10f;
+    public bool  useGravity = false;
     public float lifetime = 6f;
-    public bool useGravity = false;
 
-    [Header("Collision Filtering")]
-    [Tooltip("Layers this projectile is allowed to damage (Player, etc).")]
+    [Header("Layers")]
+    [Tooltip("What layers this projectile is allowed to damage (e.g., Player).")]
     public LayerMask hittableLayers;
 
 #if UNITY_EDITOR
+    // Convenience: if you forget to set it, default to Player layer (if it exists)
     private void OnValidate()
     {
-        // If user forgets to assign layers, default to Player layer
         if (hittableLayers == 0)
         {
             int mask = LayerMask.GetMask("Player");
-            if (mask != 0)
-                hittableLayers = mask;
+            if (mask != 0) hittableLayers = mask;
         }
     }
 #endif

@@ -24543,6 +24543,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6735966540646113996, guid: fdacff789ea876c40affc1c2ea83ec41, type: 3}
   m_PrefabInstance: {fileID: 312146878}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &312531357 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5466221776133133133, guid: 9c7af0103e325a544ba8eab114ada7a5, type: 3}
+  m_PrefabInstance: {fileID: 470905307}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76921466ba8d7e84595e3ebef24304cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &313406013
 GameObject:
   m_ObjectHideFlags: 0
@@ -46685,6 +46696,14 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 70
       objectReference: {fileID: 0}
+    - target: {fileID: 1342123079025013570, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+      propertyPath: CurrentHP
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2050850097146244661, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+      propertyPath: abilityUI
+      value: 
+      objectReference: {fileID: 1943278051}
     - target: {fileID: 2840771886311648033, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.25
@@ -46745,6 +46764,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: patchnoteAnim
       objectReference: {fileID: 0}
+    - target: {fileID: 9018595789765817369, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 1943278051}
     - target: {fileID: 9018595789765817369, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: healingProjectilePrefab
       value: 
@@ -104364,6 +104387,14 @@ PrefabInstance:
       propertyPath: directReference
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3452318955154602304, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 312531357}
+    - target: {fileID: 3734348885246267625, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
+      propertyPath: abilityUI
+      value: 
+      objectReference: {fileID: 312531357}
     - target: {fileID: 8739180875646708710, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.54
@@ -153548,6 +153579,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 72378135416196424, guid: 566581ca29943964f89862f7ac1b3efc, type: 3}
   m_PrefabInstance: {fileID: 1940858300}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1943278051 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5941980044355465131, guid: 9c7af0103e325a544ba8eab114ada7a5, type: 3}
+  m_PrefabInstance: {fileID: 470905307}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76921466ba8d7e84595e3ebef24304cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1943428789
 PrefabInstance:
   m_ObjectHideFlags: 0
