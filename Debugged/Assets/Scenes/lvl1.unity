@@ -645,7 +645,7 @@ PrefabInstance:
       objectReference: {fileID: 390719293}
     - target: {fileID: 506517766488820659, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 241.3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 506517766488820659, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
       propertyPath: m_LocalPosition.y
@@ -653,7 +653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 506517766488820659, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 3.25
       objectReference: {fileID: 0}
     - target: {fileID: 506517766488820659, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
       propertyPath: m_LocalRotation.w
@@ -711,6 +711,10 @@ PrefabInstance:
       propertyPath: sprintSpeed
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 3452318955154602304, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 292102578}
     - target: {fileID: 8914689006597724973, guid: 7646b0afeafde4869a668722f56c04ba, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.671
@@ -4428,7 +4432,7 @@ Transform:
   m_GameObject: {fileID: 176891794}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 232.08958, y: -0.28, z: 6.4173055}
+  m_LocalPosition: {x: 1.3383741, y: -0.28, z: 4.5613413}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21158,22 +21162,6 @@ MonoBehaviour:
     panelFade: 0
     textFade: 0
   calibrationGuide:
-  - characterIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-    text: 'HitBox Walk: WASD Run:C  Jump: F'
-    voiceClip: {fileID: 8300000, guid: 61196a5699ffc734e94e58ae9789a488, type: 3}
-    waitForInput: 0
-    autoHold: 0.5
-    typewriterSpeed: 0
-    panelFade: 0
-    textFade: 0
-  - characterIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-    text: 'Pathnote ...  Walk: IJKL  Run:N  Jump: H'
-    voiceClip: {fileID: 8300000, guid: 61196a5699ffc734e94e58ae9789a488, type: 3}
-    waitForInput: 0
-    autoHold: 0.5
-    typewriterSpeed: 0
-    panelFade: 0
-    textFade: 0
   - characterIcon: {fileID: 21300000, guid: 81d262c64dd62704b9419beb7f3f00b4, type: 3}
     text: Okay guys check if your all still there.
     voiceClip: {fileID: 0}
@@ -21202,32 +21190,32 @@ MonoBehaviour:
   - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
     text: Well that wasnt to bad
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: fb98fa2557843f04e87227ca42ac6028, type: 3}
     text: I guess they were all there :o
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: 8217982dbe280ee4f9e8422dd347963e, type: 3}
     text: Of course, I built the Teleportation System
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: fb98fa2557843f04e87227ca42ac6028, type: 3}
     text: Not that good since their so far away
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
@@ -21295,56 +21283,56 @@ MonoBehaviour:
   - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
     text: Okay its me and you Patch
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: f058c26aa98edc14da9c117d7cce4814, type: 3}
     text: Dont worry Hitbox ive got your back on anything
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: f058c26aa98edc14da9c117d7cce4814, type: 3}
     text: Let continue down this path
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
     text: Yeah, hopefully we can get past this sector quickly.
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: f058c26aa98edc14da9c117d7cce4814, type: 3}
     text: Look what is that??
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.4
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: f058c26aa98edc14da9c117d7cce4814, type: 3}
     text: The system is on alert we need to pass those cameras or it will it's defenses.
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.4
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: f058c26aa98edc14da9c117d7cce4814, type: 3}
     text: Let's tread carefully.
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.4
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
@@ -21378,7 +21366,7 @@ MonoBehaviour:
     text: I thought they were annihilated.
     voiceClip: {fileID: 0}
     waitForInput: 0
-    autoHold: 0.5
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
@@ -21386,7 +21374,7 @@ MonoBehaviour:
     text: Something bad is occuring here.
     voiceClip: {fileID: 0}
     waitForInput: 0
-    autoHold: 0.5
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
@@ -21394,7 +21382,7 @@ MonoBehaviour:
     text: Hey, you see that?
     voiceClip: {fileID: 0}
     waitForInput: 0
-    autoHold: 0.6
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
@@ -21402,7 +21390,7 @@ MonoBehaviour:
     text: We need to fix that fuze box, we can leave it like that.
     voiceClip: {fileID: 0}
     waitForInput: 0
-    autoHold: 0.6
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
@@ -21410,7 +21398,7 @@ MonoBehaviour:
     text: That's probably causing the power outs.
     voiceClip: {fileID: 0}
     waitForInput: 0
-    autoHold: 0.6
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
@@ -21419,23 +21407,23 @@ MonoBehaviour:
       wait.
     voiceClip: {fileID: 0}
     waitForInput: 0
-    autoHold: 0.5
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
     text: I press [TAB] to start it, and you do [DELETE].
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.7
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
     text: Then to fix it we both press [space].
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.6
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
@@ -21443,16 +21431,16 @@ MonoBehaviour:
   - characterIcon: {fileID: 21300000, guid: f058c26aa98edc14da9c117d7cce4814, type: 3}
     text: Wow that was hard!!
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: f058c26aa98edc14da9c117d7cce4814, type: 3}
     text: I think the door should open now.
     voiceClip: {fileID: 0}
-    waitForInput: 1
-    autoHold: 0
+    waitForInput: 0
+    autoHold: 0.3
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
@@ -21466,14 +21454,6 @@ MonoBehaviour:
     textFade: 0
   - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
     text: I can see the corruption seeping out of that room.
-    voiceClip: {fileID: 0}
-    waitForInput: 0
-    autoHold: 0.5
-    typewriterSpeed: 0
-    panelFade: 0
-    textFade: 0
-  - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
-    text: Watch out there are glitches everywhere!!!
     voiceClip: {fileID: 0}
     waitForInput: 0
     autoHold: 0.5
@@ -21531,7 +21511,7 @@ MonoBehaviour:
   subtitleText: {fileID: 1247180148}
   audioSource: {fileID: 1249339991}
   crackleClip: {fileID: 8300000, guid: ca000da645d1c644da71c0d055f1e628, type: 3}
-  defaultBlip: {fileID: 8300000, guid: 5219b9bd33b5d4c4f8ad7be320db8d3c, type: 3}
+  defaultBlip: {fileID: 8300000, guid: 401cb40fa3228434c8186aa3755b74eb, type: 3}
   sfxVolume: 1
   autoStart: 0
   typewriterCps: 50
@@ -22672,6 +22652,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FadeCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1843813426507279732, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1948896617911131201, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
       propertyPath: nextSceneName
       value: Level2-RAM
@@ -23586,7 +23570,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 287fa6c62e74f4df694e4de56df69c01, type: 3}
+  m_Resource: {fileID: 8300000, guid: 38c9deac25fa5461aa647ec7f983b6db, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -28773,6 +28757,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FadeFromBlackCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8934111455699993824, guid: c54672ce87feb4062b6233b49ed4e5ea, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29990,6 +29978,14 @@ MonoBehaviour:
     typewriterSpeed: 0
     panelFade: 0
     textFade: 0
+  - characterIcon: {fileID: 21300000, guid: 7bfa610f618f34e17906404a1d358d1d, type: 3}
+    text: Friends Calling!!
+    voiceClip: {fileID: 8300000, guid: 96d598cf1d3ec43acbb1b84c58acae3e, type: 3}
+    waitForInput: 0
+    autoHold: 0.4
+    typewriterSpeed: 0
+    panelFade: 0
+    textFade: 0
   - characterIcon: {fileID: 21300000, guid: 81d262c64dd62704b9419beb7f3f00b4, type: 3}
     text: Can you hear me alright? testing ... testing ... ok
     voiceClip: {fileID: 0}
@@ -30078,7 +30074,7 @@ MonoBehaviour:
   subtitleText: {fileID: 1247180148}
   audioSource: {fileID: 1249339991}
   crackleClip: {fileID: 8300000, guid: ca000da645d1c644da71c0d055f1e628, type: 3}
-  defaultBlip: {fileID: 8300000, guid: 5219b9bd33b5d4c4f8ad7be320db8d3c, type: 3}
+  defaultBlip: {fileID: 8300000, guid: 401cb40fa3228434c8186aa3755b74eb, type: 3}
   sfxVolume: 1
   autoStart: 0
   typewriterCps: 50
@@ -46090,7 +46086,7 @@ Transform:
   m_GameObject: {fileID: 1731530010}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 226.93492, y: 6.8876195, z: -3.5826945}
+  m_LocalPosition: {x: -3.8162832, y: 6.8876195, z: -5.4386587}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47775,6 +47771,7 @@ MonoBehaviour:
   - {fileID: 727262123}
   - {fileID: 838400868}
   sceneBeats: {fileID: 874277441}
+  sceneTransition: {fileID: 1928349423}
 --- !u!1 &1773983761
 GameObject:
   m_ObjectHideFlags: 0
@@ -51643,6 +51640,17 @@ Transform:
   - {fileID: 773567793}
   m_Father: {fileID: 133811139}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1928349423 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1948896617911131201, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
+  m_PrefabInstance: {fileID: 927613408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14aa09d26b7194981aaa55ef683e9a59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1928823407
 GameObject:
   m_ObjectHideFlags: 0
@@ -54674,8 +54682,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6967441724523860083, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6967441724523860083, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6967441724523860083, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6967441724523860083, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 236.6
+      value: 12.89
       objectReference: {fileID: 0}
     - target: {fileID: 6967441724523860083, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -54683,7 +54703,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6967441724523860083, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.4
+      value: -0.42
       objectReference: {fileID: 0}
     - target: {fileID: 6967441724523860083, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -54691,7 +54711,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6967441724523860083, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6967441724523860083, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: m_LocalRotation.y
@@ -54699,7 +54719,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6967441724523860083, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6967441724523860083, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -54744,6 +54764,18 @@ PrefabInstance:
     - target: {fileID: 7784763526970129775, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
       propertyPath: sprintKey
       value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 9018595789765817369, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 329790652}
+    - target: {fileID: 9018595789765817369, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+      propertyPath: allyHeal
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 9018595789765817369, guid: 9b6fc53f9aaa545408ec3a8a5837741b, type: 3}
+      propertyPath: selfHeal
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -57024,8 +57056,6 @@ SceneRoots:
   - {fileID: 1030564775}
   - {fileID: 133811139}
   - {fileID: 87843718}
-  - {fileID: 2048234156}
-  - {fileID: 20524985}
   - {fileID: 791167247}
   - {fileID: 1914503567}
   - {fileID: 756837053}
@@ -57034,6 +57064,8 @@ SceneRoots:
   - {fileID: 932311150}
   - {fileID: 1088041931}
   - {fileID: 390719291}
+  - {fileID: 486559031}
+  - {fileID: 20524985}
+  - {fileID: 2048234156}
   - {fileID: 927613408}
   - {fileID: 1172840581}
-  - {fileID: 486559031}

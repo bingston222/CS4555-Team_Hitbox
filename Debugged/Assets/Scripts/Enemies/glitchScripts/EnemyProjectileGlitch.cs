@@ -1,74 +1,93 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class EnemyProjectileGlitch : MonoBehaviour
 {
+    private Rigidbody rb;
     private ProjectileData data;
-    private Vector3 direction;
-    private Transform shooter;
-    private float timer;
+    private Transform owner;
+    private bool initialized;
+    private GameObject flightVfxInstance;
 
-    GameObject flightVfxInstance;
-
-    public void Init(ProjectileData d, Transform s, Vector3 dir)
+    public void Init(ProjectileData d, Transform shooter, Vector3 dir)
     {
-        data = d;
-        shooter = s;
-        direction = dir;
-        timer = 0f;
+        data  = d;
+        owner = shooter;
+        rb    = GetComponent<Rigidbody>();
 
-        // Create flight VFX that follows projectile
+        // Rigidbody setup
+        rb.useGravity = data.useGravity;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        rb.interpolation          = RigidbodyInterpolation.Interpolate;
+
+        // Face and launch
+        transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+        rb.linearVelocity        = dir * data.speed;
+
+        // --- attach flying VFX ---
         if (data.flightVfxPrefab)
         {
-            flightVfxInstance = Instantiate(data.flightVfxPrefab, transform.position, Quaternion.identity, transform);
+            flightVfxInstance = Instantiate(data.flightVfxPrefab, transform);
+            flightVfxInstance.transform.localPosition = Vector3.zero;
+
+            var ps = flightVfxInstance.GetComponent<ParticleSystem>();
+            if (ps)
+            {
+                var main = ps.main;
+                main.simulationSpace = ParticleSystemSimulationSpace.World; // particles stay behind
+                ps.Play();
+            }
         }
 
-        // Apply gravity settings
-        var rb = GetComponent<Rigidbody>();
-        if (rb)
-            rb.useGravity = data.useGravity;
+        // lifetime + fire sound
+        if (data.lifetime > 0f) Invoke(nameof(SelfDestruct), data.lifetime);
+        if (data.fireSfx) AudioSource.PlayClipAtPoint(data.fireSfx, transform.position, 1f);
+
+        initialized = true;
     }
 
-    private void Update()
+    private void OnCollisionEnter(Collision c)
     {
-        timer += Time.deltaTime;
-        if (timer >= data.lifetime)
-        {
-            CleanupVfx();
-            Destroy(gameObject);
-            return;
-        }
+        if (!initialized) return;
+        if (owner && c.transform == owner) return;
 
-        transform.position += direction * data.speed * Time.deltaTime;
+        if (((1 << c.gameObject.layer) & data.hittableLayers) != 0)
+            c.gameObject.GetComponent<Health>()?.TakeDamage(data.damage);
+
+        SpawnImpactFx(c.contacts.Length > 0 ? c.contacts[0].point : transform.position);
+        SelfDestruct();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform == shooter) return;
+        if (!initialized) return;
+        if (owner && other.transform == owner) return;
 
-        // COLLSION FILTERING
-        if ((data.hittableLayers.value & (1 << other.gameObject.layer)) == 0)
-            return;
+        if (((1 << other.gameObject.layer) & data.hittableLayers) != 0)
+            other.GetComponent<Health>()?.TakeDamage(data.damage);
 
-        // DAMAGE
-        Health hp = other.GetComponent<Health>();
-        if (hp)
-            hp.TakeDamage(data.damage);
-
-        // HIT VFX
-        if (data.hitVfxPrefab)
-            Destroy(Instantiate(data.hitVfxPrefab, transform.position, Quaternion.identity), 2f);
-
-        // HIT SFX
-        if (data.hitSfx)
-            AudioSource.PlayClipAtPoint(data.hitSfx, transform.position, 1f);
-
-        CleanupVfx();
-        Destroy(gameObject);
+        SpawnImpactFx(transform.position);
+        SelfDestruct();
     }
 
-    private void CleanupVfx()
+    private void SpawnImpactFx(Vector3 pos)
     {
+        if (data.hitVfxPrefab)
+        {
+            var vfx = Instantiate(data.hitVfxPrefab, pos, Quaternion.identity);
+            Destroy(vfx, 4f); // remove after 4 s
+        }
+        if (data.hitSfx) AudioSource.PlayClipAtPoint(data.hitSfx, pos, 1f);
+    }
+
+    private void SelfDestruct()
+    {
+        // fade out flight VFX before destroy
         if (flightVfxInstance)
-            Destroy(flightVfxInstance);
+        {
+            foreach (var ps in flightVfxInstance.GetComponentsInChildren<ParticleSystem>())
+                ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
+        Destroy(gameObject, 0.25f); // small delay lets last particles fade
     }
 }
