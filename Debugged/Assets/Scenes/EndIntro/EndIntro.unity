@@ -952,7 +952,7 @@ MonoBehaviour:
   audioSource: {fileID: 569417718}
   blipSound: {fileID: 8300000, guid: 401cb40fa3228434c8186aa3755b74eb, type: 3}
   volume: 1
-  nextSceneName: 
+  nextSceneName: lvl1
   stayInScene: 0
   freezePlayers: 1
   uiToHide: []
