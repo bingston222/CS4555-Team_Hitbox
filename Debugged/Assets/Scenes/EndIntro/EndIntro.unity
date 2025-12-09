@@ -267,6 +267,108 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &569417717 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5949148694946599931, guid: 409d57fd798108b4fb727e626b84a927, type: 3}
+  m_PrefabInstance: {fileID: 3027222711029884758}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &569417718
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569417717}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1023790598
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +686,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1843813426507279732, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1861799305}
   m_SourcePrefab: {fileID: 100100000, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
 --- !u!114 &1517441297 stripped
 MonoBehaviour:
@@ -676,6 +781,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1861799297 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1843813426507279732, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
+  m_PrefabInstance: {fileID: 1217125603}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1861799298 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2867255253701453402, guid: 167494db4d7104aa7b721b1522d08110, type: 3}
+  m_PrefabInstance: {fileID: 1217125603}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1861799305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861799297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14aa09d26b7194981aaa55ef683e9a59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1861799298}
+  fadeAnimationName: FadeToBlack
+  fadeDuration: 1
+  nextSceneName: Lvl1
+  playSound: 0
+  transitionSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!1001 &2515094530662729668
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -739,8 +873,89 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5233271891347794245, guid: e712c1c79d58db944a4cf278dd65ddaf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2515094530662729670}
   m_SourcePrefab: {fileID: 100100000, guid: e712c1c79d58db944a4cf278dd65ddaf, type: 3}
+--- !u!1 &2515094530662729669 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5233271891347794245, guid: e712c1c79d58db944a4cf278dd65ddaf, type: 3}
+  m_PrefabInstance: {fileID: 2515094530662729668}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2515094530662729670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2515094530662729669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca6a7998c82d6f4db0eef397d96a738, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lines:
+  - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
+    text: Guys, the PC broke, I think the Player is going to get rid of us!
+    customSound: {fileID: 0}
+  - characterIcon: {fileID: 21300000, guid: 8217982dbe280ee4f9e8422dd347963e, type: 3}
+    text: Oh no! How are Bit and I supposed to stick together if they get rid of
+      us!
+    customSound: {fileID: 0}
+  - characterIcon: {fileID: 21300000, guid: fb98fa2557843f04e87227ca42ac6028, type: 3}
+    text: AHHHHHHHHHHHHHHH!
+    customSound: {fileID: 0}
+  - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
+    text: Guys, please let's not overreact
+    customSound: {fileID: 0}
+  - characterIcon: {fileID: 21300000, guid: f058c26aa98edc14da9c117d7cce4814, type: 3}
+    text: ' Does anyone know how the PC broke?'
+    customSound: {fileID: 0}
+  - characterIcon: {fileID: 0}
+    text: '*Glitch noise*'
+    customSound: {fileID: 8300000, guid: 196f0e9d23c22d447b10faf8d957e049, type: 3}
+  - characterIcon: {fileID: 21300000, guid: 15f965f678b8ef54d8200897d01721d5, type: 3}
+    text: Uhh, is it just me, or does that not sound right?
+    customSound: {fileID: 0}
+  - characterIcon: {fileID: 21300000, guid: 81d262c64dd62704b9419beb7f3f00b4, type: 3}
+    text: We've got to leave before whatever that is, comes to get us!
+    customSound: {fileID: 0}
+  - characterIcon: {fileID: 21300000, guid: 3b7c54256ebfb3941b054c9942334773, type: 3}
+    text: 'The computer has been corrupted! We need to investigate the matter.
+
+'
+    customSound: {fileID: 0}
+  - characterIcon: {fileID: 21300000, guid: 81d262c64dd62704b9419beb7f3f00b4, type: 3}
+    text: Why would we risk leaving to explore danger????
+    customSound: {fileID: 0}
+  - characterIcon: {fileID: 21300000, guid: f058c26aa98edc14da9c117d7cce4814, type: 3}
+    text: 'Either we figure out what''s going on out there, or we let the corruption
+      get to us!
+
+'
+    customSound: {fileID: 0}
+  - characterIcon: {fileID: 21300000, guid: 8217982dbe280ee4f9e8422dd347963e, type: 3}
+    text: Bit and I can go!
+    customSound: {fileID: 0}
+  - characterIcon: {fileID: 21300000, guid: 15f965f678b8ef54d8200897d01721d5, type: 3}
+    text: 'We''re not actually sending them out together right? Them together equals
+      half a brain.
+
+'
+    customSound: {fileID: 0}
+  - characterIcon: {fileID: 21300000, guid: 15f965f678b8ef54d8200897d01721d5, type: 3}
+    text: No, Hitbox and I will go.
+    customSound: {fileID: 0}
+  iconUI: {fileID: 1517441297}
+  dialogueUI: {fileID: 512762058}
+  audioSource: {fileID: 569417718}
+  blipSound: {fileID: 8300000, guid: 401cb40fa3228434c8186aa3755b74eb, type: 3}
+  volume: 1
+  nextSceneName: 
+  stayInScene: 1
+  freezePlayers: 1
+  uiToHide: []
 --- !u!1001 &3027222711029884758
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -836,7 +1051,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5949148694946599931, guid: 409d57fd798108b4fb727e626b84a927, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 569417718}
   m_SourcePrefab: {fileID: 100100000, guid: 409d57fd798108b4fb727e626b84a927, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
