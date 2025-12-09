@@ -944,7 +944,7 @@ MonoBehaviour:
 
 '
     customSound: {fileID: 0}
-  - characterIcon: {fileID: 21300000, guid: 15f965f678b8ef54d8200897d01721d5, type: 3}
+  - characterIcon: {fileID: 21300000, guid: f058c26aa98edc14da9c117d7cce4814, type: 3}
     text: No, Hitbox and I will go.
     customSound: {fileID: 0}
   iconUI: {fileID: 1517441297}
@@ -953,7 +953,7 @@ MonoBehaviour:
   blipSound: {fileID: 8300000, guid: 401cb40fa3228434c8186aa3755b74eb, type: 3}
   volume: 1
   nextSceneName: 
-  stayInScene: 1
+  stayInScene: 0
   freezePlayers: 1
   uiToHide: []
 --- !u!1001 &3027222711029884758
